@@ -9,11 +9,11 @@ import {faBars,faXmark} from "@fortawesome/free-solid-svg-icons";
 const NavItems = () => {
     return(
         <>
-            <Link href={'/'} className={'text-color2 g-transition hover:text-color6'}>Servicios</Link>
-            <Link href={'/'} className={'text-color2 g-transition hover:text-color6'}>Publicar</Link>
-            <Link href={'/'} className={'text-color2 g-transition hover:text-color6'}>Inciar sesion</Link>
+            <Link href={'/'} className={'text-link'}>Servicios</Link>
+            <Link href={'/'} className={'text-link'}>Publicar</Link>
+            <Link href={'/'} className={'text-link'}>Inciar sesion</Link>
             
-            <Link href={'/'} className={'button-1 g-transition'}>Registro</Link>
+            <Link href={'/'} className={'btn-1'}>Registro</Link>
         </>
     )
 }
@@ -25,7 +25,7 @@ export default function Header() {
         <>
             <header className={'sticky top-0 header-shadow bg-color3 z-50'}>
                 <div className={'w-content flex-center-between py-3 md:py-5'}>
-                    <Link href={'/'} className={'font-bold text-color2 text-xl md:text-2xl'}><span className={'text-color3 bg-color5 text-2xl md:text-3xl px-2 rounded'}>G</span> SERVICES</Link>
+                    <Link href={'/'} className={'font-bold text-color2 text-xl md:text-2xl'}><span className={'text-color3 bg-color5 text-2xl md:text-3xl px-2 rounded'}>G</span> SERVICIOS</Link>
                     
                     <button
                         className={'all-center lg:hidden'}

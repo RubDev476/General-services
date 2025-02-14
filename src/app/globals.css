@@ -6,6 +6,11 @@
 
 * {
     font-family: "Roboto", serif;
+
+    &::selection {
+        color: #fff;
+        background: rgb(247, 52, 94);
+    }
 }
 
 /*================================== GLOBAL UTILITIES =========*/
@@ -17,10 +22,6 @@
     @apply flex items-center justify-between
 }
 
-.header-shadow {
-    box-shadow: 0 20px 30px 0 rgba(28, 9, 80, .05);
-}
-
 .g-transition {
     @apply transition-all duration-[.3s] ease-in-out
 }
@@ -29,14 +30,28 @@
     @apply px-7 lg:px-14 max-w-[1280px] m-auto
 }
 
-.button-1 {
-    @apply rounded-full text-color3 py-2 px-10 bg-color7 hover:bg-color6 font-semibold
+.btn-main {
+    @apply rounded-full text-color3 py-2 px-10 g-transition font-semibold;
 }
 
-.button-2 {
-    @apply rounded-full text-color3 py-2 px-10 bg-color6 hover:bg-color7 font-semibold
+.btn-1 {
+    @apply btn-main bg-color7 hover:bg-color6;
 }
 
+.btn-2 {
+    @apply btn-main bg-color6 hover:bg-color7;
+}
+
+.text-link {
+    @apply text-color2 hover:text-color6 g-transition;
+}
+
+/* ---------------------------- HEADER --------------- */
+.header-shadow {
+    box-shadow: 0 20px 30px 0 rgba(28, 9, 80, .05);
+}
+
+/*------------------- MAIN CONTENT & SECTIONS ------------- */
 .bg-main {
     background: linear-gradient(rgb(28, 9, 80) 0%, rgb(28, 9, 80) 1%, rgb(28, 9, 80) 2%, rgb(28, 9, 80) 3%, rgb(28, 9, 80) 4%, rgb(28, 9, 80) 5%, rgb(28, 9, 80) 6%, rgb(28, 9, 80) 7%, rgb(28, 9, 80) 8%, rgb(28, 9, 80) 9%, rgb(28, 9, 80) 10%, rgb(28, 9, 80) 11%, rgb(28, 9, 80) 12%, rgb(28, 9, 80) 13%, rgb(28, 9, 80) 14%, rgb(28, 9, 80) 15%, rgb(28, 10, 81) 17.67%, rgb(29, 15, 85) 20.34%, rgb(30, 21, 91) 23.01%, rgb(32, 30, 99) 25.68%, rgb(34, 42, 110) 28.35%, rgb(37, 57, 124) 31.02%, rgb(40, 75, 140) 33.69%, rgb(43, 92, 157) 36.36%, rgb(46, 110, 173) 39.03%, rgb(49, 125, 187) 41.7%, rgb(51, 137, 198) 44.37%, rgb(53, 146, 206) 47.04%, rgb(54, 152, 212) 49.71%, rgb(55, 157, 216) 52.38%, rgb(55, 158, 217) 55%, rgb(56, 156, 216) 58%, rgb(58, 152, 215) 61%, rgb(61, 145, 212) 64%, rgb(66, 136, 209) 67%, rgb(72, 123, 204) 70%, rgb(79, 107, 198) 73%, rgb(88, 88, 191) 76%, rgb(97, 70, 185) 79%, rgb(106, 51, 178) 82%, rgb(114, 35, 172) 85%, rgb(120, 22, 167) 88%, rgb(124, 13, 164) 91%, rgb(127, 6, 161) 94%, rgb(129, 2, 160) 97%, rgb(130, 0, 159) 100%);
 }
@@ -55,8 +70,4 @@
 
 .gradient-grid {
     background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.01) 6.67%, rgba(255, 255, 255, 0.04) 13.34%, rgba(255, 255, 255, 0.1) 20.01%, rgba(255, 255, 255, 0.17) 26.68%, rgba(255, 255, 255, 0.25) 33.35%, rgba(255, 255, 255, 0.35) 40.02%, rgba(255, 255, 255, 0.45) 46.69%, rgba(255, 255, 255, 0.55) 53.36%, rgba(255, 255, 255, 0.65) 60.03%, rgba(255, 255, 255, 0.75) 66.7%, rgba(255, 255, 255, 0.83) 73.37%, rgba(255, 255, 255, 0.9) 80.04%, rgba(255, 255, 255, 0.96) 86.71%, rgba(255, 255, 255, 0.99) 93.38%, rgb(255, 255, 255) 100%);
-}
-
-.shadow-link-grid {
-    box-shadow: rgba(28, 9, 80, 0.35) 0px 20px 40px 0px;
 }

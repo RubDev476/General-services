@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
     title: "G-Services",
@@ -15,6 +16,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                 <Header />
                 
                 {children}
+            
+                <Footer />
             </body>
         </html>
     );

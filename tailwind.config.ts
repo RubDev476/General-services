@@ -14,7 +14,8 @@ export default {
       color4: '#9b51e0',
       color5: "#512fad",
       color6: "rgb(247, 52, 94)",
-      color7: "#22c8e5"
+      color7: "#22c8e5",
+      color8: "#a08fc3"
     },
   },
   plugins: [],

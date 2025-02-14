@@ -8,13 +8,13 @@ export default function Home() {
                 <div className={"bg-main-2 w-full h-full absolute top-0"}></div>
                 <div className={"w-content text-center py-20 lg:py-24 relative z-[39] sm:text-xl lg:text-2xl"}>
                     <div className={'m-auto max-w-3xl'}>
-                        <p className={'text-color6 tracking-[3px] font-medium mb-5'}>GENERAL SERVICES</p>
+                        <p className={'text-color6 tracking-[3px] font-medium mb-5'}>SERVICIOS GENERALES</p>
                         
                         <h1 className={'text-color3 text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-none mb-12'}>Multiples servicios en un solo lugar, para todo tipo de trabajo.</h1>
                         
                         <p className={"text-color3 font-normal mb-9"}>Si eres proveedor o profesional, crea un servicio para que miles de clientes puedan encontrarte.</p>
                         
-                        <Link href={'/'} className={'g-transition button-2'}>Comenzar</Link>
+                        <Link href={'/'} className={'btn-2'}>Comenzar</Link>
                     </div>
                 </div>
             </main>
@@ -32,7 +32,7 @@ export default function Home() {
             <section className={""}>
                 <div className={"w-content relative"}>
                     <div className={'absolute all-center left-0 bottom-0 z-10 text-center box-border w-full m-auto gradient-grid h-[15vh] md:h-[35vh]'}>
-                        <Link href={'/'} className={'button-2 shadow-link-grid md:text-xl g-transition'}>Ver todos los servicios</Link>
+                        <Link href={'/'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>Ver todos los servicios</Link>
                     </div>
                     
                     <div className={"grid grid-cols-3 grid-rows-3 gap-2 lg:gap-5"}>
