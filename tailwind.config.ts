@@ -15,7 +15,8 @@ export default {
       color5: "#512fad",
       color6: "rgb(247, 52, 94)",
       color7: "#22c8e5",
-      color8: "#a08fc3"
+      color8: "#a08fc3",
+      color9: "#f3f2f6"
     },
   },
   plugins: [],

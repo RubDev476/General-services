@@ -46,6 +46,18 @@
     @apply text-color2 hover:text-color6 g-transition;
 }
 
+.input-sizes {
+    @apply  w-full max-w-[400px] px-7 py-2 lg:py-3 rounded-full;
+}
+
+.input {
+    @apply input-sizes placeholder:text-[rgba(28,9,80,0.5)] focus:placeholder:text-color2 text-color2 font-medium  bg-color9 outline-color2 focus:bg-color3 text-sm md:text-lg;
+}
+
+.btn-3 {
+    @apply btn-main input-sizes bg-color5 hover:bg-color6;
+}
+
 /* ---------------------------- HEADER --------------- */
 .header-shadow {
     box-shadow: 0 20px 30px 0 rgba(28, 9, 80, .05);

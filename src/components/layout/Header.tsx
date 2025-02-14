@@ -1,7 +1,8 @@
 'use client';
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import Link from 'next/link';
+import {usePathname} from "next/navigation";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars,faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +12,7 @@ const NavItems = () => {
         <>
             <Link href={'/'} className={'text-link'}>Servicios</Link>
             <Link href={'/'} className={'text-link'}>Publicar</Link>
-            <Link href={'/'} className={'text-link'}>Inciar sesion</Link>
+            <Link href={'/login'} className={'text-link'}>Inciar sesion</Link>
             
             <Link href={'/'} className={'btn-1'}>Registro</Link>
         </>
@@ -20,6 +21,12 @@ const NavItems = () => {
 
 export default function Header() {
     const [openMenu, setOpenMenu] = useState(false);
+    
+    const pathname = usePathname();
+    
+    useEffect(() => {
+        setOpenMenu(false);
+    }, [pathname]);
 
     return(
         <>
@@ -30,7 +37,7 @@ export default function Header() {
                     <button
                         className={'all-center lg:hidden'}
                         onClick={() => setOpenMenu(!openMenu)}
-                        name={'toggle-menu'}
+                        title={"menu-button"}
                     >
                         <FontAwesomeIcon className={'text-2xl text-color5'} icon={openMenu ? faXmark : faBars} />
                     </button>
