@@ -14,7 +14,7 @@ const NavItems = () => {
             <Link href={'/'} className={'text-link'}>Publicar</Link>
             <Link href={'/login'} className={'text-link'}>Inciar sesion</Link>
             
-            <Link href={'/'} className={'btn-1'}>Registro</Link>
+            <Link href={'/register'} className={'btn-1'}>Registro</Link>
         </>
     )
 }

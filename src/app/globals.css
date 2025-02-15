@@ -46,6 +46,7 @@
     @apply text-color2 hover:text-color6 g-transition;
 }
 
+/*-------------------------- FORMS ----------------- */
 .input-sizes {
     @apply  w-full max-w-[400px] px-7 py-2 lg:py-3 rounded-full;
 }
@@ -56,6 +57,40 @@
 
 .btn-3 {
     @apply btn-main input-sizes bg-color5 hover:bg-color6;
+}
+
+.fieldset {
+    @apply text-sm lg:text-lg all-center mb-10 font-medium flex-wrap w-full max-w-[400px] m-auto text-color2;
+}
+
+.check,
+.ratio {
+    @apply absolute h-0 w-0 opacity-0;
+}
+
+.custom-check {
+    @apply w-4 h-4 block lg:w-5 lg:h-5 bg-color5 rounded-sm all-center;
+}
+
+.custom-ratio {
+    @apply w-5 h-5 block lg:w-6 lg:h-6 bg-color5 rounded-full relative all-center;
+
+    &:after {
+        content: "";
+        @apply absolute bg-color5 h-3 w-3 rounded-full;
+    }
+}
+
+.icon-check {
+    @apply text-color5
+}
+
+.ratio:checked ~ .custom-ratio:after {
+    @apply absolute bg-color3;
+}
+
+.check:checked ~ .custom-check .icon-check {
+    @apply text-color3
 }
 
 /* ---------------------------- HEADER --------------- */
