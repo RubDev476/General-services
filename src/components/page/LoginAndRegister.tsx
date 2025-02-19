@@ -1,11 +1,57 @@
 "use client";
 
+import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faCheck} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
+import type {RegisterForm} from "@/types/forms";
+import {UserType, Roles} from "@/types/forms";
+import {useRouter} from "next/navigation";
 
 export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
+    const [errorForm, setErrorForm] = useState<string | null>(null);
+    const [loaderFetch, setLoaderFetch] = useState(false);
+    
     const nameForm = isRegister ? 'Registrarse' : 'Iniciar sesion';
+    
+    const router = useRouter();
+    
+    const { register, handleSubmit, formState: { errors }, watch } = useForm<RegisterForm>();
+    
+    const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {
+        setLoaderFetch(true);
+        
+        if(dataForm.contrasena !== dataForm.confirmPassword) return setErrorForm('Las contraseñas no coinciden');
+        if(dataForm.roles_id.length === 0) return setErrorForm('Elige un rol');
+        if(!dataForm.tipos_usuario_id) return setErrorForm('Elige un tipo de usuario');
+        if(!parseInt(dataForm.telefono)) return  setErrorForm('Agregue solo numeros al telefono');
+        
+        setErrorForm(null);
+        
+        //remove "confirmPassword" property
+        const {confirmPassword, ...resData} = dataForm;
+        
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/usuarios`, {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(resData),
+            })
+            
+            if(response.status === 400) return setErrorForm('Correo o telefono ya esta en uso');
+            if(response.status === 201) {
+                router.push("/login");
+                
+                setLoaderFetch(false);
+            }
+        } catch (error) {
+            //console.log(error.message);
+            setErrorForm('Error, intentelo de nuevo o mas tarde');
+        }
+    }
     
     return(
         <main>
@@ -17,14 +63,17 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                         <FontAwesomeIcon icon={faUser} className={"text-color3 text-4xl"} />
                     </div>
                     
-                    <form className={"w-full px-4 mb-7"}>
+                    <form
+                        className={"w-full px-4 mb-7"}
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
                         <input
                             className={"input mb-5"}
                             placeholder={"E-mail"}
                             type={"email"}
-                            name={"email"}
                             autoComplete={"email"}
                             required
+                            {...register("correo")}
                         />
                         
                         <input
@@ -32,7 +81,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                             placeholder={"Contraseña"}
                             type={"password"}
                             autoComplete={"off"}
-                            name={"password"}
+                            {...register("contrasena")}
                             required
                         />
                         
@@ -42,16 +91,16 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                     className={"input mb-5"}
                                     placeholder={"Confirmar contraseña"}
                                     type={"password"}
-                                    name={"confirm-password"}
                                     autoComplete={"off"}
                                     required
+                                    {...register("confirmPassword")}
                                 />
                                 
                                 <input
                                     className={"input mb-5"}
                                     placeholder={"Nombre"}
                                     type={"text"}
-                                    name={"name"}
+                                    {...register("nombre")}
                                     autoComplete={"name"}
                                     required
                                 />
@@ -60,7 +109,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                     className={"input mb-5"}
                                     placeholder={"Teléfono"}
                                     type={"tel"}
-                                    name={"phone"}
+                                    {...register("telefono")}
                                     maxLength={15}
                                     autoComplete={"off"}
                                     required
@@ -73,12 +122,13 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                         <input
                                             type="checkbox"
                                             id="cliente"
-                                            name="cliente"
+                                            {...register("roles_id")}
+                                            value={Roles.cliente}
                                             defaultChecked={true}
                                             className={"check"}
                                         />
                                         <span className={"custom-check"}>
-                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"} />
+                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"}/>
                                         </span>
                                     </label>
                                     
@@ -86,11 +136,12 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                         <input
                                             type="checkbox"
                                             id="proveedor"
-                                            name="proveedor"
+                                            {...register("roles_id")}
+                                            value={Roles.proveedor}
                                             className={"check"}
                                         />
                                         <span className={"custom-check"}>
-                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"} />
+                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"}/>
                                         </span>
                                     </label>
                                 </fieldset>
@@ -101,9 +152,10 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                     <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>
                                         <input
                                             type="radio"
-                                            name="typeUser"
-                                            value="particular"
+                                            {...register("tipos_usuario_id")}
+                                            value={UserType.particular}
                                             className={"ratio"}
+                                            //required
                                         />
                                         Particular
                                         <span className={"custom-ratio"}></span>
@@ -112,9 +164,10 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                     <label className={"all-center gap-2.5"}>
                                         <input
                                             type="radio"
-                                            name="typeUser"
-                                            value="empresa"
+                                            {...register("tipos_usuario_id")}
+                                            value={UserType.empresa}
                                             className={"ratio"}
+                                            //required
                                         />
                                         Empresa
                                         <span className={"custom-ratio"}></span>
@@ -123,6 +176,19 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                             </>
                         )}
                         
+                        {(loaderFetch && !errorForm) && (
+                            <>
+                                <span className="loader m-auto w-full flex"></span>
+                                <br/>
+                            </>
+                        )}
+                        
+                        {errorForm && (
+                            <>
+                                <span className={"w-full text-color6 font-medium"}>{errorForm}*</span>
+                                <br/>
+                            </>
+                        )}
                         <button className={"btn-3 w-full"} type={"submit"}>{nameForm}</button>
                     </form>
                     
