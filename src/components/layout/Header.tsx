@@ -7,6 +7,9 @@ import {usePathname} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars,faXmark} from "@fortawesome/free-solid-svg-icons";
 
+import {useAuthActions} from "@/store/hooks/useAuthActions";
+import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
+
 const NavItems = () => {
     return(
         <>
@@ -23,6 +26,13 @@ export default function Header() {
     const [openMenu, setOpenMenu] = useState(false);
     
     const pathname = usePathname();
+
+    const {validateSessionAction, logoutAction} = useAuthActions();
+    const {userData} = useAuthSelectors();
+
+    useEffect(() => {
+        validateSessionAction();
+    }, []); // eslint-disable-line
     
     useEffect(() => {
         setOpenMenu(false);
@@ -45,6 +55,16 @@ export default function Header() {
                     <nav className={'hidden lg:flex gap-6 items-center font-[400] text-lg'}>
                         <NavItems />
                     </nav>
+
+                    {userData ?(
+                        <>
+                            <p className={'text-color2 font-bold'}>{userData.username}</p>
+
+                            <button onClick={() => logoutAction()}>logout</button>
+                        </>
+                    ): (
+                        <></>
+                    )}
                 </div>
             </header>
             

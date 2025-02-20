@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
+import { Providers } from "@/store/Provider";
+
 export const metadata: Metadata = {
     title: "G-Services",
     description: "Website to search or offer services",
@@ -13,11 +15,13 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     return (
         <html lang="en">
             <body>
-                <Header />
+                <Providers>
+                   <Header />
                 
-                {children}
+                    {children}
             
-                <Footer />
+                    <Footer /> 
+                </Providers>
             </body>
         </html>
     );

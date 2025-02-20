@@ -1,7 +1,6 @@
 "use client";
 
 import {useState} from "react";
-import {jwtDecode} from "jwt-decode";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -15,6 +14,8 @@ import {UserType, Roles} from "@/types/forms";
 import {POST_register_login} from "@/server-actions";
 import { ERROR_MESSAGE } from "@/utils/error-messages";
 
+import { useAuthActions } from "@/store/hooks/useAuthActions";
+
 export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const [errorForm, setErrorForm] = useState<string | null>(null);
     const [loaderFetch, setLoaderFetch] = useState(false);
@@ -22,6 +23,8 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const nameForm = isRegister ? 'Registrarse' : 'Iniciar sesion';
     
     const router = useRouter();
+
+    const {loginSuccessAction} = useAuthActions();
     
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
     
@@ -76,19 +79,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
             setLoaderFetch(false);
 
             if(response.token) {
-                localStorage.setItem("gServicesToken", response.token);
-                
-                const userData = jwtDecode(response.token);
-                
-                if(userData.exp) {
-                    const currentTime = Math.floor(Date.now() / 1000);
-                    
-                    if (userData.exp < currentTime) {
-                        console.log('El token ha expirado');
-                    } else {
-                        console.log('El token aún es válido');
-                    }
-                }
+                loginSuccessAction({token: response.token, userData: null});
             } else if(response.error) {
                 throw new Error();
             } else {
