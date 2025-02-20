@@ -23,7 +23,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     const router = useRouter();
     
-    const { register, handleSubmit, formState: { errors }, watch } = useForm<RegisterForm>();
+    const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
     
     const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {
         setLoaderFetch(true);
@@ -44,10 +44,10 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
         setErrorForm(null);
         
         //remove "confirmPassword" property
-        const {confirmPassword, ...resData} = dataForm;
+        delete (dataForm as {confirmPassword?: string}).confirmPassword;
         
         try {
-            const response = await POST_register_login(resData, "/usuarios");
+            const response = await POST_register_login(dataForm, "/usuarios");
 
             if(response.status === "success") {
                 router.push("/login");
