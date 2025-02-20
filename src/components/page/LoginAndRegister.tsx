@@ -1,13 +1,19 @@
 "use client";
 
 import {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser, faCheck} from "@fortawesome/free-solid-svg-icons";
+import {jwtDecode} from "jwt-decode";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser, faCheck} from "@fortawesome/free-solid-svg-icons";
+
 import type {RegisterForm} from "@/types/forms";
 import {UserType, Roles} from "@/types/forms";
-import {useRouter} from "next/navigation";
+
+import {POST_register_login} from "@/server-actions";
+import { ERROR_MESSAGE } from "@/utils/error-messages";
 
 export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const [errorForm, setErrorForm] = useState<string | null>(null);
@@ -22,6 +28,14 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {
         setLoaderFetch(true);
         
+        if(isRegister) {
+            submitRegister(dataForm);
+        } else {
+            submitLogin(dataForm);
+        }
+    }
+    
+    const submitRegister = async (dataForm: RegisterForm) => {
         if(dataForm.contrasena !== dataForm.confirmPassword) return setErrorForm('Las contraseñas no coinciden');
         if(dataForm.roles_id.length === 0) return setErrorForm('Elige un rol');
         if(!dataForm.tipos_usuario_id) return setErrorForm('Elige un tipo de usuario');
@@ -33,23 +47,59 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
         const {confirmPassword, ...resData} = dataForm;
         
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/usuarios`, {
-                method: "post",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(resData),
-            })
-            
-            if(response.status === 400) return setErrorForm('Correo o telefono ya esta en uso');
-            if(response.status === 201) {
+            const response = await POST_register_login(resData, "/usuarios");
+
+            if(response.status === "success") {
                 router.push("/login");
-                
+
                 setLoaderFetch(false);
+            } else {
+                setErrorForm(response.message ?? ERROR_MESSAGE.unknown);
             }
         } catch (error) {
-            //console.log(error.message);
-            setErrorForm('Error, intentelo de nuevo o mas tarde');
+            if(error instanceof Error) {
+                console.log(error.message);
+            }
+            
+            setErrorForm(ERROR_MESSAGE.unknown);
+        }
+    }
+    
+    const submitLogin = async (dataForm: RegisterForm) => {
+        setErrorForm(null);
+        
+        const {contrasena, correo} = dataForm;
+        
+        try {
+            const response = await POST_register_login({email: correo, password: contrasena}, "/login");
+
+            setLoaderFetch(false);
+
+            if(response.token) {
+                localStorage.setItem("gServicesToken", response.token);
+                
+                const userData = jwtDecode(response.token);
+                
+                if(userData.exp) {
+                    const currentTime = Math.floor(Date.now() / 1000);
+                    
+                    if (userData.exp < currentTime) {
+                        console.log('El token ha expirado');
+                    } else {
+                        console.log('El token aún es válido');
+                    }
+                }
+            } else if(response.error) {
+                throw new Error();
+            } else {
+                setErrorForm(response.message ?? ERROR_MESSAGE.unknown);
+            }
+        } catch (error) {
+            if(error instanceof Error) {
+                console.log(error.message);
+            }
+            
+            setErrorForm(ERROR_MESSAGE.unknown);
         }
     }
     
@@ -177,17 +227,15 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                         )}
                         
                         {(loaderFetch && !errorForm) && (
-                            <>
-                                <span className="loader m-auto w-full flex"></span>
-                                <br/>
-                            </>
+                            <div className={"w-full all-center mb-3"}>
+                                <span className="loader"></span>
+                            </div>
                         )}
                         
                         {errorForm && (
-                            <>
-                                <span className={"w-full text-color6 font-medium"}>{errorForm}*</span>
-                                <br/>
-                            </>
+                            <div className={"w-full all-center mb-3"}>
+                                <span className={"w-full text-color6 text-sm lg:text-base font-medium"}>{errorForm}*</span>
+                            </div>
                         )}
                         <button className={"btn-3 w-full"} type={"submit"}>{nameForm}</button>
                     </form>

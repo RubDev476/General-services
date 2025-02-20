@@ -93,39 +93,18 @@
     @apply text-color3
 }
 
-.loader, .loader:before, .loader:after {
-    @apply rounded-[50%] w-4 h-4;
-    animation-fill-mode: both;
-    animation: bblFadInOut 1.8s infinite ease-in-out;
-}
-
 .loader {
-    @apply text-color6 relative;
-    font-size: 7px;
-    text-indent: -9999em;
-    transform: translateZ(0);
-    animation-delay: -0.16s;
+    @apply bg-color6 w-10 lg:w-12 p-2 aspect-[1] rounded-[50%];
+    --_m:
+            conic-gradient(#0000 10%,#000),
+            linear-gradient(#000 0 0) content-box;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+    animation: l3 1s infinite linear;
 }
-
-.loader:before,
-.loader:after {
-    @apply absolute top-0;
-    content: '';
-}
-
-.loader:before {
-    left: -3.5em;
-    animation-delay: -0.32s;
-}
-
-.loader:after {
-    left: 3.5em;
-}
-
-@keyframes bblFadInOut {
-    0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
-    40% { box-shadow: 0 2.5em 0 0 }
-}
+@keyframes l3 {to{transform: rotate(1turn)}}
 
 /* ---------------------------- HEADER --------------- */
 .header-shadow {
