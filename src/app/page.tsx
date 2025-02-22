@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
     return (
-        <div id='action-ui'>
+        <>
             <main className={'bg-main relative action-ui'}>
                 <div className={"bg-main-2 w-full h-full absolute top-0"}></div>
                 <div className={"w-content text-center py-20 lg:py-24 relative z-[39] sm:text-xl lg:text-2xl"}>
@@ -66,6 +66,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-        </div>
+        </>
     );
 }
