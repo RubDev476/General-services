@@ -13,3 +13,8 @@ export const userDataSelect = createSelector(
     [authState],
     (state) => state.userData
 );
+
+export const authLoadingSelect = createSelector(
+    [authState],
+    (state) => state.authLoading
+);

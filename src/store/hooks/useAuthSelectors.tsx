@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 
-import { tokenSelect, userDataSelect } from "../selectors/auth";
+import { tokenSelect, userDataSelect, authLoadingSelect } from "../selectors/auth";
 import { RootState } from "..";
 
 export const useAuthSelectors = () => {
@@ -9,9 +9,11 @@ export const useAuthSelectors = () => {
 
     const token = useAppSelector(tokenSelect);
     const userData = useAppSelector(userDataSelect);
+    const authLoading = useAppSelector(authLoadingSelect);
 
     return {
         token,
-        userData
+        userData,
+        authLoading
     }
 }

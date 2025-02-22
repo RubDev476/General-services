@@ -46,6 +46,24 @@
     @apply text-color2 hover:text-color6 g-transition;
 }
 
+@keyframes pulse {
+    50% {
+        opacity: .5
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
+}
+
+.skeleton {
+    @apply bg-color10 animate-pulse rounded-sm;
+}
+
+.skeleton-circle {
+    @apply bg-color10 animate-pulse rounded-full;
+}
+
 /*-------------------------- FORMS ----------------- */
 .input-sizes {
     @apply  w-full max-w-[400px] px-7 py-2 lg:py-3 rounded-full;
@@ -109,6 +127,25 @@
 /* ---------------------------- HEADER --------------- */
 .header-shadow {
     box-shadow: 0 20px 30px 0 rgba(28, 9, 80, .05);
+}
+
+.dropdown-shadow {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.avatar-dropdown {
+    @apply dropdown-shadow hidden min-w-40 absolute top-[40px] right-0 bg-color3 text-[1rem] p-5 rounded-lg flex-col items-start gap-3;
+
+    &::before {
+        @apply block absolute top-0 right-3 w-3 h-3 bg-color3 z-0 translate-y-[-50%] rotate-45;
+        content: "";
+    }
+}
+
+.avatar-header-container {
+    &:hover .avatar-dropdown {
+        @apply flex;
+    }
 }
 
 /*------------------- MAIN CONTENT & SECTIONS ------------- */

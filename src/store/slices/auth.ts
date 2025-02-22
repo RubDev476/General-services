@@ -5,7 +5,8 @@ import type { AuthState } from '@/types/store';
 
 const initialState: AuthState = {
     token: null,
-    userData: null
+    userData: null,
+    authLoading: true,
 };
 
 const authSlice = createSlice({
@@ -25,6 +26,8 @@ const authSlice = createSlice({
                 state.token = token;
                 state.userData = userData;
             }
+
+            state.authLoading = false;
         },
         logout: (state) => {
             state.token = null;

@@ -1,6 +1,6 @@
 import type { Roles, UserType } from "./forms";
 
-type UserData = {
+export type UserData = {
     username: string;
     email: string;
     type: UserType;
@@ -12,4 +12,5 @@ type UserData = {
 export type AuthState = {
     token: string | null;
     userData: UserData | null;
+    authLoading: boolean;
 }
