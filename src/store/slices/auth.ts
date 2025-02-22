@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { AuthState } from '@/types/store';
+import type { AuthState, LoginData } from '@/types/store';
 
 const initialState: AuthState = {
     token: null,
@@ -13,13 +13,13 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginSuccess: (state, action: PayloadAction<AuthState>) => {
+        loginSuccess: (state, action: PayloadAction<LoginData>) => {
             const {token, userData} = action.payload;
 
             state.token = token;
             state.userData = userData;
         },
-        validateSession: (state, action: PayloadAction<AuthState | undefined>) => {
+        validateSession: (state, action: PayloadAction<LoginData | undefined>) => {
             if(action.payload) {
                 const {token, userData} = action.payload;
 

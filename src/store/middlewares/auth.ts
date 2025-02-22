@@ -24,6 +24,8 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
 
             if(token) {
                 const decodedToken = jwtDecode(token);
+
+                //console.log(decodedToken);
     
                 if(decodedToken.exp) {
                     const currentTime = Math.floor(Date.now() / 1000);

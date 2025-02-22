@@ -4,4 +4,4 @@ export type NavItemsInitialProps = {
     mobileSize: boolean;
 }
 
-export type NavItemsSessionProps = Pick<UserData, "username" | "email">;
+export type NavItemsSessionProps = Pick<UserData, "username" | "email" | "id_usuario">;

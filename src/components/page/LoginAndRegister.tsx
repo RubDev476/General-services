@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -15,6 +15,7 @@ import {POST_register_login} from "@/server-actions";
 import { ERROR_MESSAGE } from "@/utils/error-messages";
 
 import { useAuthActions } from "@/store/hooks/useAuthActions";
+import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const [errorForm, setErrorForm] = useState<string | null>(null);
@@ -25,8 +26,13 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const router = useRouter();
 
     const {loginSuccessAction} = useAuthActions();
+    const {userData} = useAuthSelectors();
     
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
+
+    useEffect(() => {
+        if(userData) router.push(`/user/${userData.id_usuario}`);
+    }, [userData, router])
     
     const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {
         setLoaderFetch(true);
@@ -48,7 +54,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
         
         //remove "confirmPassword" property
         delete (dataForm as {confirmPassword?: string}).confirmPassword;
-        
+
         try {
             const response = await POST_register_login(dataForm, "/usuarios");
 

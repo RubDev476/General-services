@@ -12,7 +12,7 @@ import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import type { NavItemsInitialProps, NavItemsSessionProps } from "@/types/props";
 
-const NavItemsSession = ({username, email}: NavItemsSessionProps) => {
+const NavItemsSession = ({username, email, id_usuario}: NavItemsSessionProps) => {
     const {logoutAction} = useAuthActions();
 
     return (
@@ -25,7 +25,7 @@ const NavItemsSession = ({username, email}: NavItemsSessionProps) => {
 
                 <hr className="text-color10 w-full" />
 
-                <Link href={'/'} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
+                <Link href={`/user/${id_usuario}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
                 <Link href={'/'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
 
                 <button onClick={() => logoutAction()} className="text-color6">
@@ -55,14 +55,14 @@ const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
                             <>
                                 <hr className="text-color10 w-full" />
                                 
-                                <NavItemsSession username={userData.username} email={userData.email} />
+                                <NavItemsSession id_usuario={userData.id_usuario} username={userData.username} email={userData.email} />
                             </>
                     ): (
                         <div className="relative avatar-header-container">
                             <div className="w-11 h-11 rounded-full bg-color7 cursor-pointer"></div>
 
                             <div className="avatar-dropdown">
-                                <NavItemsSession username={userData.username} email={userData.email} />
+                                <NavItemsSession id_usuario={userData.id_usuario} username={userData.username} email={userData.email} />
                             </div>
                         </div>
                     )}
