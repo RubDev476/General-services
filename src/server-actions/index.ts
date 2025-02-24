@@ -15,3 +15,11 @@ export const POST_register_login = async <T>(formData: T, keyUrl: string) => {
 
     return response.json();
 }
+
+export const GET_user = async (idUser: string) => {
+    if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
+
+    const response = await fetch(`${urlApi}/usuarios/${idUser}`).then(res => res.json());
+
+    return response;
+}
