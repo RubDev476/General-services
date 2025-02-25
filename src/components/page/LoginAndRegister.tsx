@@ -17,6 +17,10 @@ import { ERROR_MESSAGE } from "@/utils/error-messages";
 import { useAuthActions } from "@/store/hooks/useAuthActions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
+import FormLayout from "../ui/form/FormLayout";
+import Loader from "../ui/form/Loader";
+import ErrorForm from "../ui/form/Error";
+
 export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const [errorForm, setErrorForm] = useState<string | null>(null);
     const [loaderFetch, setLoaderFetch] = useState(false);
@@ -25,7 +29,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     const router = useRouter();
 
-    const {loginSuccessAction} = useAuthActions();
+    const {loginSuccessAction, fakeLoginAction} = useAuthActions();
     const {userData} = useAuthSelectors();
     
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
@@ -76,6 +80,13 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     const submitLogin = async (dataForm: RegisterForm) => {
         setErrorForm(null);
+
+        if(dataForm.correo === "test@correo.com" && dataForm.contrasena === "test") {
+            setLoaderFetch(false);
+            fakeLoginAction();            
+
+            return;
+        }
         
         const {contrasena, correo} = dataForm;
         
@@ -102,155 +113,144 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     return(
         <main>
-            <div className={"w-content py-20"}>
-                <h1 className={"text-color2 text-center text-4xl lg:text-7xl font-bold mb-9"}>{nameForm}</h1>
-                
-                <div className={"w-full text-center max-w-xl mx-auto mb-5 py-12 shadow-[0px_10px_30px_0px_rgba(28,9,80,0.07)]"}>
-                    <div className={"bg-color5 mx-auto mb-10 rounded-full all-center w-20 h-20 shadow-[0px_30px_50px_0px_rgba(94,53,177,0.35)]"}>
-                        <FontAwesomeIcon icon={faUser} className={"text-color3 text-4xl"} />
-                    </div>
-                    
-                    <form
-                        className={"w-full px-4 mb-7"}
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <input
-                            className={"input mb-5"}
-                            placeholder={"E-mail"}
-                            type={"email"}
-                            autoComplete={"email"}
-                            required
-                            {...register("correo")}
-                        />
-                        
-                        <input
-                            className={"input mb-5"}
-                            placeholder={"Contraseña"}
-                            type={"password"}
-                            autoComplete={"off"}
-                            {...register("contrasena")}
-                            required
-                        />
-                        
-                        {isRegister && (
-                            <>
-                                <input
-                                    className={"input mb-5"}
-                                    placeholder={"Confirmar contraseña"}
-                                    type={"password"}
-                                    autoComplete={"off"}
-                                    required
-                                    {...register("confirmPassword")}
-                                />
-                                
-                                <input
-                                    className={"input mb-5"}
-                                    placeholder={"Nombre"}
-                                    type={"text"}
-                                    {...register("nombre")}
-                                    autoComplete={"name"}
-                                    required
-                                />
-                                
-                                <input
-                                    className={"input mb-5"}
-                                    placeholder={"Teléfono"}
-                                    type={"tel"}
-                                    {...register("telefono")}
-                                    maxLength={15}
-                                    autoComplete={"off"}
-                                    required
-                                />
-                                
-                                <fieldset className={"fieldset"}>
-                                    <legend className={"mb-4 font-bold"}>Tipo de rol:</legend>
-                                    
-                                    <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>Cliente
-                                        <input
-                                            type="checkbox"
-                                            id="cliente"
-                                            {...register("roles_id")}
-                                            value={Roles.cliente}
-                                            defaultChecked={true}
-                                            className={"check"}
-                                        />
-                                        <span className={"custom-check"}>
-                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"}/>
-                                        </span>
-                                    </label>
-                                    
-                                    <label className={"all-center gap-2.5"}>Proveedor
-                                        <input
-                                            type="checkbox"
-                                            id="proveedor"
-                                            {...register("roles_id")}
-                                            value={Roles.proveedor}
-                                            className={"check"}
-                                        />
-                                        <span className={"custom-check"}>
-                                            <FontAwesomeIcon icon={faCheck} className={"icon-check"}/>
-                                        </span>
-                                    </label>
-                                </fieldset>
-                                
-                                <fieldset className={"fieldset"}>
-                                    <legend className={"mb-4 font-bold"}>Tipo de usuario:</legend>
-                                    
-                                    <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>
-                                        <input
-                                            type="radio"
-                                            {...register("tipos_usuario_id")}
-                                            value={UserType.particular}
-                                            className={"ratio"}
-                                            //required
-                                        />
-                                        Particular
-                                        <span className={"custom-ratio"}></span>
-                                    </label>
-                                    
-                                    <label className={"all-center gap-2.5"}>
-                                        <input
-                                            type="radio"
-                                            {...register("tipos_usuario_id")}
-                                            value={UserType.empresa}
-                                            className={"ratio"}
-                                            //required
-                                        />
-                                        Empresa
-                                        <span className={"custom-ratio"}></span>
-                                    </label>
-                                </fieldset>
-                            </>
-                        )}
-                        
-                        {(loaderFetch && !errorForm) && (
-                            <div className={"w-full all-center mb-3"}>
-                                <span className="loader"></span>
-                            </div>
-                        )}
-                        
-                        {errorForm && (
-                            <div className={"w-full all-center mb-3"}>
-                                <span className={"w-full text-color6 text-sm lg:text-base font-medium"}>{errorForm}*</span>
-                            </div>
-                        )}
-                        <button className={"btn-3 w-full"} type={"submit"}>{nameForm}</button>
-                    </form>
-                    
-                    <div className={"all-center text-sm md:text-lg flex-col gap-5"}>
-                    {isRegister ? (
-                            <>
-                                <Link href={"/login"} className={"text-link font-medium"}>¿Ya tienes una cuenta? Inicia sesion</Link>
-                            </>
-                        ): (
-                            <>
-                                <Link href={"/"} className={"text-link font-medium"}>¿Olvidaste tu contraseña?</Link>
-                                <Link href={"/register"} className={"text-link font-medium"}>¿No tienes una cuenta? Registrate</Link>
-                            </>
-                        )}
-                    </div>
+            <FormLayout nameForm={nameForm}>
+                <div className={"bg-color5 mx-auto mb-10 rounded-full all-center w-20 h-20 shadow-[0px_30px_50px_0px_rgba(94,53,177,0.35)]"}>
+                    <FontAwesomeIcon icon={faUser} className={"text-color3 text-4xl"} />
                 </div>
-            </div>
+
+                <form
+                    className={"w-full px-4 mb-7"}
+                    onSubmit={handleSubmit(onSubmit)}
+                >
+                    <input
+                        className={"input mb-5"}
+                        placeholder={"E-mail"}
+                        type={"email"}
+                        autoComplete={"email"}
+                        required
+                        {...register("correo")}
+                    />
+
+                    <input
+                        className={"input mb-5"}
+                        placeholder={"Contraseña"}
+                        type={"password"}
+                        autoComplete={"off"}
+                        {...register("contrasena")}
+                        required
+                    />
+
+                    {isRegister && (
+                        <>
+                            <input
+                                className={"input mb-5"}
+                                placeholder={"Confirmar contraseña"}
+                                type={"password"}
+                                autoComplete={"off"}
+                                required
+                                {...register("confirmPassword")}
+                            />
+
+                            <input
+                                className={"input mb-5"}
+                                placeholder={"Nombre"}
+                                type={"text"}
+                                {...register("nombre")}
+                                autoComplete={"name"}
+                                required
+                            />
+
+                            <input
+                                className={"input mb-5"}
+                                placeholder={"Teléfono"}
+                                type={"tel"}
+                                {...register("telefono")}
+                                maxLength={15}
+                                autoComplete={"off"}
+                                required
+                            />
+
+                            <fieldset className={"fieldset"}>
+                                <legend className={"mb-4 font-bold"}>Tipo de rol:</legend>
+
+                                <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>Cliente
+                                    <input
+                                        type="checkbox"
+                                        id="cliente"
+                                        {...register("roles_id")}
+                                        value={Roles.cliente}
+                                        defaultChecked={true}
+                                        className={"check"}
+                                    />
+                                    <span className={"custom-check"}>
+                                        <FontAwesomeIcon icon={faCheck} className={"icon-check"} />
+                                    </span>
+                                </label>
+
+                                <label className={"all-center gap-2.5"}>Proveedor
+                                    <input
+                                        type="checkbox"
+                                        id="proveedor"
+                                        {...register("roles_id")}
+                                        value={Roles.proveedor}
+                                        className={"check"}
+                                    />
+                                    <span className={"custom-check"}>
+                                        <FontAwesomeIcon icon={faCheck} className={"icon-check"} />
+                                    </span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset className={"fieldset"}>
+                                <legend className={"mb-4 font-bold"}>Tipo de usuario:</legend>
+
+                                <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>
+                                    <input
+                                        type="radio"
+                                        {...register("tipos_usuario_id")}
+                                        value={UserType.particular}
+                                        className={"ratio"}
+                                    //required
+                                    />
+                                    Particular
+                                    <span className={"custom-ratio"}></span>
+                                </label>
+
+                                <label className={"all-center gap-2.5"}>
+                                    <input
+                                        type="radio"
+                                        {...register("tipos_usuario_id")}
+                                        value={UserType.empresa}
+                                        className={"ratio"}
+                                    //required
+                                    />
+                                    Empresa
+                                    <span className={"custom-ratio"}></span>
+                                </label>
+                            </fieldset>
+                        </>
+                    )}
+
+                    {(loaderFetch && !errorForm) && <Loader />}
+
+                    {errorForm && <ErrorForm message={errorForm} />}
+                    
+                    <button className={"btn-3 w-full"} type={"submit"}>{nameForm}</button>
+                </form>
+
+                <div className={"all-center text-sm md:text-lg flex-col gap-5"}>
+                    {isRegister ? (
+                        <>
+                            <Link href={"/login"} className={"text-link font-medium"}>¿Ya tienes una cuenta? Inicia sesion</Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link href={"/"} className={"text-link font-medium"}>¿Olvidaste tu contraseña?</Link>
+                            <Link href={"/register"} className={"text-link font-medium"}>¿No tienes una cuenta? Registrate</Link>
+                        </>
+                    )}
+                </div>
+            </FormLayout>
         </main>
     )
 }

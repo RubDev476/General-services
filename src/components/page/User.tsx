@@ -33,7 +33,22 @@ export default function User({ userId }: { userId: string }) {
             }
         }
 
-        getUser();
+        //getUser();
+
+        if (userId === "999") {
+            setUserData({
+                id_usuarios: "999",
+                nombre: "nombre de prueba",
+                correo: "test@correo.com",
+                telefono: "989898",
+                tipos_usuario_id: 0,
+                imagen: null
+            })
+
+            setLoadingData(false);
+        } else {
+            getUser();
+        }
     }, [userId])
 
     if (loadinData) return (

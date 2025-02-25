@@ -42,7 +42,6 @@ const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
     return(
         <>
             <Link href={'/'} className={'text-link'}>Servicios</Link>
-            <Link href={'/'} className={'text-link'}>Publicar</Link>
 
             {!userData ? (
                 <>
@@ -51,6 +50,8 @@ const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
                 </>
             ): (
                 <>
+                    <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>
+
                     {mobileSize ? (
                             <>
                                 <hr className="text-color10 w-full" />

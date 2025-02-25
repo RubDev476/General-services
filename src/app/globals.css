@@ -66,11 +66,23 @@
 
 /*-------------------------- FORMS ----------------- */
 .input-sizes {
-    @apply  w-full max-w-[400px] px-7 py-2 lg:py-3 rounded-full;
+    @apply  w-full max-w-[400px] px-7 py-2 lg:py-3;
+}
+
+.input-styles {
+    @apply placeholder:text-[rgba(28,9,80,0.5)] focus:placeholder:text-color2 text-color2 font-medium  bg-color9 outline-color2 focus:bg-color3 text-sm md:text-lg;
 }
 
 .input {
-    @apply input-sizes placeholder:text-[rgba(28,9,80,0.5)] focus:placeholder:text-color2 text-color2 font-medium  bg-color9 outline-color2 focus:bg-color3 text-sm md:text-lg;
+    @apply input-sizes input-styles rounded-full;
+}
+
+.textarea {
+    @apply input-styles input-sizes h-28 min-h-28 max-h-28 lg:h-40 lg:max-h-40;
+}
+
+.dropzone {
+    @apply input-sizes input-styles m-auto h-[250px] lg:h-[350px];
 }
 
 .btn-3 {
