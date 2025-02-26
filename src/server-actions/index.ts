@@ -30,8 +30,8 @@ export const POST_create_service = async <T>(formData: T, token: string) => {
     const response = await fetch(`${urlApi}/servicios`, {
         method: "post",
         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
     });

@@ -34,9 +34,9 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const {userData} = useAuthSelectors();
     
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
-
+    
     useEffect(() => {
-        if(userData) router.push(`/user/${userData.id_usuario}`);
+        if(userData) router.push(`/user/${userData.id_usuarios}`);
     }, [userData, router])
     
     const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {

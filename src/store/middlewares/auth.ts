@@ -4,30 +4,43 @@ import { type Middleware } from "@reduxjs/toolkit";
 
 import {jwtDecode} from "jwt-decode";
 
+import { GET_user } from "@/server-actions";
+
 const middleware: Middleware = (store) => (next) => (action: any) => {
     switch (action.type) {
         case "auth/loginSuccess": {
             const {token} = action.payload;
+            const decodedToken: any = jwtDecode(token);
 
-            localStorage.setItem('gServicesToken', token);
+            const getUserData = async (id: string, roles: any) => {
+                const res = await GET_user(id);
+
+                if(res.usuario) {
+                    const newData = {token, userData: {...res.usuario, roles}};
+
+                    localStorage.setItem('gServicesUser', JSON.stringify(newData));
+
+                    action.payload = newData;
+
+                    next(action);
+                } else {
+                    next(action);
+                }
+            }
     
-            const decodedToken = jwtDecode(token);
-    
-            action.payload = {token, userData: decodedToken};
-    
-            next(action);
+            getUserData(decodedToken.id_usuario, decodedToken.roles);
 
             break;
         }
         case "auth/validateSession": {
-            const token = localStorage.getItem('gServicesToken');
+            const userData = localStorage.getItem('gServicesUser');
 
-            if(token) {
-                const decodedToken = jwtDecode(token);
+            if(userData) {
+                action.payload = JSON.parse(userData);
 
-                //console.log(decodedToken);
-    
-                if(decodedToken.exp) {
+                next(action);
+
+                /*if(decodedToken.exp) {
                     const currentTime = Math.floor(Date.now() / 1000);
                     
                     if (decodedToken.exp < currentTime) {
@@ -37,7 +50,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
     
                         next(action);
                     }
-                }
+                }*/
             } else {
                 next(action);
             }
@@ -45,7 +58,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             break;
         }
         case "auth/logout": {
-            localStorage.removeItem('gServicesToken');
+            localStorage.removeItem('gServicesUser');
 
             next(action);
 

@@ -11,21 +11,22 @@ import {useAuthActions} from "@/store/hooks/useAuthActions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import type { NavItemsInitialProps, NavItemsSessionProps } from "@/types/props";
+import { Roles } from "@/types/forms";
 
-const NavItemsSession = ({username, email, id_usuario}: NavItemsSessionProps) => {
+const NavItemsSession = ({nombre, correo, id_usuarios}: NavItemsSessionProps) => {
     const {logoutAction} = useAuthActions();
 
     return (
         <>
             <>
                 <div className="font-bold text-color2 close-ui-action">
-                    <p className="close-ui-action">{username}</p>
-                    <p className="close-ui-action">{email}</p>
+                    <p className="close-ui-action">{nombre}</p>
+                    <p className="close-ui-action">{correo}</p>
                 </div>
 
                 <hr className="text-color10 w-full" />
 
-                <Link href={`/user/${id_usuario}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
+                <Link href={`/user/${id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
                 <Link href={'/'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
 
                 <button onClick={() => logoutAction()} className="text-color6">
@@ -50,20 +51,20 @@ const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
                 </>
             ): (
                 <>
-                    <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>
+                    {userData?.roles.includes(Roles.proveedor) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
 
                     {mobileSize ? (
                             <>
                                 <hr className="text-color10 w-full" />
                                 
-                                <NavItemsSession id_usuario={userData.id_usuario} username={userData.username} email={userData.email} />
+                                <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
                             </>
                     ): (
                         <div className="relative avatar-header-container">
                             <div className="w-11 h-11 rounded-full bg-color7 cursor-pointer"></div>
 
                             <div className="avatar-dropdown">
-                                <NavItemsSession id_usuario={userData.id_usuario} username={userData.username} email={userData.email} />
+                                <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
                             </div>
                         </div>
                     )}

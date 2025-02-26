@@ -8,6 +8,7 @@ import FormLayout from "@/components/ui/form/FormLayout";
 import Dropzone from "@/components/ui/form/Dropzone";
 
 import type { CreateService } from "@/types/forms";
+import { Roles } from "@/types/forms";
 
 import useFormStatus from "@/hooks/useFormStatus";
 
@@ -23,15 +24,16 @@ export default function Page() {
     const [imgFile, setImgFile] = useState<File | null>(null);
 
     const {loaderFetch, setErrorForm, errorForm} = useFormStatus();
-    const {token, authLoading} = useAuthSelectors();
+    const {token, authLoading, userData} = useAuthSelectors();
 
     const router = useRouter();
 
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<CreateService>();
 
     useEffect(() => {   
-        if(!token && !authLoading) router.push("/");
-    }, [token, router, authLoading])
+        //if(!token && !authLoading) router.push("/");
+        if(!userData?.roles.includes(Roles.proveedor) && !authLoading) router.push("/");
+    }, [token, router, authLoading, userData])
 
     const onSubmit: SubmitHandler<CreateService> = async (data) => {
         console.log(data);

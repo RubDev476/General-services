@@ -1,13 +1,13 @@
 import type { Roles, UserType } from "./forms";
 
 export type UserData = {
-    id_usuario: number;
-    username: string;
-    email: string;
-    type: UserType;
+    id_usuarios: number;
+    nombre: string;
+    correo: string;
+    tipos_usuario_id: UserType;
     roles: Roles[];
-    exp: number;
-    iat: number;
+    imagen: string | null;
+    telefono: string;
 }
 
 export type AuthState = {
