@@ -82,7 +82,7 @@
 }
 
 .dropzone {
-    @apply input-sizes input-styles m-auto h-[250px] lg:h-[350px];
+    @apply input-sizes input-styles mx-auto h-[250px] lg:h-[350px];
 }
 
 .btn-3 {

@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -21,13 +21,14 @@ import FormLayout from "../ui/form/FormLayout";
 import Loader from "../ui/form/Loader";
 import ErrorForm from "../ui/form/Error";
 
-export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
-    const [errorForm, setErrorForm] = useState<string | null>(null);
-    const [loaderFetch, setLoaderFetch] = useState(false);
-    
+import useFormStatus from "@/hooks/useFormStatus";
+
+export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {    
     const nameForm = isRegister ? 'Registrarse' : 'Iniciar sesion';
     
     const router = useRouter();
+
+    const {loaderFetch, setLoaderFetch, errorForm, setErrorForm} = useFormStatus();
 
     const {loginSuccessAction, fakeLoginAction} = useAuthActions();
     const {userData} = useAuthSelectors();

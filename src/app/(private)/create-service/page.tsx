@@ -1,21 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import {useRouter} from "next/navigation";
 
 import FormLayout from "@/components/ui/form/FormLayout";
 import Dropzone from "@/components/ui/form/Dropzone";
 
 import type { CreateService } from "@/types/forms";
 
+import useFormStatus from "@/hooks/useFormStatus";
+
+import Loader from "@/components/ui/form/Loader";
+import ErrorForm from "@/components/ui/form/Error";
+
+import { ERROR_MESSAGE } from "@/utils/error-messages";
+import { POST_create_service } from "@/server-actions";
+
+import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
+
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | null>(null);
 
+    const {loaderFetch, setErrorForm, errorForm} = useFormStatus();
+    const {token, authLoading} = useAuthSelectors();
+
+    const router = useRouter();
+
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<CreateService>();
 
-    const onSubmit: SubmitHandler<CreateService> = (data) => {
+    useEffect(() => {   
+        if(!token && !authLoading) router.push("/");
+    }, [token, router, authLoading])
+
+    const onSubmit: SubmitHandler<CreateService> = async (data) => {
         console.log(data);
         console.log(imgFile);
+
+        if(!token) return setErrorForm("Inicie sesion para crear servicio");
+        if(!imgFile) return setErrorForm("Porfavor suba una imagen");
+
+        const newdata = {...data, imagen: imgFile};
+
+        try {
+            const response = await POST_create_service(newdata, token);
+
+            console.log(response);
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log(error.message);
+            }
+
+            setErrorForm(ERROR_MESSAGE.unknown);
+        }
     }
 
     return (
@@ -79,11 +116,11 @@ export default function Page() {
 
                     <Dropzone setImg={setImgFile} />
 
-                    {/*(loaderFetch && !errorForm) && <Loader />*/}
+                    {(loaderFetch && !errorForm) && <Loader />}
 
-                    {/*errorForm && <ErrorForm message={errorForm} />*/}
+                    {errorForm && <ErrorForm message={errorForm} />}
 
-                    <button className={"btn-3 w-full mt-7"} type={"submit"}>Crear servicio</button>
+                    <button className={"btn-3 w-full"} type={"submit"}>Crear servicio</button>
                 </form>
             </FormLayout>
         </main>

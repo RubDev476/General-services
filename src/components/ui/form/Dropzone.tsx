@@ -44,7 +44,7 @@ export default function Dropzone({setImg}: DropzoneProps) {
     } = useDropzone({ onDropAccepted, onDropRejected, accept: { 'image/png': ['.png'], 'image/jpeg': ['.jpg', '.jpeg'] }, maxSize });
 
     return (
-        <div className="dropzone">
+        <div className="dropzone mb-7">
             {/*errorImg !== '' && (
                 <span className="error-input">{errorImg}</span>
             )*/}
