@@ -6,12 +6,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import FormLayout from "@/components/ui/form/FormLayout";
 import Dropzone from "@/components/ui/form/Dropzone";
 
+import type { CreateService } from "@/types/forms";
+
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | null>(null);
 
-    const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<any>();
+    const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<CreateService>();
 
-    const onSubmit: SubmitHandler<any> = (data) => {
+    const onSubmit: SubmitHandler<CreateService> = (data) => {
         console.log(data);
         console.log(imgFile);
     }

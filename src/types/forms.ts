@@ -17,3 +17,5 @@ export interface RegisterForm {
     tipos_usuario_id: UserType,
     roles_id: Roles[];
 }
+
+export type CreateService = Record<"nombre" | "descripcion" | "precio" | "ubicacion" | "tipos_servicio_id" | "disponibilidad_servicio_id", string>;

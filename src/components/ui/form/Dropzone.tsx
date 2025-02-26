@@ -36,11 +36,11 @@ export default function Dropzone({setImg}: DropzoneProps) {
 
     //extract Dropzone content
     const {
-        fileRejections,
+        //fileRejections,
         getRootProps,
         getInputProps,
         isDragActive,
-        acceptedFiles
+        //acceptedFiles
     } = useDropzone({ onDropAccepted, onDropRejected, accept: { 'image/png': ['.png'], 'image/jpeg': ['.jpg', '.jpeg'] }, maxSize });
 
     return (
