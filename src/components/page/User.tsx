@@ -9,6 +9,8 @@ import { UserType } from "@/types/forms";
 
 import ErrorComponent from "../ui/Error";
 
+import { IMAGE_DEFAULT } from "@/utils/global-vars";
+
 export default function User({ userId }: { userId: string }) {
     const [loadinData, setLoadingData] = useState(true);
     const [userData, setUserData] = useState<UserData | null>(null);
@@ -83,7 +85,7 @@ export default function User({ userId }: { userId: string }) {
                             <div className="sm:flex items-center gap-6 flex-row">
                                 <div className="relative h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-full mb-5 object-cover">
                                     <Image
-                                        src={userData.imagen ?? "https://res.cloudinary.com/dfnjifn4w/image/upload/v1740232796/525e350a-f2e9-4b04-9cf8-93d54bffc2ec.png"}
+                                        src={userData.imagen ?? IMAGE_DEFAULT}
                                         alt="profile-img"
                                         fill
                                         sizes="50vw, (min-width: 1024px) 100vw"

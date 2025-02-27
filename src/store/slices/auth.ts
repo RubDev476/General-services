@@ -16,13 +16,13 @@ const authSlice = createSlice({
     reducers: {
         fakeLogin: (state) => {
             state.userData = {
-                id_usuario: 999,
-                username: "nombre de prueba",
-                email: "test@correo.com",
-                exp: 246246,
-                iat: 24624624,
-                type: UserType.particular,
-                roles: [Roles.cliente]
+                id_usuarios: 999,
+                nombre: "nombre de prueba",
+                correo: "test@correo.com",
+                tipos_usuario_id: UserType.particular,
+                roles: [Roles.cliente],
+                imagen: null,
+                telefono: "9989898"
             }
         },
         loginSuccess: (state, action: PayloadAction<LoginData>) => {

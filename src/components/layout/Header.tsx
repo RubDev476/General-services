@@ -1,20 +1,23 @@
 'use client';
 
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
-import {usePathname} from "next/navigation";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars,faGear,faRightFromBracket,faUser,faXmark} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faGear, faRightFromBracket, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import {useAuthActions} from "@/store/hooks/useAuthActions";
+import { useAuthActions } from "@/store/hooks/useAuthActions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import type { NavItemsInitialProps, NavItemsSessionProps } from "@/types/props";
 import { Roles } from "@/types/forms";
 
-const NavItemsSession = ({nombre, correo, id_usuarios}: NavItemsSessionProps) => {
-    const {logoutAction} = useAuthActions();
+import { IMAGE_DEFAULT } from "@/utils/global-vars";
+
+const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) => {
+    const { logoutAction } = useAuthActions();
 
     return (
         <>
@@ -37,31 +40,33 @@ const NavItemsSession = ({nombre, correo, id_usuarios}: NavItemsSessionProps) =>
     )
 }
 
-const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
-    const {userData} = useAuthSelectors();
+const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
+    const { userData } = useAuthSelectors();
 
-    return(
+    return (
         <>
-            <Link href={'/'} className={'text-link'}>Servicios</Link>
+            <Link href={'/services'} className={'text-link'}>Servicios</Link>
 
             {!userData ? (
                 <>
                     <Link href={'/login'} className={'text-link'}>Inciar sesion</Link>
                     <Link href={'/register'} className={'btn-1'}>Registro</Link>
                 </>
-            ): (
+            ) : (
                 <>
                     {userData?.roles.includes(Roles.proveedor) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
 
                     {mobileSize ? (
-                            <>
-                                <hr className="text-color10 w-full" />
-                                
-                                <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
-                            </>
-                    ): (
+                        <>
+                            <hr className="text-color10 w-full" />
+
+                            <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
+                        </>
+                    ) : (
                         <div className="relative avatar-header-container">
-                            <div className="w-11 h-11 rounded-full bg-color7 cursor-pointer"></div>
+                            <div className="w-11 h-11 rounded-full cursor-pointer object-cover relative">
+                                <Image src={userData.imagen ?? IMAGE_DEFAULT} alt="user-img" fill priority className="rounded-full cursor-pointer" sizes="11vw" />
+                            </div>
 
                             <div className="avatar-dropdown">
                                 <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
@@ -76,26 +81,26 @@ const NavItemsInitial = ({mobileSize}: NavItemsInitialProps) => {
 
 export default function Header() {
     const [openMenu, setOpenMenu] = useState(false);
-    
+
     const pathname = usePathname();
 
-    const {validateSessionAction} = useAuthActions();
-    const {authLoading} = useAuthSelectors();
+    const { validateSessionAction } = useAuthActions();
+    const { authLoading } = useAuthSelectors();
 
     useEffect(() => {
         validateSessionAction();
     }, []); // eslint-disable-line
-    
+
     useEffect(() => {
         setOpenMenu(false);
     }, [pathname]);
 
-    return(
+    return (
         <>
             <header className={'sticky top-0 header-shadow bg-color3 z-[100]'}>
                 <div className={'w-content flex-center-between py-3 md:py-5 lg:h-20'}>
                     <Link href={'/'} className={'font-bold text-color2 text-xl md:text-2xl'}><span className={'text-color3 bg-color5 text-2xl md:text-3xl px-2 rounded'}>G</span> SERVICIOS</Link>
-                    
+
                     <button
                         className={'all-center lg:hidden'}
                         onClick={() => setOpenMenu(!openMenu)}
@@ -103,7 +108,7 @@ export default function Header() {
                     >
                         <FontAwesomeIcon className={'text-2xl text-color5'} icon={openMenu ? faXmark : faBars} />
                     </button>
-                    
+
                     <nav className={'hidden lg:flex gap-6 items-center font-[400] text-lg'}>
                         {authLoading ? (
                             <>
@@ -112,7 +117,7 @@ export default function Header() {
                                 <div className="w-24 h-5 skeleton"></div>
                                 <div className="w-11 h-11 skeleton-circle"></div>
                             </>
-                        ): (
+                        ) : (
                             <NavItemsInitial mobileSize={false} />
                         )}
                     </nav>
