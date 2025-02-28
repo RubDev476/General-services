@@ -39,10 +39,10 @@ export const POST_create_service = async <T>(formData: T, token: string) => {
     return response.json();
 }
 
-export const GET_services = async () => {
+export const GET_services = async (url: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
-    const response = await fetch(`${urlApi}/servicios`).then(res => res.json());
+    const response = await fetch(`${urlApi}${url}`).then(res => res.json());
 
     return response;
 }

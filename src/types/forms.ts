@@ -19,3 +19,5 @@ export interface RegisterForm {
 }
 
 export type CreateService = Record<"nombre" | "descripcion" | "precio" | "ubicacion" | "tipos_servicio_id" | "disponibilidad_servicio_id", string>;
+
+export type FilterServices = Record<"busqueda" | "categoria" | "precio_max" | "precio_min", string>;
