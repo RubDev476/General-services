@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -55,7 +55,7 @@ const ServiceCard = ({ imagen, id_servicios, nombre, ubicacion, precio }: Pick<S
     )
 }
 
-export default function Page() {
+const ServicesPage = () => {
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
     const [modalFilters, setModalFilters] = useState(false);
@@ -224,5 +224,13 @@ export default function Page() {
                 </div>
             </main>
         </>
+    )
+}
+
+export default function Page() {
+    return (
+        <Suspense>
+            <ServicesPage />
+        </Suspense>
     )
 }
