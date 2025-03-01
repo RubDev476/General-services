@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faGear, faRightFromBracket, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faGear, faList, faRightFromBracket, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useAuthActions } from "@/store/hooks/useAuthActions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
@@ -18,6 +18,7 @@ import { IMAGE_DEFAULT } from "@/utils/global-vars";
 
 const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) => {
     const { logoutAction } = useAuthActions();
+    const { userData } = useAuthSelectors();
 
     return (
         <>
@@ -30,6 +31,7 @@ const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) 
                 <hr className="text-color10 w-full" />
 
                 <Link href={`/user/${id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
+                {userData?.roles.includes(Roles.proveedor) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
                 <Link href={'/'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
 
                 <button onClick={() => logoutAction()} className="text-color6">

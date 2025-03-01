@@ -20,6 +20,8 @@ import { POST_create_service } from "@/server-actions";
 
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
+import { AvailabilityService, CategoriesService } from "@/types/forms";
+
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | null>(null);
 
@@ -43,6 +45,7 @@ export default function Page() {
         if(!imgFile) return setErrorForm("Porfavor suba una imagen");
 
         const newdata = {...data, imagen: imgFile};
+        //const newdata = data;
 
         try {
             const response = await POST_create_service(newdata, token);
@@ -98,23 +101,23 @@ export default function Page() {
                         required
                     />
 
-                    <input
-                        className={"input mb-5"}
-                        placeholder={"Tipo de servicio"}
-                        type={"text"}
-                        {...register("tipos_servicio_id")}
-                        autoComplete={"off"}
-                        required
-                    />
+                    <select className="input mb-5" {...register("tipos_servicio_id")} required>
+                        <option value="">Selecciona categoria:</option>
+                        <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
+                        <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
+                        <option value={CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}>{CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}</option>
+                        <option value={CategoriesService.HOTELES_Y_HOSPEDAJES}>{CategoriesService.HOTELES_Y_HOSPEDAJES}</option>
+                        <option value={CategoriesService.RESTAURANTES_Y_BARES}>{CategoriesService.RESTAURANTES_Y_BARES}</option>
+                        <option value={CategoriesService.SALONES_DE_EVENTOS}>{CategoriesService.SALONES_DE_EVENTOS}</option>
+                        <option value={CategoriesService.SPA_Y_MASAJES}>{CategoriesService.SPA_Y_MASAJES}</option>
+                        <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
+                    </select>
 
-                    <input
-                        className={"input mb-5"}
-                        placeholder={"Disponibilidad"}
-                        type={"text"}
-                        {...register("disponibilidad_servicio_id")}
-                        autoComplete={"off"}
-                        required
-                    />
+                    <select className="input mb-5" {...register("disponibilidad_servicio_id")} required>
+                        <option value={AvailabilityService.DISPONIBLE}>{AvailabilityService.DISPONIBLE}</option>
+                        <option value={AvailabilityService.PROXIMAMENTE}>{AvailabilityService.PROXIMAMENTE}</option>
+                        <option value={AvailabilityService.AGOTADO}>{AvailabilityService.AGOTADO}</option>
+                    </select>
 
                     <Dropzone setImg={setImgFile} />
 

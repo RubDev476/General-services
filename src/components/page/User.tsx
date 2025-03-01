@@ -5,7 +5,6 @@ import Image from "next/image";
 
 import { GET_user } from "@/server-actions";
 import type { UserData } from "@/types/server-response";
-import { UserType } from "@/types/forms";
 
 import ErrorComponent from "../ui/Error";
 
@@ -35,22 +34,7 @@ export default function User({ userId }: { userId: string }) {
             }
         }
 
-        //getUser();
-
-        if (userId === "999") {
-            setUserData({
-                id_usuarios: "999",
-                nombre: "nombre de prueba",
-                correo: "test@correo.com",
-                telefono: "989898",
-                tipos_usuario_id: 0,
-                imagen: null
-            })
-
-            setLoadingData(false);
-        } else {
-            getUser();
-        }
+        getUser();
     }, [userId])
 
     if (loadinData) return (
@@ -95,15 +79,17 @@ export default function User({ userId }: { userId: string }) {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-color2 font-semibold text-3xl lg:text-5xl">{userData.nombre} <span className="text-sm lg:text-lg text-color8 rounded-full">{`(${userData.tipos_usuario_id === 1 ? UserType.empresa : UserType.particular})`}</span></h3>
+                                    <h3 className="text-color2 font-semibold text-3xl lg:text-5xl">{userData.nombre} <span className="text-sm lg:text-lg text-color8 rounded-full">{`(${userData.tipo_usuario.tipo})`}</span></h3>
                                     <h4 className="text-color2 lg:text-xl">{userData.correo}</h4>
                                 </div>
                             </div>
 
                             <div className="mt-7 text-sm lg:text-lg lg:flex items-center justify-start">
                                 <p className="text-color2 mb-3 lg:mb-0 text-xl lg:mr-5">Roles: </p>
-                                <p className="bg-col text-color5 rounded-full py-1 px-4 inline-block font-semibold border-2 border-solid border-color5 mr-3">CLIENTE</p>
-                                <p className="bg-col text-color5 rounded-full py-1 px-4 inline-block font-semibold border-2 border-solid border-color5">PROVEEDOR</p>
+
+                                {userData.roles.map((role) => (
+                                    <p key={role.id_roles} className="bg-col text-color5 rounded-full py-1 px-4 inline-block font-semibold border-2 border-solid border-color5 mr-3">{role.tipo}</p>
+                                ))}
                             </div>
                         </div>
                     ) : (
@@ -111,14 +97,6 @@ export default function User({ userId }: { userId: string }) {
                     )}
                 </div>
             </main>
-
-            {userData && (
-                <section className="my-20">
-                    <div className="w-content">
-                        <h3 className="text-center text-color2 font-bold text-2xl lg:text-4xl">No hay servicios de este usuario para mostrar.</h3>
-                    </div>
-                </section>
-            )}
         </>
     )
 }

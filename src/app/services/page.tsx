@@ -16,6 +16,8 @@ import ErrorComponent from "@/components/ui/Error";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorProps } from "@/types/props";
 
+import { CategoriesService } from "@/types/forms";
+
 const SkeletonServiceCard = () => {
     return (
         <div className="rounded-md shadow-service cursor-pointer sm:flex overflow-hidden sm:max-h-[200px]">
@@ -34,7 +36,7 @@ const SkeletonServiceCard = () => {
 const ServiceCard = ({ imagen, id_servicios, nombre, ubicacion, precio }: Pick<Service, "imagen" | "id_servicios" | "nombre" | "ubicacion" | "precio">) => {
     return (
         <Link href={`/service/${id_servicios}`}>
-            <div className="rounded-md shadow-service cursor-pointer sm:flex overflow-hidden sm:max-h-[200px]">
+            <article className="rounded-md shadow-service cursor-pointer sm:flex overflow-hidden sm:max-h-[200px]">
                 <div className="w-auto sm:w-full sm:max-w-[300px] h-[200px] relative rounded-md sm:rounded-t-none  sm:rounded-l-md">
                     <Image src={imagen} alt="service-img" fill priority className="rounded-t-md sm:rounded-t-none sm:rounded-l-lg object-cover" sizes="20vw" />
                 </div>
@@ -48,7 +50,7 @@ const ServiceCard = ({ imagen, id_servicios, nombre, ubicacion, precio }: Pick<S
 
                     <p className="text-color2 text-sm"><FontAwesomeIcon icon={faLocationDot} className="text-sm" /> {ubicacion}</p>
                 </div>
-            </div>
+            </article>
         </Link>
     )
 }
@@ -59,7 +61,7 @@ export default function Page() {
     const [modalFilters, setModalFilters] = useState(false);
     const [notFoundMessage, setMessage] = useState<ErrorProps>({ title: "", message: "" });
 
-    const { register, handleSubmit, watch } = useForm<FilterServices>();
+    const { register, handleSubmit, watch, reset } = useForm<FilterServices>();
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -70,6 +72,8 @@ export default function Page() {
 
             try {
                 const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
+
+                console.log(res);
 
                 if (res.length > 0) {
                     setServices(res);
@@ -100,17 +104,19 @@ export default function Page() {
     }, [searchParams])
 
     const onSubmit: SubmitHandler<FilterServices> = async (dataForm) => {
-        const currentParams = new URLSearchParams(searchParams.toString());
+        //const currentParams = new URLSearchParams(searchParams.toString());
+        const newParams = new URLSearchParams();
 
         const { busqueda, categoria, precio_max, precio_min } = dataForm;
 
-        if (busqueda.trim().length > 0) currentParams.set("busqueda", busqueda.trim());
-        if (categoria.trim().length > 0) currentParams.set("categoria", categoria.trim());
-        if (parseInt(precio_min) > 0 && (parseInt(precio_min) < parseInt(precio_max) || precio_max === "")) currentParams.set("precio_min", precio_min);
-        if (parseInt(precio_max) > 0 && (parseInt(precio_min) < parseInt(precio_max) || precio_min === "")) currentParams.set("precio_max", precio_max);
+        if (busqueda.trim().length > 0) newParams.set("busqueda", busqueda.trim());
+        if (categoria.trim().length > 0) newParams.set("categoria", categoria.trim());
+        if (parseInt(precio_min) > 0 && (parseInt(precio_min) < parseInt(precio_max) || precio_max === "")) newParams.set("precio_min", precio_min);
+        if (parseInt(precio_max) > 0 && (parseInt(precio_min) < parseInt(precio_max) || precio_min === "")) newParams.set("precio_max", precio_max);
 
         setModalFilters(false);
-        router.push('/services?' + currentParams.toString(), { scroll: true });
+        reset();
+        router.push('/services?' + newParams.toString(), { scroll: true });
     }
 
     return (
@@ -145,13 +151,17 @@ export default function Page() {
                                     {...register("busqueda")}
                                 />
 
-                                <input
-                                    className={"input mb-5"}
-                                    placeholder={"Buscar por categoria"}
-                                    type={"text"}
-                                    autoComplete={"off"}
-                                    {...register("categoria")}
-                                />
+                                <select className="input mb-5" {...register("categoria")}>
+                                    <option value="">Selecciona categoria:</option>
+                                    <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
+                                    <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
+                                    <option value={CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}>{CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}</option>
+                                    <option value={CategoriesService.HOTELES_Y_HOSPEDAJES}>{CategoriesService.HOTELES_Y_HOSPEDAJES}</option>
+                                    <option value={CategoriesService.RESTAURANTES_Y_BARES}>{CategoriesService.RESTAURANTES_Y_BARES}</option>
+                                    <option value={CategoriesService.SALONES_DE_EVENTOS}>{CategoriesService.SALONES_DE_EVENTOS}</option>
+                                    <option value={CategoriesService.SPA_Y_MASAJES}>{CategoriesService.SPA_Y_MASAJES}</option>
+                                    <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
+                                </select>
 
                                 <div className="lg:flex items-center justify-center gap-6 my-6">
                                     <h3 className="text-center mb-4 text-color2 text-xl font-medium">Precio: </h3>
@@ -162,7 +172,6 @@ export default function Page() {
                                             <input
                                                 type="number"
                                                 id="minPrice"
-                                                placeholder="2500"
                                                 value={watch(["precio_min"])}
                                                 className="input-styles rounded p-2 max-w-20"
                                                 {...register("precio_min")}
@@ -173,7 +182,6 @@ export default function Page() {
                                             <input
                                                 type="number"
                                                 id="maxPrice"
-                                                placeholder="10000"
                                                 value={watch(["precio_max"])}
                                                 className="input-styles rounded p-2 max-w-20"
                                                 {...register("precio_max")}

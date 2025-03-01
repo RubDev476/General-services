@@ -46,3 +46,17 @@ export const GET_services = async (url: string) => {
 
     return response;
 }
+
+export const GET_user_services = async (idUser: string, token: string) => {
+    if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
+
+    const response = await fetch(`${urlApi}/usuarios/${idUser}/servicios`, {
+        //method: "get",
+        headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+    });
+
+    return response.json();
+}

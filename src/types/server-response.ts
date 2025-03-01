@@ -2,8 +2,15 @@ import type { RegisterForm } from "./forms";
 
 export type UserData = Pick<RegisterForm, "nombre" | "correo" | "telefono"> & {
     id_usuarios: string;
-    imagen: string | null;
-    tipos_usuario_id: number;
+    imagen: string;
+    tipo_usuario: {
+        id_tipos_usuarios: number;
+        tipo: string;
+    };
+    roles: {
+        id_roles: number;
+        tipo: string;
+    }[];
 }
 
 export type Service = {
