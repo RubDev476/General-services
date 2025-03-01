@@ -32,7 +32,7 @@ const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) 
 
                 <Link href={`/user/${id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
                 {userData?.roles.includes(Roles.proveedor) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
-                <Link href={'/'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
+                <Link href={'/edit-profile'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
 
                 <button onClick={() => logoutAction()} className="text-color6">
                     <FontAwesomeIcon icon={faRightFromBracket} className="mr-1" /> Cerrar sesion

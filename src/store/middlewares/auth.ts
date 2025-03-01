@@ -36,21 +36,19 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             const userData = localStorage.getItem('gServicesUser');
 
             if(userData) {
-                action.payload = JSON.parse(userData);
+                const decodedToken: any = jwtDecode(JSON.parse(userData).token);
 
-                next(action);
-
-                /*if(decodedToken.exp) {
+                if(decodedToken.exp) {
                     const currentTime = Math.floor(Date.now() / 1000);
                     
                     if (decodedToken.exp < currentTime) {
                         next(action);
                     } else {
-                        action.payload = {token, userData: decodedToken};
+                        action.payload = JSON.parse(userData);
     
                         next(action);
                     }
-                }*/
+                }
             } else {
                 next(action);
             }

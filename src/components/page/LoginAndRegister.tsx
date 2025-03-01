@@ -30,7 +30,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
 
     const {loaderFetch, setLoaderFetch, errorForm, setErrorForm} = useFormStatus();
 
-    const {loginSuccessAction, fakeLoginAction} = useAuthActions();
+    const {loginSuccessAction} = useAuthActions();
     const {userData} = useAuthSelectors();
     
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
@@ -81,13 +81,6 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     const submitLogin = async (dataForm: RegisterForm) => {
         setErrorForm(null);
-
-        if(dataForm.correo === "test@correo.com" && dataForm.contrasena === "test") {
-            setLoaderFetch(false);
-            fakeLoginAction();            
-
-            return;
-        }
         
         const {contrasena, correo} = dataForm;
         
