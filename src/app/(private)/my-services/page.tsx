@@ -65,7 +65,7 @@ export default function Page() {
 
                 console.log(res);
 
-                setServices(res);
+                if(res.length > 0) setServices(res);
                 setLoading(false);
             } catch (error) {
                 if(error instanceof Error) {

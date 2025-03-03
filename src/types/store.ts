@@ -1,10 +1,10 @@
-import type { Roles, UserType } from "./forms";
+import type { Roles } from "./forms";
 
 export type UserData = {
     id_usuarios: number;
     nombre: string;
     correo: string;
-    tipos_usuario_id: UserType;
+    tipo_usuario: {id_tipos_usuario: number, tipo: 'PARTICULAR' | 'EMPRESA'};
     roles: Roles[];
     imagen: string | null;
     telefono: string;
