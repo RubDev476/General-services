@@ -39,7 +39,7 @@ export const PATCH_edit_user = async <T>(formData: T, token: string, idUser: num
     return response.json();
 }
 
-export const PATCH_edit_service = async <T>(formData: any, token: string, idService: string) => {
+export const PATCH_edit_service = async <T>(formData: T, token: string, idService: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
     const response = await fetch(`${urlApi}/servicios/${idService}`, {
