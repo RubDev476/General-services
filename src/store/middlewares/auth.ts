@@ -12,11 +12,11 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             const {token} = action.payload;
             const decodedToken: any = jwtDecode(token);
 
-            const getUserData = async (id: string, roles: any) => {
+            const getUserData = async (id: string) => {
                 const res = await GET_user(id);
 
                 if(res.usuario) {
-                    const newData = {token, userData: {...res.usuario, roles}};
+                    const newData = {token, userData: {...res.usuario}};
 
                     localStorage.setItem('gServicesUser', JSON.stringify(newData));
 
@@ -28,7 +28,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
                 }
             }
     
-            getUserData(decodedToken.id_usuario, decodedToken.roles);
+            getUserData(decodedToken.id_usuario);
 
             break;
         }

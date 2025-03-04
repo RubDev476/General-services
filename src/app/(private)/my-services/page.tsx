@@ -35,7 +35,7 @@ const TableServices = ({services, setDeleteService}: TableServicesProps) => {
                                     <td className="whitespace-nowrap px-3 py-4 text-sm font-semibold">{`${index + 1}`}</td>
                                     <td className="whitespace-nowrap py-4 px-3 text-sm font-semibold"><Link href={`/service/${service.id_servicios}`} className="hover:underline">{service.nombre}</Link></td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm font-semibold">
-                                        <button className="mr-4 text-color5 hover:underline">Editar</button>
+                                        <Link href={`/edit-service/${service.id_servicios}`} className="mr-4 text-color5 hover:underline">Editar</Link>
                                         <button className="text-color6 hover:underline" onClick={() => setDeleteService(service)} >Eliminar</button>
                                     </td>
                                 </tr>

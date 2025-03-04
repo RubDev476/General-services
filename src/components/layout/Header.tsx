@@ -31,7 +31,7 @@ const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) 
                 <hr className="text-color10 w-full" />
 
                 <Link href={`/user/${id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
-                {userData?.roles.includes(Roles.proveedor) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
+                {userData?.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
                 <Link href={'/edit-profile'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
 
                 <button onClick={() => logoutAction()} className="text-color6">
@@ -56,7 +56,7 @@ const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                 </>
             ) : (
                 <>
-                    {userData?.roles.includes(Roles.proveedor) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
+                    {userData?.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
 
                     {mobileSize ? (
                         <>

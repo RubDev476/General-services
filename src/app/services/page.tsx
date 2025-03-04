@@ -61,7 +61,7 @@ const ServicesPage = () => {
     const [modalFilters, setModalFilters] = useState(false);
     const [notFoundMessage, setMessage] = useState<ErrorProps>({ title: "", message: "" });
 
-    const { register, handleSubmit, watch, reset } = useForm<FilterServices>();
+    const { register, handleSubmit, watch, /*reset*/ } = useForm<FilterServices>();
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -72,8 +72,6 @@ const ServicesPage = () => {
 
             try {
                 const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
-
-                console.log(res);
 
                 if (res.length > 0) {
                     setServices(res);
@@ -115,7 +113,7 @@ const ServicesPage = () => {
         if (parseInt(precio_max) > 0 && (parseInt(precio_min) < parseInt(precio_max) || precio_min === "")) newParams.set("precio_max", precio_max);
 
         setModalFilters(false);
-        reset();
+        //reset();
         router.push('/services?' + newParams.toString(), { scroll: true });
     }
 

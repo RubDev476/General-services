@@ -27,8 +27,23 @@ export const GET_user = async (idUser: string) => {
 export const PATCH_edit_user = async <T>(formData: T, token: string, idUser: number) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
-    const response = await fetch(`${urlApi}/usuarios/${idUser}`, {
-        method: "patch",
+    const response = await fetch(`${urlApi}/usuarios/${idUser.toString()}`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(formData)
+    });
+
+    return response.json();
+}
+
+export const PATCH_edit_service = async <T>(formData: T, token: string, idService: string) => {
+    if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
+
+    const response = await fetch(`${urlApi}/servicios/${idService}`, {
+        method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -82,6 +97,24 @@ export const PUT_img_profile = async (imgUser: File, token: string, idUser: numb
     formData.append('imagen', imgUser);
 
     const response = await fetch(`${urlApi}/usuarios/${idUser}/foto-perfil`, {
+        method: "PUT",
+        headers: {
+            //'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+    });
+
+    return response.json();
+}
+
+export const PUT_img_service = async (imgUser: File, token: string, idService: string) => {
+    if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
+
+    const formData = new FormData();
+    formData.append('imagen', imgUser);
+
+    const response = await fetch(`${urlApi}/servicios/${idService}/imagen-servicio`, {
         method: "PUT",
         headers: {
             //'Content-Type': 'multipart/form-data',

@@ -33,7 +33,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const {loginSuccessAction} = useAuthActions();
     const {userData} = useAuthSelectors();
     
-    const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
+    const { register, handleSubmit } = useForm<RegisterForm>();
     
     useEffect(() => {
         if(userData) router.push(`/user/${userData.id_usuarios}`);

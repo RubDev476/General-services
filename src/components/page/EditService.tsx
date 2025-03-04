@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {useRouter} from "next/navigation";
 
+import FormLayout from "@/components/ui/form/FormLayout";
+import Dropzone from "@/components/ui/form/Dropzone";
+
 import type { CreateService } from "@/types/forms";
 import { Roles } from "@/types/forms";
 
@@ -11,17 +14,15 @@ import useFormStatus from "@/hooks/useFormStatus";
 
 import Loader from "@/components/ui/form/Loader";
 import ErrorForm from "@/components/ui/form/Error";
-import FormLayout from "@/components/ui/form/FormLayout";
-import Dropzone from "@/components/ui/form/Dropzone";
 
 import { ERROR_MESSAGE } from "@/utils/error-messages";
-import { POST_create_service } from "@/server-actions";
+import { PUT_img_service, PATCH_edit_service } from "@/server-actions";
 
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import { AvailabilityService, CategoriesService } from "@/types/forms";
 
-export default function Page() {
+export default function EditService({id}: {id: string}) {
     const [imgFile, setImgFile] = useState<File | null>(null);
 
     const {loaderFetch, setErrorForm, errorForm, setLoaderFetch} = useFormStatus();
@@ -37,33 +38,51 @@ export default function Page() {
 
     const onSubmit: SubmitHandler<CreateService> = async (data) => {
         if(!token) return setErrorForm("Inicie sesion para crear servicio");
-        if(!imgFile) return setErrorForm("Porfavor suba una imagen");
 
         setErrorForm("");
         setLoaderFetch(true);
 
-        const newdata = {...data, imagen: imgFile};
+        const {nombre, descripcion, disponibilidad_servicio_id, tipos_servicio_id, precio, ubicacion} = data;
+
+        let newData = {};
+
+        if(nombre.trim() !== "") newData = {...newData, nombre: nombre.trim()};
+        if(descripcion.trim() !== "") newData = {...newData, descripcion: descripcion.trim()};
+        if(data.disponibilidad_servicio_id !== "") newData = {...newData, disponibilidad_servicio_id};
+        if(data.tipos_servicio_id !== "") newData = {...newData, tipos_servicio_id};
+        if(data.precio !== "") newData = {...newData, precio};
+        if(data.ubicacion !== "") newData = {...newData, ubicacion};
+
+        if(Object.keys(newData).length === 0 && !imgFile) return setErrorForm("LLene los datos que desea actualizar");
 
         try {
-            const response = await POST_create_service(newdata, token);
+            if(imgFile) {
+                const res = await PUT_img_service(imgFile, token, id);
 
-            if(response.error || !response.message.includes("exitosamente")) {
-                throw new Error("ui- Error al crear servicio");
-            } else if(response.status === "success") {
-                router.push("/my-services");
+                if(res.error || !res.message.includes("exitosamente")){
+                    throw new Error("ui- Error al cambiar imagen, intentelo de nuevo o mas tarde")
+                }
             }
+
+            const response = await PATCH_edit_service(newData, token, id);
+
+            if(response.error || !response.message.includes("exitosamente")){
+                throw new Error("ui- Error al actualizar los datos, intentelo de nuevo o mas tarde")
+            }
+
+            router.push(`/service/${id}`);
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error.message);
 
-                setErrorForm(error.message.includes("ui-") ? error.message.split("ui-")[1] : ERROR_MESSAGE.unknown);
+                setErrorForm(error.message.includes("ui-") ? error.message.split("ui-")[1] : ERROR_MESSAGE.unknown)
             }
         }
     }
 
     return (
         <main>
-            <FormLayout nameForm="Crear servicio">
+            <FormLayout nameForm="Editar servicio">
                 <form
                     className={"w-full px-4 mb-7"}
                     onSubmit={handleSubmit(onSubmit)}
@@ -74,14 +93,12 @@ export default function Page() {
                         type={"text"}
                         {...register("nombre")}
                         autoComplete={"name"}
-                        required
                     />
 
                     <textarea
                         className="textarea mb-5"
                         {...register("descripcion")}
                         placeholder="Añade una descripcion de tu servicio"
-                        required
                     />
 
                     <input
@@ -90,7 +107,6 @@ export default function Page() {
                         type={"number"}
                         {...register("precio")}
                         autoComplete={"off"}
-                        required
                     />
 
                     <input
@@ -99,10 +115,9 @@ export default function Page() {
                         type={"text"}
                         {...register("ubicacion")}
                         autoComplete={"off"}
-                        required
                     />
 
-                    <select className="input mb-5" {...register("tipos_servicio_id")} required>
+                    <select className="input mb-5" {...register("tipos_servicio_id")}>
                         <option value="">Selecciona categoria:</option>
                         <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
                         <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
@@ -114,19 +129,21 @@ export default function Page() {
                         <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
                     </select>
 
-                    <select className="input mb-5" {...register("disponibilidad_servicio_id")} required>
+                    <select className="input mb-5" {...register("disponibilidad_servicio_id")}>
+                        <option value="">Selecciona disponibilidad</option>
                         <option value={AvailabilityService.DISPONIBLE}>{AvailabilityService.DISPONIBLE}</option>
                         <option value={AvailabilityService.PROXIMAMENTE}>{AvailabilityService.PROXIMAMENTE}</option>
                         <option value={AvailabilityService.AGOTADO}>{AvailabilityService.AGOTADO}</option>
                     </select>
 
+                    <p className="text-color2 font-bold text-center mb-4 mt-7">Cambiar imagen: </p>
                     <Dropzone setImg={setImgFile} />
 
                     {(loaderFetch && !errorForm) && <Loader />}
 
                     {errorForm && <ErrorForm message={errorForm} />}
 
-                    <button className={"btn-3 w-full"} type={"submit"}>Crear servicio</button>
+                    <button className={"btn-3 w-full"} type={"submit"}>Editar servicio</button>
                 </form>
             </FormLayout>
         </main>

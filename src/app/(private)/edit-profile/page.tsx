@@ -19,10 +19,9 @@ import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 import FormLayout from "@/components/ui/form/FormLayout";
 import Loader from "@/components/ui/form/Loader";
 import ErrorForm from "@/components/ui/form/Error";
+import Dropzone from "@/components/ui/form/Dropzone";
 
 import useFormStatus from "@/hooks/useFormStatus";
-
-import Dropzone from "@/components/ui/form/Dropzone";
 
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | null>(null);
@@ -34,7 +33,7 @@ export default function Page() {
     const { updateProfileAction } = useAuthActions();
     const { userData, authLoading, token } = useAuthSelectors();
 
-    const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
+    const { register, handleSubmit } = useForm<RegisterForm>();
 
     useEffect(() => {
         if (!userData && !authLoading) router.push("/login");
@@ -50,45 +49,36 @@ export default function Page() {
 
         let newData = {};
 
-        if (nombre.trim() !== "") newData = { ...newData, nombre };
-        if (dataForm.correo !== "") newData = { ...newData, correo };
-        if (dataForm.tipos_usuario_id) newData = { ...newData, tipos_usuario_id }; //NO WORK
-        if (dataForm.roles_id) newData = { ...newData, roles_id }; //NO WORK
+        if (nombre.trim() !== "") newData = {...newData, nombre: nombre.trim()};
+        if (dataForm.correo !== "") newData = {...newData, correo};
+        if (dataForm.tipos_usuario_id) newData = {...newData, tipos_usuario_id};
+        if (dataForm.roles_id) newData = {...newData, roles_id};
 
         if (telefono.length > 0 && !parseInt(telefono)) {
             return setErrorForm('Agregue solo numeros al telefono');
         } else if (telefono.length > 0 && parseInt(telefono)) {
-            newData = { ...newData, telefono };
+            newData = {...newData, telefono};
         }
 
-        //NO WORK
         if ((contrasena.length > 0 && confirmPassword.length > 0) && (contrasena === confirmPassword)) {
-            newData = { ...newData, contrasena };
+            newData = {...newData, contrasena};
         } else if ((contrasena !== confirmPassword)) {
-            return setErrorForm('Las contraseña no coinciden');
+            return setErrorForm('Las contraseñas no coinciden');
         }
 
         try {
             if (imgFile) {
                 const res = await PUT_img_profile(imgFile, token, userData.id_usuarios);
 
-                //console.log(resImg);
-
                 if (!res.message.includes("exitosamente")) {
                     throw new Error("ui- " + "Error al actualizar la imagen, inténtelo de nuevo o mas tarde");
                 } 
             }
 
-            if (Object.keys(newData).length > 0) {
-                const res = await PATCH_edit_user(
-                    newData,
-                    token,
-                    userData.id_usuarios
-                )
+            if (Object.keys(newData).length !== 0) {
+                const res = await PATCH_edit_user(newData, token, userData.id_usuarios);
 
-                //console.log(res);
-
-                if (res.status !== "success") {
+                if (res.error || !res.message.includes("exitosamente")) {
                     throw new Error("ui- " + "Error al actualizar datos, verifique los campos o inténtelo mas tarde");
                 } 
             } else if (Object.keys(newData).length === 0 && !imgFile) {
