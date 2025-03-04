@@ -39,16 +39,37 @@ export const PATCH_edit_user = async <T>(formData: T, token: string, idUser: num
     return response.json();
 }
 
-export const POST_create_service = async <T>(formData: T, token: string) => {
+type CreateServiceForm = {
+    imagen: File;
+    nombre: string;
+    descripcion: string;
+    precio: string;
+    ubicacion: string;
+    tipos_servicio_id: string;
+    disponibilidad_servicio_id: string;
+}
+
+export const POST_create_service = async (formData: CreateServiceForm, token: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
+    const formData2 = new FormData();
+
+    formData2.append("imagen", formData.imagen);
+    formData2.append("nombre", formData.nombre);
+    formData2.append("descripcion", formData.descripcion);
+    formData2.append("precio", formData.precio);
+    formData2.append("disponibilidad_servicio_id", formData.disponibilidad_servicio_id);
+    formData2.append("tipos_servicio_id", formData.tipos_servicio_id);
+    formData2.append("ubicacion", formData.ubicacion);
+
     const response = await fetch(`${urlApi}/servicios`, {
-        method: "post",
+        method: "POST",
         headers: {
-            'Content-Type': 'multipart/form-data',
+            //'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        //body: JSON.stringify(formData),
+        body: formData2
     });
 
     return response.json();

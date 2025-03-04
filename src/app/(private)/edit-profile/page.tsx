@@ -13,6 +13,7 @@ import { UserType, Roles } from "@/types/forms";
 import { PATCH_edit_user, PUT_img_profile, GET_user } from "@/server-actions";
 import { ERROR_MESSAGE } from "@/utils/error-messages";
 
+import { useAuthActions } from "@/store/hooks/useAuthActions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import FormLayout from "@/components/ui/form/FormLayout";
@@ -30,6 +31,7 @@ export default function Page() {
 
     const { loaderFetch, setLoaderFetch, errorForm, setErrorForm } = useFormStatus();
 
+    const { updateProfileAction } = useAuthActions();
     const { userData, authLoading, token } = useAuthSelectors();
 
     const { register, handleSubmit, /*formState: { errors }, watch*/ } = useForm<RegisterForm>();
@@ -41,6 +43,7 @@ export default function Page() {
     const onSubmit: SubmitHandler<RegisterForm> = async (dataForm) => {
         if (!userData || !token) return;
 
+        setErrorForm("");
         setLoaderFetch(true);
 
         const { nombre, correo, telefono, tipos_usuario_id, roles_id, confirmPassword, contrasena } = dataForm;
@@ -71,7 +74,9 @@ export default function Page() {
 
                 //console.log(resImg);
 
-                if (res.error) return setErrorForm(res.error);
+                if (!res.message.includes("exitosamente")) {
+                    throw new Error("ui- " + "Error al actualizar la imagen, inténtelo de nuevo o mas tarde");
+                } 
             }
 
             if (Object.keys(newData).length > 0) {
@@ -83,7 +88,9 @@ export default function Page() {
 
                 //console.log(res);
 
-                if (res.error) return setErrorForm(res.error);
+                if (res.status !== "success") {
+                    throw new Error("ui- " + "Error al actualizar datos, verifique los campos o inténtelo mas tarde");
+                } 
             } else if (Object.keys(newData).length === 0 && !imgFile) {
                 return setErrorForm('Llene el campo que desea actualizar');
             }
@@ -91,18 +98,20 @@ export default function Page() {
             const res = await GET_user(userData.id_usuarios.toString());
 
             if (res.usuario) {
-                const newData = { token, userData: { ...res.usuario, roles: userData.roles } };
+                const newData = { token, userData: res.usuario };
 
                 localStorage.setItem('gServicesUser', JSON.stringify(newData));
+
+                updateProfileAction(newData);
+
+                router.push(`/user/${userData.id_usuarios}`);
             }
-             
-            router.push(`/user/${userData.id_usuarios}`);
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error);
-            }
 
-            setErrorForm(ERROR_MESSAGE.unknown);
+                setErrorForm(error.message.includes('ui-') ? error.message.split("ui-")[1] : ERROR_MESSAGE.unknown);
+            }
         }
     }
 

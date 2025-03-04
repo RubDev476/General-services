@@ -67,7 +67,7 @@ const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                     ) : (
                         <div className="relative avatar-header-container">
                             <div className="w-11 h-11 rounded-full cursor-pointer object-cover relative">
-                                <Image src={userData.imagen ?? IMAGE_DEFAULT} alt="user-img" fill priority className="rounded-full cursor-pointer" sizes="11vw" />
+                                <Image src={userData.imagen ?? IMAGE_DEFAULT} alt="user-img" fill priority className="rounded-full cursor-pointer object-cover" sizes="11vw" />
                             </div>
 
                             <div className="avatar-dropdown">

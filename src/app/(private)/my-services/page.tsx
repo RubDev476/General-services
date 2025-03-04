@@ -131,7 +131,7 @@ export default function Page() {
 
                     {(!loading && services.length === 0) && (
                         <div className="w-full all-center my-6 h-[50vh]">
-                            <h5 className="text-color2 font-medium text-xl lg:text-3xl text-center">No tienes servicios aun</h5>
+                            <h5 className="text-color2 font-medium text-xl lg:text-3xl text-center">No tienes servicios aún</h5>
                         </div>
                     )}
                 </div>
