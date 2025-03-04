@@ -11,6 +11,8 @@ import { GET_services, GET_user } from "@/server-actions";
 import type { Service } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 
+const dispo = ["DISPONIBLE", "AGOTADO", "PROXIMAMENTE"];
+
 const SkeletonService = () => {
     return (
         <main className="my-7">
@@ -92,7 +94,7 @@ export default function Page({ idService }: { idService: string }) {
                         </div>
 
                         <div className="py-4 w-full">
-                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{service.nombre} <span className="text-color8 text-sm lg:text-lg">(DISPONIBLE)</span></h4>
+                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{service.nombre} <span className="text-color8 text-sm lg:text-lg">{`(${dispo[service.disponibilidad_servicio_id - 1]})`}</span></h4>
 
                             <hr className="text-color8 mb-4" />
 

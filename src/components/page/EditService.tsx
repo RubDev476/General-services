@@ -66,6 +66,8 @@ export default function EditService({id}: {id: string}) {
 
             const response = await PATCH_edit_service(newData, token, id);
 
+            console.log(response)
+
             if(response.error || !response.message.includes("exitosamente")){
                 throw new Error("ui- Error al actualizar los datos, intentelo de nuevo o mas tarde")
             }
