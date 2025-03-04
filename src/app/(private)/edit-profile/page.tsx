@@ -51,8 +51,8 @@ export default function Page() {
 
         if (nombre.trim() !== "") newData = {...newData, nombre: nombre.trim()};
         if (dataForm.correo !== "") newData = {...newData, correo};
-        if (dataForm.tipos_usuario_id) newData = {...newData, tipos_usuario_id};
-        if (dataForm.roles_id) newData = {...newData, roles_id};
+        if (dataForm.tipos_usuario_id) newData = {...newData, tipos_usuario: tipos_usuario_id};
+        if (dataForm.roles_id) newData = {...newData, roles: roles_id};
 
         if (telefono.length > 0 && !parseInt(telefono)) {
             return setErrorForm('Agregue solo numeros al telefono');
