@@ -89,7 +89,7 @@ export default function Page() {
         setDeleteStatus({loader: true, message: "", error: false});
 
         try {
-            const res = await DELETE_user_service({token, idUser: service.usuarios_proveedores_id.toString(), idService: service.id_servicios.toString()});
+            const res = await DELETE_user_service({token, idUser: service.usuarios_proveedores.id_usuarios.toString(), idService: service.id_servicios.toString()});
 
             console.log(res);
 
