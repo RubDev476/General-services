@@ -1,26 +1,32 @@
-import type { RegisterForm } from "./forms";
+import type { RegisterForm, AvailabilityService, CategoriesService, Roles, UserType } from "./forms";
 
 export type UserData = Pick<RegisterForm, "nombre" | "correo" | "telefono"> & {
-    id_usuarios: string;
+    id_usuarios: number;
     imagen: string;
     tipo_usuario: {
         id_tipos_usuarios: number;
-        tipo: string;
+        tipo: UserType;
     };
     roles: {
         id_roles: number;
-        tipo: string;
+        tipo: Roles;
     }[];
 }
 
 export type Service = {
     descripcion: string;
-    disponibilidad_servicio_id: number;
+    disponibilidad_servicio: {
+        estado: AvailabilityService;
+        id_disponibilidad_servicio: number;
+    };
     id_servicios: number;
     imagen: string;
     nombre: string;
     precio: number;
-    tipos_servicio_id: number;
+    tipos_servicio: {
+        id_tipos_servicio: number;
+        tipo: CategoriesService;
+    };
     ubicacion: string;
-    usuarios_proveedores_id: number;
+    usuarios_proveedores: UserData;
 }

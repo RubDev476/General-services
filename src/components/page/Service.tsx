@@ -7,11 +7,9 @@ import Link from "next/link";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { GET_services, GET_user } from "@/server-actions";
+import { GET_services } from "@/server-actions";
 import type { Service } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
-
-const dispo = ["DISPONIBLE", "AGOTADO", "PROXIMAMENTE"];
 
 const SkeletonService = () => {
     return (
@@ -44,7 +42,6 @@ const SkeletonService = () => {
 export default function Page({ idService }: { idService: string }) {
     const [loading, setLoading] = useState(true);
     const [service, setService] = useState<Service | null>(null);
-    const [creatorData, setCreatorData] = useState<{id: "", name: ""} | null>(null);
 
     useEffect(() => {
         const getService = async () => {
@@ -55,26 +52,14 @@ export default function Page({ idService }: { idService: string }) {
 
                 if(res.servicio) {
                     setService(res.servicio);
-
-                    const user = await GET_user(res.servicio.usuarios_proveedores_id);
-
-                    console.log(user);
-
-                    if(user.usuario) {
-                        setCreatorData({id: user.usuario.id_usuarios.toString(), name: user.usuario.nombre});
-                    } else {
-                        throw new Error("No user");
-                    }
                 }
-
-                setLoading(false);
             } catch (error) {
                 if(error instanceof Error) {
                     console.log(error);
                 }
-
-                setLoading(false);
             }
+            
+            setLoading(false);
         }
 
         getService();
@@ -82,9 +67,9 @@ export default function Page({ idService }: { idService: string }) {
 
     if(loading) return <SkeletonService />;
 
-    if((!service || !creatorData) && !loading) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
+    if(!service && !loading) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
 
-    if((service && creatorData) && !loading) return (
+    if(service && !loading) return (
         <>
             <main className="my-7">
                 <div className="w-content">
@@ -94,7 +79,7 @@ export default function Page({ idService }: { idService: string }) {
                         </div>
 
                         <div className="py-4 w-full">
-                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{service.nombre} <span className="text-color8 text-sm lg:text-lg">{`(${dispo[service.disponibilidad_servicio_id - 1]})`}</span></h4>
+                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{service.nombre} <span className="text-color8 text-sm lg:text-lg">{`(${service.disponibilidad_servicio.estado})`}</span></h4>
 
                             <hr className="text-color8 mb-4" />
 
@@ -112,7 +97,7 @@ export default function Page({ idService }: { idService: string }) {
                         </div>
 
                         <div className="basis-1/3 min-w-[200px] ">
-                            <p className="text-color2  text-sm lg:text-lg">Publicado por: <Link href={`/user/${creatorData.id}`} className="text-md underline font-medium">{creatorData.name}</Link></p>
+                            <p className="text-color2  text-sm lg:text-lg">Publicado por: <Link href={`/user/${service.usuarios_proveedores.id_usuarios}`} className="text-md underline font-medium">{service.usuarios_proveedores.nombre}</Link></p>
 
                             <button className="btn-1 mt-4">Reservar</button>
                         </div>

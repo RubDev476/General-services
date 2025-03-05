@@ -35,17 +35,30 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
         case "auth/validateSession": {
             const userData = localStorage.getItem('gServicesUser');
 
+            const getUserData = async (idUser: string, token: string) => {
+                const res = await GET_user(idUser);
+
+                if(res.usuario) {
+                    const newData = {token, userData: res.usuario};
+
+                    localStorage.setItem('gServicesUser', JSON.stringify(newData));
+
+                    action.payload = newData;
+                } 
+
+                next(action);
+            }
+
             if(userData) {
-                const decodedToken: any = jwtDecode(JSON.parse(userData).token);
+                const token = JSON.parse(userData).token;
+                const decodedToken: any = jwtDecode(token);
 
                 if(decodedToken.exp) {
                     const currentTime = Math.floor(Date.now() / 1000);
                     
-                    if (decodedToken.exp < currentTime) {
-                        next(action);
+                    if (decodedToken.exp > currentTime) {
+                        getUserData(decodedToken.id_usuario, token);
                     } else {
-                        action.payload = JSON.parse(userData);
-    
                         next(action);
                     }
                 }
