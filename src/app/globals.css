@@ -182,8 +182,12 @@
 }
 
 /*--------------------- SERVICES PAGE---------*/
-.shadow-service {
+.shadow-card {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.shadow-service {
+    @apply shadow-card;
 
     &:hover {
         @apply dropdown-shadow g-transition;

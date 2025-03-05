@@ -6,7 +6,7 @@ export type UserData = {
     correo: string;
     tipo_usuario: {id_tipos_usuario: number, tipo: UserType};
     roles: {id_roles: number, tipo: Roles}[];
-    imagen: string | null;
+    imagen: string;
     telefono: string;
 }
 

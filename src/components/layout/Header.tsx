@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from 'next/link';
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,30 +13,33 @@ import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 import type { NavItemsInitialProps, NavItemsSessionProps } from "@/types/props";
 import { Roles } from "@/types/forms";
 
-import { IMAGE_DEFAULT } from "@/utils/global-vars";
+import Avatar from "../ui/Avatar";
 
-const NavItemsSession = ({ nombre, correo, id_usuarios }: NavItemsSessionProps) => {
+const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) => {
     const { logoutAction } = useAuthActions();
-    const { userData } = useAuthSelectors();
 
     return (
         <>
-            <>
-                <div className="font-bold text-color2 close-ui-action">
-                    <p className="close-ui-action">{nombre}</p>
-                    <p className="close-ui-action">{correo}</p>
-                </div>
+            <div className="text-nowrap">
+                {mobileSize && (
+                    <div className="mb-4">
+                        <Avatar size={20} urlImg={userData.imagen} pointer={false} />
+                    </div>
+                )}
 
-                <hr className="text-color10 w-full" />
+                <p className="font-bold text-color5 text-lg">{userData.nombre}</p>
+                <p className="font-normal text-color8 text-sm lg:text-[16px]">{userData.correo}</p>
+            </div>
 
-                <Link href={`/user/${id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
-                {userData?.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
-                <Link href={'/edit-profile'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
+            <hr className="text-color10 w-full" />
 
-                <button onClick={() => logoutAction()} className="text-color6">
-                    <FontAwesomeIcon icon={faRightFromBracket} className="mr-1" /> Cerrar sesion
-                </button>
-            </>
+            <Link href={`/user/${userData.id_usuarios}`} className={'text-link'}><FontAwesomeIcon icon={faUser} className="mr-1" /> Mi perfil</Link>
+            {userData.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/my-services'} className={'text-link'}><FontAwesomeIcon icon={faList} className="mr-1" /> Mis servicios</Link>}
+            <Link href={'/edit-profile'} className={'text-link'}><FontAwesomeIcon icon={faGear} className="mr-1" /> Editar perfil</Link>
+
+            <button onClick={() => logoutAction()} className="text-color6">
+                <FontAwesomeIcon icon={faRightFromBracket} className="mr-1" /> Cerrar sesion
+            </button>
         </>
     )
 }
@@ -56,22 +58,20 @@ const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                 </>
             ) : (
                 <>
-                    {userData?.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
+                    {userData.roles.some(role => role.tipo.includes(Roles.proveedor)) && <Link href={'/create-service'} className={'text-link'}>Crear servicio</Link>}
 
                     {mobileSize ? (
                         <>
                             <hr className="text-color10 w-full" />
 
-                            <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
+                            <NavItemsSession userData={userData} mobileSize={mobileSize} />
                         </>
                     ) : (
                         <div className="relative avatar-header-container">
-                            <div className="w-11 h-11 rounded-full cursor-pointer object-cover relative">
-                                <Image src={userData.imagen ?? IMAGE_DEFAULT} alt="user-img" fill priority className="rounded-full cursor-pointer object-cover" sizes="11vw" />
-                            </div>
+                            <Avatar size={11} urlImg={userData.imagen} pointer={true} />
 
                             <div className="avatar-dropdown">
-                                <NavItemsSession id_usuarios={userData.id_usuarios} nombre={userData.nombre} correo={userData.correo} />
+                                <NavItemsSession userData={userData} mobileSize={mobileSize} />
                             </div>
                         </div>
                     )}
@@ -126,7 +126,7 @@ export default function Header() {
                 </div>
             </header>
 
-            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-14 flex items-start gap-5 flex-col text-xl font-bold lg:hidden`}>
+            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-7 flex items-start gap-4 flex-col text-lg font-bold lg:hidden`}>
                 <NavItemsInitial mobileSize={true} />
             </nav>
         </>

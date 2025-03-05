@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from "next/image";
 
+const MainImages = ["/1.webp", "/9.webp", "/5.webp", "/7.webp", "/8.webp", "/2.webp", "/3.webp", "/4.webp", "/5.webp"];
+
 export default function Home() {
     return (
         <>
@@ -14,7 +16,7 @@ export default function Home() {
                         
                         <p className={"text-color3 font-normal mb-9"}>Si eres proveedor o profesional, crea un servicio para que miles de clientes puedan encontrarte.</p>
                         
-                        <Link href={'/'} className={'btn-2'}>Comenzar</Link>
+                        <Link href={'/create-service'} className={'btn-2'}>Comenzar</Link>
                     </div>
                 </div>
             </main>
@@ -29,40 +31,18 @@ export default function Home() {
                 </div>
             </section>
             
-            <section className={""}>
+            <section>
                 <div className={"w-content relative"}>
                     <div className={'absolute all-center left-0 bottom-0 z-10 text-center box-border w-full m-auto gradient-grid h-[15vh] md:h-[35vh]'}>
-                        <Link href={'/'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>Ver todos los servicios</Link>
+                        <Link href={'/services'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>Ver todos los servicios</Link>
                     </div>
                     
                     <div className={"grid grid-cols-3 grid-rows-3 gap-2 lg:gap-5"}>
-                        <div className={"bg-color4 text-center relative h-[15vw] max-h-52 rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
-                        <div className={"bg-color4 text-center relative img-g rounded-md"}>
-                            <Image src={"/service.webp"} alt={"img-service"} fill={true} className={"relative rounded-lg object-cover"} />
-                        </div>
+                        {MainImages.map((img, index) => (
+                            <div key={index} className={"text-center shadow-card relative h-[15vw] max-h-52 rounded-md"}>
+                                <Image src={img} alt={"img-service"} fill={true} className={"rounded-lg object-cover"} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

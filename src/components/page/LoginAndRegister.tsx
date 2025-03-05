@@ -28,7 +28,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     
     const router = useRouter();
 
-    const {loaderFetch, setLoaderFetch, errorForm, setErrorForm} = useFormStatus();
+    const {loaderFetch, setLoaderFetch, errorForm, setErrorForm, disabled, setDisabled} = useFormStatus();
 
     const {loginSuccessAction} = useAuthActions();
     const {userData} = useAuthSelectors();
@@ -56,6 +56,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
         if(!parseInt(dataForm.telefono)) return  setErrorForm('Agregue solo numeros al telefono');
         
         setErrorForm(null);
+        setDisabled(true);
         
         //remove "confirmPassword" property
         delete (dataForm as {confirmPassword?: string}).confirmPassword;
@@ -65,10 +66,9 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
 
             if(response.status === "success") {
                 router.push("/login");
-
-                setLoaderFetch(false);
             } else {
                 setErrorForm(response.message ?? ERROR_MESSAGE.unknown);
+                setDisabled(false);
             }
         } catch (error) {
             if(error instanceof Error) {
@@ -76,25 +76,27 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
             }
             
             setErrorForm(ERROR_MESSAGE.unknown);
+            setDisabled(false);
         }
     }
     
     const submitLogin = async (dataForm: RegisterForm) => {
         setErrorForm(null);
+        setDisabled(true);
         
         const {contrasena, correo} = dataForm;
         
         try {
             const response = await POST_register_login({email: correo, password: contrasena}, "/login");
 
-            setLoaderFetch(false);
-
             if(response.token) {
                 loginSuccessAction({token: response.token, userData: null});
             } else if(response.error) {
-                throw new Error();
+                setDisabled(false);
+                throw new Error("Ha ocurrido un error");
             } else {
                 setErrorForm(response.message ?? ERROR_MESSAGE.unknown);
+                setDisabled(false);
             }
         } catch (error) {
             if(error instanceof Error) {
@@ -102,6 +104,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
             }
             
             setErrorForm(ERROR_MESSAGE.unknown);
+            setDisabled(false);
         }
     }
     
@@ -229,7 +232,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
 
                     {errorForm && <ErrorForm message={errorForm} />}
                     
-                    <button className={"btn-3 w-full"} type={"submit"}>{nameForm}</button>
+                    <button className={"btn-3 w-full"} type={"submit"} disabled={disabled}>{nameForm}</button>
                 </form>
 
                 <div className={"all-center text-sm md:text-lg flex-col gap-5"}>

@@ -6,7 +6,9 @@ export type NavItemsInitialProps = {
     mobileSize: boolean;
 }
 
-export type NavItemsSessionProps = Pick<UserData, "nombre" | "correo" | "id_usuarios">;
+export type NavItemsSessionProps = NavItemsInitialProps & {
+    userData: UserData;
+};
 
 export type ErrorProps = Record<"title" | "message", string>;
 
@@ -22,4 +24,10 @@ export type DropzoneProps = {
 export type TableServicesProps = {
     setDeleteService: Dispatch<SetStateAction<Service | null>>
     services: Service[];
+}
+
+export type AvatarProps = {
+    urlImg: string;
+    size: number;
+    pointer: boolean;
 }
