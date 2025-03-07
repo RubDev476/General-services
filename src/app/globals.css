@@ -69,6 +69,10 @@
     @apply  w-full max-w-[400px] px-7 py-2 lg:py-3;
 }
 
+.label {
+    @apply text-color2 font-normal mb-2 text-center;
+}
+
 .input-styles {
     @apply placeholder:text-[rgba(28,9,80,0.5)] focus:placeholder:text-color2 text-color2 font-medium  bg-color9 outline-color2 focus:bg-color3 text-sm md:text-lg;
 }

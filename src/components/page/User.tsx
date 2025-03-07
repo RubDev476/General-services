@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 
 import { GET_user } from "@/server-actions";
@@ -8,34 +8,10 @@ import type { UserData } from "@/types/server-response";
 
 import ErrorComponent from "../ui/Error";
 
-export default function User({ userId }: { userId: string }) {
-    const [loadinData, setLoadingData] = useState(true);
-    const [userData, setUserData] = useState<UserData | null>(null);
+import useGetData from "@/hooks/useGetData";
 
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const response = await GET_user(userId);
-
-                if (response.usuario) {
-                    console.log(response.usuario);
-                    setUserData(response.usuario);
-                    setLoadingData(false);
-                } else {
-                    throw new Error('No se pudo obtener la información del usuario');
-                }
-            } catch (error) {
-                console.log(error);
-
-                setUserData(null);
-                setLoadingData(false);
-            }
-        }
-
-        getUser();
-    }, [userId])
-
-    if (loadinData) return (
+const SkeletonUser = () => {
+    return (
         <div className="w-content">
             <div className="my-12">
                 <div className="sm:flex items-center gap-6 flex-row">
@@ -57,17 +33,45 @@ export default function User({ userId }: { userId: string }) {
             </div>
         </div>
     )
+}
+
+export default function User({ userId }: { userId: string }) {
+    const {setFetchData, fetchData, loadingData, setLoadingData} = useGetData<UserData>();
+
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const response = await GET_user(userId);
+
+                console.log(response);
+
+                if (response.usuario) {
+                    setFetchData(response.usuario);
+                }
+            } catch (error) {
+                if(error instanceof Error) {
+                    console.log(error);
+                }
+            }
+
+            setLoadingData(false);
+        }
+
+        getUser();
+    }, [userId, setFetchData, setLoadingData])
+
+    if (loadingData) return <SkeletonUser />;
 
     return (
         <>
             <main>
                 <div className="w-content">
-                    {userData ? (
+                    {fetchData ? (
                         <div className="my-12">
                             <div className="sm:flex items-center gap-6 flex-row">
                                 <div className="relative h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-full mb-5 object-cover">
                                     <Image
-                                        src={userData.imagen}
+                                        src={fetchData.imagen}
                                         alt="profile-img"
                                         fill
                                         sizes="50vw, (min-width: 1024px) 100vw"
@@ -77,15 +81,15 @@ export default function User({ userId }: { userId: string }) {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-color2 font-semibold text-3xl lg:text-5xl">{userData.nombre} <span className="text-sm lg:text-lg text-color8 rounded-full">{`(${userData.tipo_usuario.tipo})`}</span></h3>
-                                    <h4 className="text-color2 lg:text-xl">{userData.correo}</h4>
+                                    <h3 className="text-color2 font-semibold text-3xl lg:text-5xl">{fetchData.nombre} <span className="text-sm lg:text-lg text-color8 rounded-full">{`(${fetchData.tipo_usuario.tipo})`}</span></h3>
+                                    <h4 className="text-color2 lg:text-xl">{fetchData.correo}</h4>
                                 </div>
                             </div>
 
                             <div className="mt-7 text-sm lg:text-lg lg:flex items-center justify-start">
                                 <p className="text-color2 mb-3 lg:mb-0 text-xl lg:mr-5">Roles: </p>
 
-                                {userData.roles.map((role) => (
+                                {fetchData.roles.map((role) => (
                                     <p key={role.id_roles} className="bg-col text-color5 rounded-full py-1 px-4 inline-block font-semibold border-2 border-solid border-color5 mr-3">{role.tipo}</p>
                                 ))}
                             </div>

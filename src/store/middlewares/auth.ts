@@ -36,19 +36,27 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             const userData = localStorage.getItem('gServicesUser');
 
             const getUserData = async (idUser: string, token: string, userData: string) => {
-                const res = await GET_user(idUser);
+                try {
+                    const res = await GET_user(idUser);
 
-                if(res.usuario) {
-                    const newData = {token, userData: res.usuario};
+                    if (res.usuario) {
+                        const newData = { token, userData: res.usuario };
 
-                    localStorage.setItem('gServicesUser', JSON.stringify(newData));
+                        localStorage.setItem('gServicesUser', JSON.stringify(newData));
 
-                    action.payload = newData;
-                } else {
+                        action.payload = newData;
+                    } else {
+                        action.payload = JSON.parse(userData);
+                    }
+
+                    next(action);
+                } catch (error) {
+                    console.log(error);
+
                     action.payload = JSON.parse(userData);
-                }
 
-                next(action);
+                    next(action);
+                }
             }
 
             if(userData) {

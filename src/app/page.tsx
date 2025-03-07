@@ -40,7 +40,7 @@ export default function Home() {
                     <div className={"grid grid-cols-3 grid-rows-3 gap-2 lg:gap-5"}>
                         {MainImages.map((img, index) => (
                             <div key={index} className={"text-center shadow-card relative h-[15vw] max-h-52 rounded-md"}>
-                                <Image src={img} alt={"img-service"} fill={true} className={"rounded-lg object-cover"} />
+                                <Image src={img} alt={"img-service"} priority fill sizes={"70vw"} className={"rounded-lg object-cover"} />
                             </div>
                         ))}
                     </div>

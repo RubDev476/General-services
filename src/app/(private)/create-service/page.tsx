@@ -22,7 +22,7 @@ import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 import { AvailabilityService, CategoriesService } from "@/types/forms";
 
 export default function Page() {
-    const [imgFile, setImgFile] = useState<File | null>(null);
+    const [imgFile, setImgFile] = useState<File | string | null>(null);
 
     const {loaderFetch, setErrorForm, errorForm, setLoaderFetch} = useFormStatus();
     const {token, authLoading, userData} = useAuthSelectors();
@@ -38,6 +38,7 @@ export default function Page() {
     const onSubmit: SubmitHandler<CreateService> = async (data) => {
         if(!token) return setErrorForm("Inicie sesion para crear servicio");
         if(!imgFile) return setErrorForm("Porfavor suba una imagen");
+        if(typeof imgFile === "string") return;
 
         setErrorForm("");
         setLoaderFetch(true);

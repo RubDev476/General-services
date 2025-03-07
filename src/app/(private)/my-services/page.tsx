@@ -9,6 +9,9 @@ import type { Service } from "@/types/server-response";
 import type { TableServicesProps } from "@/types/props";
 
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
+import useGetData from "@/hooks/useGetData";
+
+import LoaderPage from "@/components/ui/LoaderPage";
 
 const TableServices = ({services, setDeleteService}: TableServicesProps) => {
     return (
@@ -49,11 +52,11 @@ const TableServices = ({services, setDeleteService}: TableServicesProps) => {
 }
 
 export default function Page() {
-    const [loading, setLoading] = useState(true);
-    const [services, setServices] = useState<Service[]>([]);
     const [deleteService, setDeleteService] = useState<Service | null>(null);
     const [deleteStatus, setDeleteStatus] = useState({loader: false, message: "", error: false});
 
+    const {loadingData, fetchData, setFetchData, setLoadingData} = useGetData<Service[]>();
+    
     const {token, userData, authLoading} = useAuthSelectors();
 
     const router = useRouter();
@@ -65,15 +68,14 @@ export default function Page() {
 
                 console.log(res);
 
-                if(res.length > 0) setServices(res);
-                setLoading(false);
+                if(res.length > 0) setFetchData(res);
             } catch (error) {
                 if(error instanceof Error) {
                     console.log(error);
                 }
-
-                setLoading(false);
             }
+
+            setLoadingData(false);
         }
 
         if(token && userData) {
@@ -81,23 +83,21 @@ export default function Page() {
         } else if((!token && !userData) && !authLoading) {
             router.push("/login");
         }
-    }, [token, userData, authLoading, router])
+    }, [token, userData, authLoading, router, setFetchData, setLoadingData])
 
     const deleteServiceAction = async (service: Service) => {
-        if(!token) return setDeleteService(null);
+        if(!token || !fetchData) return setDeleteService(null);
 
         setDeleteStatus({loader: true, message: "", error: false});
 
         try {
             const res = await DELETE_user_service({token, idUser: service.usuarios_proveedores.id_usuarios.toString(), idService: service.id_servicios.toString()});
 
-            console.log(res);
-
             if(!res.error) {
-                const newServices = services.filter((s) => s.id_servicios !== service.id_servicios);
+                const newServices = fetchData.filter((s) => s.id_servicios !== service.id_servicios);
 
                 setDeleteStatus({loader: false, message: "Borrado exitosamente", error: false});
-                setServices(newServices);
+                setFetchData(newServices);
             } else if(res.error) {
                 setDeleteStatus({loader: false, message: res.error, error: true});
             }
@@ -121,15 +121,11 @@ export default function Page() {
                 <div className="w-content">
                     <h2 className="text-color2 text-center text-4xl lg:text-7xl mt-20 font-bold">Mis servicios</h2>
 
-                    {loading && (
-                        <div className="w-full all-center my-6 h-[50vh]">
-                            <div className="loader"></div>
-                        </div>
-                    )}
+                    {loadingData && <LoaderPage />}
 
-                    {services.length > 0 && <TableServices services={services} setDeleteService={setDeleteService} />}
+                    {fetchData && <TableServices services={fetchData} setDeleteService={setDeleteService} />}
 
-                    {(!loading && services.length === 0) && (
+                    {(!loadingData && !fetchData) && (
                         <div className="w-full all-center my-6 h-[50vh]">
                             <h5 className="text-color2 font-medium text-xl lg:text-3xl text-center">No tienes servicios aún</h5>
                         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 
@@ -14,6 +15,8 @@ import type { NavItemsInitialProps, NavItemsSessionProps } from "@/types/props";
 import { Roles } from "@/types/forms";
 
 import Avatar from "../ui/Avatar";
+ 
+const NoSSR = dynamic(() => import('../no-ssr/NavMobile'), { ssr: false });
 
 const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) => {
     const { logoutAction } = useAuthActions();
@@ -44,7 +47,7 @@ const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) => {
     )
 }
 
-const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
+export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
     const { userData } = useAuthSelectors();
 
     return (
@@ -126,9 +129,11 @@ export default function Header() {
                 </div>
             </header>
 
-            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-7 flex items-start gap-4 flex-col text-lg font-bold lg:hidden`}>
+            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-7 flex items-start gap-4 flex-col text-lg font-bold lg:hidden overflow-y-auto`}>
                 <NavItemsInitial mobileSize={true} />
             </nav>
+
+            <NoSSR openMenu={openMenu} />
         </>
     )
 }

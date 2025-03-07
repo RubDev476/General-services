@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GET_services } from "@/server-actions";
 import type { Service } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
+
+import useGetData from "@/hooks/useGetData";
 
 const SkeletonService = () => {
     return (
@@ -40,8 +42,7 @@ const SkeletonService = () => {
 }
 
 export default function Page({ idService }: { idService: string }) {
-    const [loading, setLoading] = useState(true);
-    const [service, setService] = useState<Service | null>(null);
+    const {loadingData, setFetchData, fetchData, setLoadingData} = useGetData<Service>();
 
     useEffect(() => {
         const getService = async () => {
@@ -51,7 +52,7 @@ export default function Page({ idService }: { idService: string }) {
                 console.log(res);
 
                 if(res.servicio) {
-                    setService(res.servicio);
+                    setFetchData(res.servicio);
                 }
             } catch (error) {
                 if(error instanceof Error) {
@@ -59,33 +60,33 @@ export default function Page({ idService }: { idService: string }) {
                 }
             }
             
-            setLoading(false);
+            setLoadingData(false);
         }
 
         getService();
-    }, []) // eslint-disable-line
+    }, [idService, setFetchData, setLoadingData])
 
-    if(loading) return <SkeletonService />;
+    if(loadingData) return <SkeletonService />;
 
-    if(!service && !loading) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
+    if(!fetchData && !loadingData) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
 
-    if(service && !loading) return (
+    if(fetchData && !loadingData) return (
         <>
             <main className="my-7">
                 <div className="w-content">
                     <article className="sm:flex gap-4 overflow-hidden sm:max-h-[300px]">
                         <div className="w-auto sm:w-full sm:max-w-[400px] h-[200px] lg:h-[300px] relative">
-                            <Image src={service.imagen} alt="service-img" fill priority className="object-cover" sizes="30vw" />
+                            <Image src={fetchData.imagen} alt="service-img" fill priority className="object-cover" sizes="30vw" />
                         </div>
 
                         <div className="py-4 w-full">
-                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{service.nombre} <span className="text-color8 text-sm lg:text-lg">{`(${service.disponibilidad_servicio.estado})`}</span></h4>
+                            <h4 className="text-color2 font-semibold text-xl lg:text-3xl">{fetchData.nombre} <span className="text-color8 text-sm lg:text-lg">{`(${fetchData.disponibilidad_servicio.estado})`}</span></h4>
 
                             <hr className="text-color8 mb-4" />
 
-                            <p className="text-color6 font-bold mb-2 text-xl lg:text-2xl">{`$${service.precio}`}</p>
+                            <p className="text-color6 font-bold mb-2 text-xl lg:text-2xl">{`$${fetchData.precio}`}</p>
 
-                            <p className="text-color8 text-sm"><FontAwesomeIcon icon={faLocationDot} className="text-sm lg:text-lg" /> {service.ubicacion}</p>
+                            <p className="text-color8 text-sm"><FontAwesomeIcon icon={faLocationDot} className="text-sm lg:text-lg" /> {fetchData.ubicacion}</p>
                         </div>
                     </article>
 
@@ -93,11 +94,11 @@ export default function Page({ idService }: { idService: string }) {
                         <div className="basis-2/3">
                             <h4 className="text-color2 text-sm mb-4 lg:text-lg">Descripcion: </h4>
 
-                            <p className="text-color2">{service.descripcion}</p>
+                            <p className="text-color2">{fetchData.descripcion}</p>
                         </div>
 
                         <div className="basis-1/3 min-w-[200px] ">
-                            <p className="text-color2  text-sm lg:text-lg">Publicado por: <Link href={`/user/${service.usuarios_proveedores.id_usuarios}`} className="text-md underline font-medium">{service.usuarios_proveedores.nombre}</Link></p>
+                            <p className="text-color2  text-sm lg:text-lg">Publicado por: <Link href={`/user/${fetchData.usuarios_proveedores.id_usuarios}`} className="text-md underline font-medium">{fetchData.usuarios_proveedores.nombre}</Link></p>
 
                             <button className="btn-1 mt-4">Reservar</button>
                         </div>

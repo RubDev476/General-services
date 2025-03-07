@@ -3,6 +3,7 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Warning from "@/components/layout/Warning";
 
 import { Providers } from "@/store/Provider";
 
@@ -19,6 +20,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                    <Header />
                 
                     {children}
+
+                    <Warning />
             
                     <Footer /> 
                 </Providers>

@@ -18,7 +18,13 @@ export type FormLayoutProps = {
 }
 
 export type DropzoneProps = {
-    setImg: Dispatch<SetStateAction<File | null>>;
+    imgUploaded?: string;
+    setImg: Dispatch<SetStateAction<File | string | null>>;
+}
+
+export type PreviewImgProps = Pick<DropzoneProps, "setImg"> & {
+    img: string;
+    setPreviewImg: Dispatch<SetStateAction<string | null>>;
 }
 
 export type TableServicesProps = {

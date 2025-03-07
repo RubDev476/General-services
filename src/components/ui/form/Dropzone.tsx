@@ -6,9 +6,36 @@ import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 
-import type { DropzoneProps } from "@/types/props";
+import type { DropzoneProps, PreviewImgProps } from "@/types/props";
 
-export default function Dropzone({setImg}: DropzoneProps) {
+const PreviewImg = ({img, setImg, setPreviewImg}: PreviewImgProps) => {
+    return (
+        <div className="w-full h-full all-center flex-col">
+            <div className="h-[170px] lg:h-[250px] w-full relative">
+                <Image
+                    src={img}
+                    fill
+                    alt="img-preview"
+                    priority
+                    className="object-contain"
+                    sizes="40vw"
+                />
+            </div>
+
+            <button
+                onClick={() => {
+                    setPreviewImg(null);
+                    setImg(null);
+                }}
+                className="mt-4 underline"
+            >
+                Cambiar imagen
+            </button>
+        </div>
+    )
+}
+
+export default function Dropzone({setImg, imgUploaded}: DropzoneProps) {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
 
     const onDropRejected = () => console.log("Error (Max. 10Mb, 'jpeg/png')*");
@@ -49,29 +76,11 @@ export default function Dropzone({setImg}: DropzoneProps) {
                 <span className="error-input">{errorImg}</span>
             )*/}
 
-            {previewImg ? (
-                <div className="w-full h-full all-center flex-col">
-                    <div className="h-[170px] lg:h-[250px] w-full relative">
-                        <Image
-                            src={previewImg}
-                            fill
-                            alt="img-preview"
-                            priority
-                            className="object-contain"
-                        />
-                    </div>
+            {(imgUploaded && !previewImg) && <PreviewImg img={imgUploaded} setImg={setImg} setPreviewImg={setPreviewImg} />}
 
-                    <button 
-                        onClick={() => {
-                            setPreviewImg(null);
-                            setImg(null);
-                        }}
-                        className="mt-4 underline"
-                    >
-                        Cambiar imagen
-                    </button>
-                </div>
-            ) : (
+            {previewImg && <PreviewImg img={previewImg} setImg={setImg} setPreviewImg={setPreviewImg} />}
+
+            {(!imgUploaded && !previewImg) && (
                 <div {...getRootProps({ className: 'all-center flex-col h-full w-full text-[rgba(28,9,80,0.5)]' })}>
                     <input {...getInputProps()} />
 
