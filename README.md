@@ -34,7 +34,7 @@ Inspired design from [SliderRevolution](https://www.sliderrevolution.com/). offi
 
 # Backend Docs
 
-The backend repository is private, if you want to collaborate on this project add **Alexis11** or **Rubdev66*** on discord
+The backend repository is private, if you want to collaborate on this project add **Alexis11** or **Rubdev666** on discord
 
 # Frontend Docs
 
