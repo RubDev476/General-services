@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# General Services
+Main technologies:
 
-## Getting Started
+- TypeScript
+- React with Next js 15
+- Tailwindcss
+- React Dropzone
+- React Hook Form
+- Cloudinary
+- Redux Toolkit
+- FontAwesome
+- Python with Flask, Turso and LibSQL (Backend)
 
-First, run the development server:
+## Collaborators:
+
+- [RubDev666](https://github.com/RubDev666) (Frontend)
+- [martin-alexis](https://github.com/martin-alexis) (Backend)
+
+## Documentation
+- [Backend](#backend-docs)
+- [Frontend](#frontend-docs)
+
+## Project features
+
+- Login and Signup
+- Dynamic, Public and Private routes (App router with Next js 15)
+- CRUD Services
+- Edit profile
+- Filter and search for services
+- Profile photos and services with cloudinary
+- Responsive Design
+
+Inspired design from [SliderRevolution](https://www.sliderrevolution.com/). official web site.
+
+# Backend Docs
+
+The backend repository is private, if you want to collaborate on this project add **Alexis11** or **Rubdev66*** on discord
+
+# Frontend Docs
+
+This document provides an overview of the General services project, specifically the `frontend`.
+
+## Installation
+
+To install the project dependencies, run the following command:
+
+```bash
+npm install
+```
+
+## Project Structure
+
+The structure of the `frontend` folder is as follows:
+
+```
+General-services/
+├── public/
+│   ├── icons/
+│   └── ...
+├── src/
+│   ├── app/
+│   │   ├── (private)/
+│   │   ├── globals.css
+│   │   └── ...
+│   ├── components/
+│   ├── hooks/
+│   ├── server-actions/
+│   ├── store/
+│   ├── types/
+│   └── utils/
+├── package.json
+├── tailwind.config.ts
+└── README.md
+```
+
+- **public/**: Main images.
+    - **icons/**: Icons for the website.
+- **src/**: Contains the project's source code.
+    - **app/**: All routes of the application.
+        - **(private)/**: Private routes only.
+        - **globals.css**: Global and reusable styles.
+    - **components/**: Reusable components of the application (for Layout, Pages, forms, no-ssr and ui).
+    - **hooks/**: Reusable code for the project.
+    - **server-actions/**: Server actions, and API endpoints.
+    - **store/**: Redux and global state management of the application.
+    - **types**: Types, enums and interfaces.
+    - **utils/**: Global variables.
+- **package.json**: npm configuration file.
+- **tailwind.config.ts**: tailwind configuration file (Contains the entire color palette for this project.).
+
+## Usage
+
+First, create a .env file (Environment Variables) at the root of the Frontend project with the following variable:
+
+```
+//replace it with the url you have
+NEXT_PUBLIC_API = 
+```
+
+To start the application in development mode, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will open the application in your default browser at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contribution
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you want to contribute to this project, **fork** the repository and then create a **pull request**.
