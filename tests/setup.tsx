@@ -2,7 +2,7 @@ import React, { PropsWithChildren, JSX } from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 
 import { RootState, AppStore, setupStore } from '@/store';
 

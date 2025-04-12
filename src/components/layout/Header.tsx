@@ -56,7 +56,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
 
             {!userData ? (
                 <>
-                    <Link href={'/login'} className={'text-link'}>Inciar sesion</Link>
+                    <Link href={'/login'} className={'text-link'} data-testid="login-link">Inciar sesion</Link>
                     <Link href={'/register'} className={'btn-1'}>Registro</Link>
                 </>
             ) : (
@@ -114,7 +114,7 @@ export default function Header() {
                         <FontAwesomeIcon className={'text-2xl text-color5'} icon={openMenu ? faXmark : faBars} />
                     </button>
 
-                    <nav className={'hidden lg:flex gap-6 items-center font-[400] text-lg'}>
+                    <nav className={'hidden lg:flex gap-6 items-center font-[400] text-lg'} data-testid="nav-desktop">
                         {authLoading ? (
                             <>
                                 <div className="w-24 h-5 skeleton"></div>
@@ -129,7 +129,7 @@ export default function Header() {
                 </div>
             </header>
 
-            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-7 flex items-start gap-4 flex-col text-lg font-bold lg:hidden overflow-y-auto`}>
+            <nav className={`fixed bg-color3 w-full h-[calc(100vh-56px)] top-[56px] g-transition ${openMenu ? 'left-0' : 'left-[-100%]'} z-40 w-content py-7 flex items-start gap-4 flex-col text-lg font-bold lg:hidden overflow-y-auto`} data-testid="nav-mobile">
                 <NavItemsInitial mobileSize={true} />
             </nav>
 
