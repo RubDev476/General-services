@@ -18,14 +18,14 @@ import Avatar from "../ui/Avatar";
  
 const NoSSR = dynamic(() => import('../no-ssr/NavMobile'), { ssr: false });
 
-const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) => {
+export const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) => {
     const { logoutAction } = useAuthActions();
 
     return (
         <>
             <div className="text-nowrap">
                 {mobileSize && (
-                    <div className="mb-4">
+                    <div className="mb-4" data-testid="avatar-container">
                         <Avatar size={20} urlImg={userData.imagen} pointer={false} />
                     </div>
                 )}
@@ -70,7 +70,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                             <NavItemsSession userData={userData} mobileSize={mobileSize} />
                         </>
                     ) : (
-                        <div className="relative avatar-header-container">
+                        <div className="relative avatar-header-container" data-testid="nav-items-session-desktop">
                             <Avatar size={11} urlImg={userData.imagen} pointer={true} />
 
                             <div className="avatar-dropdown">

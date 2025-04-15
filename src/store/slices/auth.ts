@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import type { AuthState, LoginData } from '@/types/store';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
     token: null,
     userData: null,
     authLoading: true,
