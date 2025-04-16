@@ -112,12 +112,13 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
         <main>
             <FormLayout nameForm={nameForm}>
                 <div className={"bg-color5 mx-auto mb-10 rounded-full all-center w-20 h-20 shadow-[0px_30px_50px_0px_rgba(94,53,177,0.35)]"}>
-                    <FontAwesomeIcon icon={faUser} className={"text-color3 text-4xl"} />
+                    <FontAwesomeIcon icon={faUser} className={"text-color3 text-4xl"} data-testid="icon-user" />
                 </div>
 
                 <form
                     className={"w-full px-4 mb-7"}
                     onSubmit={handleSubmit(onSubmit)}
+                    role="form"
                 >
                     <input
                         className={"input mb-5"}
@@ -167,7 +168,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                 required
                             />
 
-                            <fieldset className={"fieldset"}>
+                            <fieldset className={"fieldset"} data-testid="fieldset-roles">
                                 <legend className={"mb-4 font-bold"}>Tipo de rol:</legend>
 
                                 <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>Cliente
@@ -178,6 +179,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                         value={Roles.cliente}
                                         defaultChecked={true}
                                         className={"check"}
+                                        data-testid="check-client"
                                     />
                                     <span className={"custom-check"}>
                                         <FontAwesomeIcon icon={faCheck} className={"icon-check"} />
@@ -198,7 +200,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                 </label>
                             </fieldset>
 
-                            <fieldset className={"fieldset"}>
+                            <fieldset className={"fieldset"} data-testid="fieldset-types">
                                 <legend className={"mb-4 font-bold"}>Tipo de usuario:</legend>
 
                                 <label className={"all-center gap-2.5 mr-3 lg:mr-6"}>
@@ -207,6 +209,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                         {...register("tipos_usuario_id")}
                                         value={UserType.particular}
                                         className={"ratio"}
+                                        data-testid="radio-particular"
                                     //required
                                     />
                                     Particular
