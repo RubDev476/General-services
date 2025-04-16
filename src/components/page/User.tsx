@@ -12,7 +12,7 @@ import useGetData from "@/hooks/useGetData";
 
 const SkeletonUser = () => {
     return (
-        <div className="w-content">
+        <div className="w-content" data-testid="skeleton-user">
             <div className="my-12">
                 <div className="sm:flex items-center gap-6 flex-row">
                     <div className="relative h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-full mb-5 object-cover">
@@ -67,7 +67,7 @@ export default function User({ userId }: { userId: string }) {
             <main>
                 <div className="w-content">
                     {fetchData ? (
-                        <div className="my-12">
+                        <div className="my-12" data-testid="user-data-container">
                             <div className="sm:flex items-center gap-6 flex-row">
                                 <div className="relative h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-full mb-5 object-cover">
                                     <Image
