@@ -1,7 +1,7 @@
 import { test, describe, beforeAll, expect, afterAll } from "vitest";
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithProviders } from '../../../setup';
+import { renderWithProviders } from '@tests/setup';
 
 import Header from '@/components/layout/Header';
 

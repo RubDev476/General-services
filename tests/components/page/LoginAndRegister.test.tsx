@@ -2,11 +2,11 @@ import { test, expect, beforeAll, describe, afterAll, vi, afterEach, beforeEach 
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 
-import { initialTestUser, renderWithProviders } from "../../setup";
+import { initialTestUser, renderWithProviders } from "@tests/setup";
 
 import * as serverActions from "@/server-actions";
 import * as useAuthSelectors from "@/store/hooks/useAuthSelectors";
-import { pushMock } from "../../../__mocks__/next/navigation";
+import { routerPushMock } from "@mocks/next/navigation";
 
 import LoginAndRegister from "@/components/page/LoginAndRegister";
 
@@ -160,7 +160,7 @@ describe("form submission - login", () => {
 
         renderWithProviders(<LoginAndRegister isRegister={false} />);
 
-        expect(pushMock).toHaveBeenCalledWith("/user/1");
+        expect(routerPushMock).toHaveBeenCalledWith("/user/1");
     });
 });
 

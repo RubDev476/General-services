@@ -1,9 +1,8 @@
-import { test, describe, beforeAll, expect, afterAll } from "vitest";
+import { test, describe, beforeAll, expect, afterAll, afterEach } from "vitest";
 import { cleanup, screen } from '@testing-library/react';
-import { renderWithProviders, initialTestUser, Roles, initialState } from '../../../setup';
+import { renderWithProviders, initialTestUser, Roles } from '@tests/setup';
 
 import { NavItemsSession } from "@/components/layout/Header";
-import { afterEach, beforeEach } from "node:test";
 
 describe("any authenticated user", () => {
     beforeAll(() => {
@@ -60,14 +59,16 @@ describe("'my services' link", () => {
 })
 
 describe("avatar container", () => {
+    afterEach(() => {
+        cleanup();
+    })
+    
     test('(mobile size) - displayed', () => {
         renderWithProviders(<NavItemsSession mobileSize={true} userData={initialTestUser} />);
 
         const avatarContainer = screen.getByTestId("avatar-container");
 
         expect(avatarContainer).toBeInTheDocument();
-
-        cleanup();
     })
 
     test('(desktop size) - not displayed', () => {
@@ -76,7 +77,5 @@ describe("avatar container", () => {
         const avatarContainer = screen.queryByTestId("avatar-container");
 
         expect(avatarContainer).not.toBeInTheDocument();
-
-        cleanup();
     })
 })

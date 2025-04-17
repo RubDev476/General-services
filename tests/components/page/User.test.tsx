@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import { vi, describe, it, expect, afterEach } from "vitest";
 
-import { initialTestUser, Roles, UserType } from "../../setup";
+import { initialTestUser, Roles, UserType } from "@tests/setup";
 
 import * as useGetData from "@/hooks/useGetData";
 

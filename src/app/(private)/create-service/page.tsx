@@ -20,6 +20,7 @@ import { POST_create_service } from "@/server-actions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import { AvailabilityService, CategoriesService } from "@/types/forms";
+import { console } from "inspector";
 
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | string | null>(null);
@@ -103,7 +104,7 @@ export default function Page() {
                         required
                     />
 
-                    <select className="input mb-5" {...register("tipos_servicio_id")} required>
+                    <select className="input mb-5" {...register("tipos_servicio_id")} required role="combobox" name="categories">
                         <option value="">Selecciona categoria:</option>
                         <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
                         <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
@@ -115,7 +116,7 @@ export default function Page() {
                         <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
                     </select>
 
-                    <select className="input mb-5" {...register("disponibilidad_servicio_id")} required>
+                    <select className="input mb-5" {...register("disponibilidad_servicio_id")} required name="availability" role="combobox">
                         <option value={AvailabilityService.DISPONIBLE}>{AvailabilityService.DISPONIBLE}</option>
                         <option value={AvailabilityService.PROXIMAMENTE}>{AvailabilityService.PROXIMAMENTE}</option>
                         <option value={AvailabilityService.AGOTADO}>{AvailabilityService.AGOTADO}</option>

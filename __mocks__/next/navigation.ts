@@ -1,9 +1,9 @@
 import { vi } from 'vitest';
 
-export const pushMock = vi.fn();
+export const routerPushMock = vi.fn();
 
 const useRouter = () => ({
-    push: pushMock
+    push: routerPushMock
 })
 
 export {

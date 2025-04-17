@@ -1,6 +1,6 @@
 import { test, describe, beforeAll, expect, afterAll } from "vitest";
 import { cleanup, screen } from '@testing-library/react';
-import { renderWithProviders, initialTestUser, Roles, initialState } from '../../../setup';
+import { renderWithProviders, initialTestUser, Roles, initialState } from '@tests/setup';
 
 import {NavItemsInitial} from "@/components/layout/Header";
 
