@@ -15,7 +15,7 @@ import useGetData from "@/hooks/useGetData";
 
 const SkeletonService = () => {
     return (
-        <main className="my-7">
+        <main className="my-7" data-testid="skeleton-service">
             <div className="w-content">
                 <article className="sm:flex gap-4 overflow-hidden sm:max-h-[300px]">
                     <div className="w-auto sm:w-full sm:max-w-[400px] h-[200px] lg:h-[300px] relative">
