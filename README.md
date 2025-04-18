@@ -10,6 +10,7 @@ Main technologies:
 - Redux Toolkit
 - FontAwesome
 - Python with Flask, Turso and LibSQL (Backend)
+- Vitest and React Testing Library (Unit Testing)
 
 ## Collaborators:
 
@@ -29,6 +30,7 @@ Main technologies:
 - Filter and search for services
 - Profile photos and services with cloudinary
 - Responsive Design
+- Unit Testing
 
 Inspired design from [SliderRevolution](https://www.sliderrevolution.com/). official web site.
 
@@ -104,6 +106,23 @@ npm run dev
 ```
 
 This will open the application in your default browser at `http://localhost:3000`.
+
+To run unit tests:
+
+```bash
+npm run test
+```
+
+If you want to make any changes, run the tests command, and also run the eslint command to verify that everything is in order:
+
+```bash
+npm run lint
+```
+or
+
+```bash
+npm run build
+```
 
 ## Contribution
 
