@@ -20,7 +20,6 @@ import { POST_create_service } from "@/server-actions";
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
 import { AvailabilityService, CategoriesService } from "@/types/forms";
-import { console } from "inspector";
 
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | string | null>(null);
