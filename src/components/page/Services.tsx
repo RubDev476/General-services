@@ -129,7 +129,7 @@ export default function Services() {
             </div>
 
             {modalFilters && (
-                <div>
+                <div data-testid="modal-filters-container">
                     <div className="w-full h-screen z-[200] fixed top-0 modal-container all-center">
                         <div className="w-full max-w-[700px] px-7">
                             <form
@@ -148,7 +148,7 @@ export default function Services() {
                                     {...register("busqueda")}
                                 />
 
-                                <select className="input mb-5" {...register("categoria")}>
+                                <select className="input mb-5" {...register("categoria")} role="combobox">
                                     <option value="">Selecciona categoria:</option>
                                     <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
                                     <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
@@ -197,7 +197,7 @@ export default function Services() {
             <main>
                 <div className="w-content py-7">
                     {loadingData && (
-                        <div className="grid gap-y-8 gap-x-4 md:grid-cols-2 md:grid-rows-[200px]">
+                        <div className="grid gap-y-8 gap-x-4 md:grid-cols-2 md:grid-rows-[200px]" data-testid="skeletons-service">
                             <SkeletonServiceCard />
                             <SkeletonServiceCard />
                             <SkeletonServiceCard />
@@ -208,7 +208,7 @@ export default function Services() {
                     )}
 
                     {(!loadingData && fetchData) && (
-                        <div className="grid gap-y-8 gap-x-4 md:grid-cols-2 md:grid-rows-[200px]">
+                        <div className="grid gap-y-8 gap-x-4 md:grid-cols-2 md:grid-rows-[200px]" data-testid="services-container">
                             {fetchData.map((service) => <ServiceCard key={service.id_servicios} service={service} />)}
                         </div>
                     )}

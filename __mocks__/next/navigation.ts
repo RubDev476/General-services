@@ -6,6 +6,10 @@ const useRouter = () => ({
     push: routerPushMock
 })
 
+const searchParams = new URLSearchParams('/');
+const useSearchParams = () => searchParams;
+
 export {
     useRouter,
+    useSearchParams
 }
