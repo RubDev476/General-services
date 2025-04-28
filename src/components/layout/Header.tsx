@@ -52,7 +52,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
 
     return (
         <>
-            <Link href={'/services'} className={'text-link'}>Servicios</Link>
+            <Link href={'/services?page=1'} className={'text-link'}>Servicios</Link>
 
             {!userData ? (
                 <>

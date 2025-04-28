@@ -25,7 +25,7 @@ export default function Footer(){
         <footer className={"bg-color1"}>
             <div className={"w-content py-12 lg:py-16 grid grid-cols-2 gap-5 md:grid-cols-4"}>
                 <UlContainer title="Servicios">
-                    <LiItems url="/services" name="Todos los servicios" />
+                    <LiItems url="/services?page=1" name="Todos los servicios" />
                     <LiItems url="/create-service" name="Crear servicio" />
                 </UlContainer>
 

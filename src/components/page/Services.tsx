@@ -72,9 +72,13 @@ export default function Services() {
 
             try {
                 const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
+                
+                if (res.data) {
+                    setFetchData(res.data.results);
 
-                if (res.length > 0) {
-                    setFetchData(res);
+                    setLoadingData(false);
+
+                    return;
                 }
 
                 if (res.message && !res.error) {
@@ -96,6 +100,8 @@ export default function Services() {
 
             setLoadingData(false);
         }
+
+        if(searchParams.toString() === "") router.push("/services?page=1");
 
         getServices(searchParams.toString());
     }, [searchParams, setFetchData, setLoadingData, setErrorMessage])
