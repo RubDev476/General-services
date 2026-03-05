@@ -225,12 +225,17 @@ describe("form submission - register", () => {
     });
 
     test("displays error when there are no roles", async () => {
+        const user = userEvent.setup();
         const checkClient = screen.getByTestId("check-client"); // default checked
 
         const { submitButton } = await mockForm(mockUser);
 
-        await userEvent.click(checkClient); // uncheck client
+        expect(checkClient).toBeChecked();
+
+        await user.click(checkClient); // uncheck client
         await userEvent.click(submitButton);
+
+        expect(checkClient).not.toBeChecked();
 
         const errorMessage = await screen.findByText(/Elige un rol/);
         expect(errorMessage).toBeInTheDocument();

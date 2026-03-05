@@ -6,7 +6,7 @@ const MainImages = ["/1.webp", "/9.webp", "/5.webp", "/7.webp", "/8.webp", "/2.w
 export default function Home() {
     return (
         <>
-            <main className={'bg-main relative action-ui'}>
+            <main className={'bg-main bg-color1 relative action-ui'}>
                 <div className={"bg-main-2 w-full h-full absolute top-0"}></div>
                 <div className={"w-content text-center py-20 lg:py-24 relative z-[39] sm:text-xl lg:text-2xl"}>
                     <div className={'m-auto max-w-3xl'}>

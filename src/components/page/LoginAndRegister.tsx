@@ -33,7 +33,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
     const {loginSuccessAction} = useAuthActions();
     const {userData} = useAuthSelectors();
     
-    const { register, handleSubmit } = useForm<RegisterForm>();
+    const { register, handleSubmit } = useForm<RegisterForm>({defaultValues: {roles_id: [Roles.cliente]}});
     
     useEffect(() => {
         if(userData) router.push(`/user/${userData.id_usuarios}`);
@@ -177,7 +177,7 @@ export default  function LoginAndRegister({isRegister}: {isRegister: boolean}) {
                                         id="cliente"
                                         {...register("roles_id")}
                                         value={Roles.cliente}
-                                        defaultChecked={true}
+                                        //defaultChecked={true}
                                         className={"check"}
                                         data-testid="check-client"
                                     />

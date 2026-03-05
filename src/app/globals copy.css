@@ -3,7 +3,7 @@
 @import 'tailwindcss';
 
 * {
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto", serif;
 
     &::selection {
         color: #fff;
@@ -11,37 +11,24 @@
     }
 }
 
-@theme {
-    --color-color1: #150a33;
-    --color-color2: #1c0950;
-    --color-color3: #fff;
-    --color-color4: #9b51e0;
-    --color-color5: #512fad;
-    --color-color6: rgb(247, 52, 94);
-    --color-color7: #22c8e5;
-    --color-color8: #a08fc3;
-    --color-color9: #f3f2f6;
-    --color-color10: #969696;
-}
-
 /*================================== GLOBAL UTILITIES =========*/
-@utility g-transition {
-    @apply transition-all duration-[.3s] ease-in-out;
-}
-
-@utility all-center {
-    @apply flex items-center justify-center;
+.all-center {
+    @apply flex items-center justify-center
 }
 
 .flex-center-between {
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between
+}
+
+.g-transition {
+    @apply transition-all duration-[.3s] ease-in-out
 }
 
 .w-content {
-    @apply px-7 lg:px-14 max-w-[1280px] m-auto;
+    @apply px-7 lg:px-14 max-w-[1280px] m-auto
 }
 
-@utility btn-main {
+.btn-main {
     @apply rounded-full text-color3 py-2 px-10 g-transition font-semibold;
 }
 
@@ -63,7 +50,7 @@
     }
 }
 
-@utility animate-pulse {
+.animate-pulse {
     animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
 }
 
@@ -76,7 +63,7 @@
 }
 
 /*-------------------------- FORMS ----------------- */
-@utility input-sizes {
+.input-sizes {
     @apply  w-full max-w-[400px] px-7 py-2 lg:py-3;
 }
 
@@ -84,7 +71,7 @@
     @apply text-color2 font-normal mb-2 text-center;
 }
 
-@utility input-styles {
+.input-styles {
     @apply placeholder:text-[rgba(28,9,80,0.5)] focus:placeholder:text-color2 text-color2 font-medium  bg-color9 outline-color2 focus:bg-color3 text-sm md:text-lg;
 }
 
@@ -114,11 +101,11 @@
 }
 
 .custom-check {
-    @apply w-4 h-4 lg:w-5 lg:h-5 bg-color5 rounded-sm all-center;
+    @apply w-4 h-4 block lg:w-5 lg:h-5 bg-color5 rounded-sm all-center;
 }
 
 .custom-ratio {
-    @apply w-5 h-5 lg:w-6 lg:h-6 bg-color5 rounded-full relative all-center;
+    @apply w-5 h-5 block lg:w-6 lg:h-6 bg-color5 rounded-full relative all-center;
 
     &:after {
         content: "";
@@ -156,7 +143,7 @@
     box-shadow: 0 20px 30px 0 rgba(28, 9, 80, .05);
 }
 
-@utility dropdown-shadow {
+.dropdown-shadow {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -197,7 +184,7 @@
 }
 
 /*--------------------- SERVICES PAGE---------*/
-@utility shadow-card {
+.shadow-card {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
