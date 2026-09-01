@@ -12,6 +12,7 @@ import type { Service } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 
 import useGetData from "@/hooks/useGetData";
+import { MOCK_SERVICES } from "@/mockDB";
 
 const SkeletonService = () => {
     return (
@@ -47,12 +48,18 @@ export default function Page({ idService }: { idService: string }) {
     useEffect(() => {
         const getService = async () => {
             try {
-                const res = await GET_services("/servicios/" + idService);
+                /*const res = await GET_services("/servicios/" + idService);
 
                 console.log(res);
 
                 if(res.servicio) {
                     setFetchData(res.servicio);
+                }*/
+
+                const servicio = MOCK_SERVICES.find(service => service.id_servicios.toString() === idService);
+
+                if(servicio) {
+                    setFetchData(servicio);
                 }
             } catch (error) {
                 if(error instanceof Error) {

@@ -15,9 +15,11 @@ import ErrorComponent from "@/components/ui/Error";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { CategoriesService } from "@/types/forms";
+import { AvailabilityService, CategoriesService, Roles, UserType } from "@/types/forms";
 
 import useGetData from "@/hooks/useGetData";
+
+import { MOCK_SERVICES } from "@/mockDB";
 
 const SkeletonServiceCard = () => {
     return (
@@ -71,7 +73,7 @@ export default function Services() {
             setLoadingData(true);
 
             try {
-                const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
+                /*const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
 
                 if (res.length > 0) {
                     setFetchData(res);
@@ -84,7 +86,9 @@ export default function Services() {
 
                 if (res.error) {
                     throw new Error("Error inesperado");
-                }
+                }*/
+
+                    setFetchData(MOCK_SERVICES);
             } catch (error) {
                 if (error instanceof Error) {
                     console.log(error);

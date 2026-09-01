@@ -9,6 +9,7 @@ import type { UserData } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 
 import useGetData from "@/hooks/useGetData";
+import { MOCK_USERS } from "@/mockDB";
 
 const SkeletonUser = () => {
     return (
@@ -41,12 +42,18 @@ export default function User({ userId }: { userId: string }) {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await GET_user(userId);
+                /*const response = await GET_user(userId);
 
                 console.log(response);
 
                 if (response.usuario) {
                     setFetchData(response.usuario);
+                }*/
+
+                const usuario = MOCK_USERS.find(user => user.id_usuarios.toString() === userId);
+
+                if (usuario) {
+                    setFetchData(usuario);
                 }
             } catch (error) {
                 if(error instanceof Error) {
