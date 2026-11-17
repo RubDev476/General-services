@@ -77,7 +77,7 @@ describe("Create Service Page", () => {
         await userEvent.type(description, "Test Description");
         await userEvent.type(price, "100");
         await userEvent.type(location, "Test Location");
-        await userEvent.selectOptions(category2[0], "CINES Y TEATROS");
+        await userEvent.selectOptions(category2[0], "TARJETAS GRAFICAS");
         await userEvent.selectOptions(category2[1], "DISPONIBLE");
 
         await userEvent.click(button);

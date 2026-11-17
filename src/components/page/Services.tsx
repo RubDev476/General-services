@@ -38,20 +38,39 @@ const SkeletonServiceCard = () => {
 
 const ServiceCard = ({service}: {service: Service}) => {
     return (
-        <Link href={`/service/${service.id_servicios}`}>
-            <article className="rounded-md shadow-service cursor-pointer sm:flex overflow-hidden sm:max-h-[200px]">
-                <div className="w-auto sm:w-full sm:max-w-[300px] h-[200px] relative rounded-md sm:rounded-t-none  sm:rounded-l-md">
-                    <Image src={service.imagen} alt="service-img" fill priority className="rounded-t-md sm:rounded-t-none sm:rounded-l-lg object-cover" sizes="20vw" />
+        <Link href={`/service/${service.id_servicios}`} className="block group">
+            <article className="bg-color3 rounded-xl border border-color8/20 shadow-md group-hover:shadow-xl group-hover:border-color5/40 transition-all duration-300 cursor-pointer sm:flex overflow-hidden sm:min-h-[190px]">
+                <div className="w-auto sm:w-[260px] sm:min-w-[260px] h-[210px] sm:h-auto relative overflow-hidden bg-color1">
+                    <Image src={service.imagen} alt="service-img" fill priority className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, 260px" />
+                    <span className="absolute top-2 left-2 bg-color1/80 backdrop-blur-md text-color3 text-xs font-semibold px-2.5 py-1 rounded-md border border-color3/20 shadow">
+                        {service.disponibilidad_servicio?.estado || "DISPONIBLE"}
+                    </span>
                 </div>
 
-                <div className="py-4 px-4 w-full">
-                    <h4 className="text-color2 font-semibold text-xl">{service.nombre}</h4>
+                <div className="p-5 w-full flex flex-col justify-between">
+                    <div>
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                            <span className="text-xs uppercase tracking-wider font-semibold text-color5 bg-color9 px-2 py-0.5 rounded">
+                                {service.tipos_servicio?.tipo || "HARDWARE"}
+                            </span>
+                            <span className="text-xs text-color8">
+                                <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-color6" /> {service.ubicacion}
+                            </span>
+                        </div>
+                        <h4 className="text-color2 font-bold text-lg lg:text-xl group-hover:text-color5 transition-colors line-clamp-2">
+                            {service.nombre}
+                        </h4>
+                    </div>
 
-                    <hr className="text-color8 mb-4" />
-
-                    <p className="text-color6 font-bold mb-2 text-xl">{`$ ${service.precio}`}</p>
-
-                    <p className="text-color2 text-sm"><FontAwesomeIcon icon={faLocationDot} className="text-sm" /> {service.ubicacion}</p>
+                    <div className="mt-4 pt-3 border-t border-color8/20 flex items-center justify-between">
+                        <div>
+                            <span className="text-xs text-color10 block">Precio</span>
+                            <p className="text-color6 font-extrabold text-2xl leading-none">{`$${service.precio}`}</p>
+                        </div>
+                        <span className="text-xs font-semibold text-color5 group-hover:text-color6 transition-colors flex items-center gap-1">
+                            Ver detalles &rarr;
+                        </span>
+                    </div>
                 </div>
             </article>
         </Link>
@@ -123,13 +142,33 @@ export default function Services() {
     return (
         <>
             <div className="mt-6">
-                <div className="w-content flex">
-                    <button className="bg-color5 text-color3 py-1 px-3 overflow-hidden max-h-[32px]" onClick={() => setModalFilters(true)}><FontAwesomeIcon icon={faFilter} /> Filtros</button>
+                <div className="w-content flex items-center justify-between">
+                    <div className="flex gap-3">
+                        <button className="bg-color5 hover:bg-color6 g-transition text-color3 py-1.5 px-4 rounded-lg font-medium text-sm flex items-center gap-2 shadow" onClick={() => setModalFilters(true)}>
+                            <FontAwesomeIcon icon={faFilter} /> Filtros
+                        </button>
 
-                    <Link href={"/services"} className="ml-4 bg-color5 text-color3 py-1 px-3">Limpiar filtros</Link>
+                        <Link href={"/services"} className="bg-color9 hover:bg-color8/20 text-color2 g-transition py-1.5 px-4 rounded-lg font-medium text-sm border border-color8/30">
+                            Limpiar filtros
+                        </Link>
+                    </div>
+
+                    <Link href={"/create-service"} className="hidden sm:inline-flex bg-color6 hover:bg-color5 g-transition text-color3 py-1.5 px-4 rounded-lg font-semibold text-sm shadow">
+                        + Vender artículo
+                    </Link>
                 </div>
 
-                <h1 className="text-center text-4xl lg:text-7xl font-bold text-color2 mt-7">Servicios</h1>
+                <div className="text-center mt-6 mb-8 w-content">
+                    <span className="text-xs uppercase tracking-widest font-semibold text-color6 bg-color6/10 px-3 py-1 rounded-full border border-color6/20 inline-block mb-3">
+                        Catálogo de Hardware & Gaming
+                    </span>
+                    <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-color2">
+                        Explorar Componentes & Setups
+                    </h1>
+                    <p className="text-color10 text-sm sm:text-base lg:text-lg mt-2 max-w-2xl mx-auto">
+                        Tarjetas gráficas, procesadores, PCs armadas y periféricos nuevos y seminuevos con trato directo.
+                    </p>
+                </div>
             </div>
 
             {modalFilters && (
@@ -154,13 +193,13 @@ export default function Services() {
 
                                 <select className="input mb-5" {...register("categoria")} role="combobox">
                                     <option value="">Selecciona categoria:</option>
-                                    <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
-                                    <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
-                                    <option value={CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}>{CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}</option>
-                                    <option value={CategoriesService.HOTELES_Y_HOSPEDAJES}>{CategoriesService.HOTELES_Y_HOSPEDAJES}</option>
-                                    <option value={CategoriesService.RESTAURANTES_Y_BARES}>{CategoriesService.RESTAURANTES_Y_BARES}</option>
-                                    <option value={CategoriesService.SALONES_DE_EVENTOS}>{CategoriesService.SALONES_DE_EVENTOS}</option>
-                                    <option value={CategoriesService.SPA_Y_MASAJES}>{CategoriesService.SPA_Y_MASAJES}</option>
+                                    <option value={CategoriesService.TARJETAS_GRAFICAS}>{CategoriesService.TARJETAS_GRAFICAS}</option>
+                                    <option value={CategoriesService.PROCESADORES_Y_CPUS}>{CategoriesService.PROCESADORES_Y_CPUS}</option>
+                                    <option value={CategoriesService.PCS_GAMING_COMPLETAS}>{CategoriesService.PCS_GAMING_COMPLETAS}</option>
+                                    <option value={CategoriesService.MONITORES_Y_PANTALLAS}>{CategoriesService.MONITORES_Y_PANTALLAS}</option>
+                                    <option value={CategoriesService.PERIFERICOS_Y_ACCESORIOS}>{CategoriesService.PERIFERICOS_Y_ACCESORIOS}</option>
+                                    <option value={CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}</option>
+                                    <option value={CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}</option>
                                     <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
                                 </select>
 

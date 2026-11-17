@@ -164,13 +164,13 @@ export default function EditService({id}: {id: string}) {
 
                     <p className="label">Categoria: </p>
                     <select defaultValue={fetchData.tipos_servicio.tipo} className="input mb-5" {...register("tipos_servicio_id")}>
-                        <option value={CategoriesService.ALQUILER_DE_VEHICULOS}>{CategoriesService.ALQUILER_DE_VEHICULOS}</option>
-                        <option value={CategoriesService.CINES_Y_TEATROS}>{CategoriesService.CINES_Y_TEATROS}</option>
-                        <option value={CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}>{CategoriesService.GIMNASIOS_Y_ENTRENAMIENTOS}</option>
-                        <option value={CategoriesService.HOTELES_Y_HOSPEDAJES}>{CategoriesService.HOTELES_Y_HOSPEDAJES}</option>
-                        <option value={CategoriesService.RESTAURANTES_Y_BARES}>{CategoriesService.RESTAURANTES_Y_BARES}</option>
-                        <option value={CategoriesService.SALONES_DE_EVENTOS}>{CategoriesService.SALONES_DE_EVENTOS}</option>
-                        <option value={CategoriesService.SPA_Y_MASAJES}>{CategoriesService.SPA_Y_MASAJES}</option>
+                        <option value={CategoriesService.TARJETAS_GRAFICAS}>{CategoriesService.TARJETAS_GRAFICAS}</option>
+                        <option value={CategoriesService.PROCESADORES_Y_CPUS}>{CategoriesService.PROCESADORES_Y_CPUS}</option>
+                        <option value={CategoriesService.PCS_GAMING_COMPLETAS}>{CategoriesService.PCS_GAMING_COMPLETAS}</option>
+                        <option value={CategoriesService.MONITORES_Y_PANTALLAS}>{CategoriesService.MONITORES_Y_PANTALLAS}</option>
+                        <option value={CategoriesService.PERIFERICOS_Y_ACCESORIOS}>{CategoriesService.PERIFERICOS_Y_ACCESORIOS}</option>
+                        <option value={CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}</option>
+                        <option value={CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}</option>
                         <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
                     </select>
 
