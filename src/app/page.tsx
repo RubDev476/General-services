@@ -40,7 +40,7 @@ export default function Home() {
                         <div className="inline-flex items-center gap-2 bg-color3/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-color3/20 mb-6 shadow-sm">
                             <span className="w-2 h-2 rounded-full bg-color7 animate-pulse"></span>
                             <span className={'text-color7 tracking-[2px] font-bold text-xs uppercase'}>
-                                G-SERVICES • HARDWARE & GAMING MARKETPLACE
+                                NEXT LOOT • HARDWARE & GAMING MARKETPLACE
                             </span>
                         </div>
                         

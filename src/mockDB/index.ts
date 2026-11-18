@@ -173,5 +173,175 @@ export const MOCK_SERVICES = [
             estado: AvailabilityService.DISPONIBLE
         },
         usuarios_proveedores: MOCK_USERS[4]
+    },
+    {
+        id_servicios: 6,
+        nombre: 'AMD Radeon RX 7900 XTX 24GB Sapphire Nitro+ Vapor-X',
+        descripcion: 'Tope de gama de AMD con 24GB VRAM GDDR6. Cámara de vapor integrada, disipador triple fan con iluminación ARGB continua. Rinde a la par de la RTX 4080 Super en rasterizado puro. Solo 3 meses de uso para edición de video y render 3D. Se entrega con soporte y caja original.',
+        precio: 890,
+        ubicacion: 'Ciudad de México, Miguel Hidalgo',
+        imagen: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 1,
+            tipo: CategoriesService.TARJETAS_GRAFICAS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[0]
+    },
+    {
+        id_servicios: 7,
+        nombre: 'Procesador Intel Core i7-14700K 20 Núcleos 28 Hilos hasta 5.6GHz',
+        descripcion: 'Procesador LGA1700 ideal para gaming competitivo y creación de contenido pesada. 8 P-Cores y 12 E-Cores. Nunca se le hizo delid ni overclock extremo, siempre refrigerado con AIO de 360mm por debajo de 68 grados. Pines de socket impecables, se entrega con caja.',
+        precio: 340,
+        ubicacion: 'Guadalajara, Providencia',
+        imagen: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 2,
+            tipo: CategoriesService.PROCESADORES_Y_CPUS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[1]
+    },
+    {
+        id_servicios: 8,
+        nombre: 'Monitor Curvo Ultrawide 34" Samsung Odyssey OLED G8 175Hz',
+        descripcion: 'Pantalla curva 1800R con resolución UWQHD (3440 x 1440). Procesador Neo Quantum para colores vibrantes y negros absolutos con tiempo de respuesta de 0.03ms. Incluye control remoto Smart TV integrado, cable micro-HDMI y base de aluminio original.',
+        precio: 799,
+        ubicacion: 'Monterrey, Valle Oriente',
+        imagen: 'https://images.unsplash.com/photo-1547119957-637f8679db1e?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 4,
+            tipo: CategoriesService.MONITORES_Y_PANTALLAS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[2]
+    },
+    {
+        id_servicios: 9,
+        nombre: 'Mouse Gaming Wireless Logitech G Pro X Superlight 2 Lightspeed',
+        descripcion: 'Mouse profesional de esports con peso pluma de solo 60 gramos. Sensor HERO 2 con 32,000 DPI y switches óptico-mecánicos híbridos Lightforce. Duración de batería de hasta 95 horas continuas. Skates de PTFE cambiados por unos Tiger Ice v2 para deslizamiento superior.',
+        precio: 115,
+        ubicacion: 'Ciudad de México, Tlalpan',
+        imagen: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 5,
+            tipo: CategoriesService.PERIFERICOS_Y_ACCESORIOS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[3]
+    },
+    {
+        id_servicios: 10,
+        nombre: 'Nintendo Switch OLED Edición Especial Zelda Tears of the Kingdom',
+        descripcion: 'Consola edición de colección con diseño dorado hyliano en dock y Joy-Cons temáticos. Pantalla OLED de 7 pulgadas con mica de cristal templado instalada desde el primer día. Incluye cargador original, dock con puerto LAN y estuche rígido de viaje.',
+        precio: 310,
+        ubicacion: 'Querétaro, Centro',
+        imagen: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 6,
+            tipo: CategoriesService.CONSOLAS_Y_VIDEOJUEGOS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[4]
+    },
+    {
+        id_servicios: 11,
+        nombre: 'Kit Memoria RAM Corsair Dominator Titanium DDR5 64GB (2x32GB) 6000MHz',
+        descripcion: 'Módulos de alta gama en color blanco mate con barras superiores intercambiables e iluminación ARGB individualmente direccionable. Perfil XMP 3.0 / EXPO con latencias CL30 optimizadas para procesadores Ryzen 7000/9000 e Intel 14va gen.',
+        precio: 220,
+        ubicacion: 'Ciudad de México, Cuauhtémoc',
+        imagen: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 7,
+            tipo: CategoriesService.COMPONENTES_Y_ALMACENAMIENTO
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[0]
+    },
+    {
+        id_servicios: 12,
+        nombre: 'Mini PC Gamer SFF: Ryzen 5 7600X + RTX 4060 Ti 16GB en Gabinete ITX',
+        descripcion: 'Ensamble ultra compacto de solo 11 litros de volumen (Gabinete Fractal Terra Jade). Placa base B650I AORUS Ultra, 32GB DDR5, disipador Noctua NH-L9a, fuente SFX Corsair SF750 Platinum. Máxima portabilidad para llevar a torneos o colocar discretamente en tu escritorio.',
+        precio: 980,
+        ubicacion: 'Guadalajara, Chapultepec',
+        imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 3,
+            tipo: CategoriesService.PCS_GAMING_COMPLETAS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[1]
+    },
+    {
+        id_servicios: 13,
+        nombre: 'Auriculares Inalámbricos SteelSeries Arctis Nova Pro Wireless',
+        descripcion: 'Audio espacial 360 con cancelación activa de ruido (ANC). Sistema dual de batería intercambiable para juego ininterrumpido. Estación base OLED para ecualización en tiempo real y conexión simultánea a PC y consola por Bluetooth y 2.4GHz.',
+        precio: 240,
+        ubicacion: 'Monterrey, Cumbres',
+        imagen: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 5,
+            tipo: CategoriesService.PERIFERICOS_Y_ACCESORIOS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[2]
+    },
+    {
+        id_servicios: 14,
+        nombre: 'Gabinete Gamer Lian Li O11 Dynamic EVO RGB Blanco + 9 Fans ARGB',
+        descripcion: 'Chasis de doble cámara con paneles de cristal templado sin pilares frontales para vista panorámica. Tiras RGB duales difusas. Se entrega con kit de 9 ventiladores Lian Li UNI FAN SL-Infinity 120mm con controlador de efectos L-Connect.',
+        precio: 175,
+        ubicacion: 'Ciudad de México, Polanco',
+        imagen: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 7,
+            tipo: CategoriesService.COMPONENTES_Y_ALMACENAMIENTO
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[3]
+    },
+    {
+        id_servicios: 15,
+        nombre: 'Consola Portátil Steam Deck OLED 1TB + Dock Oficial 4K + Estuche',
+        descripcion: 'Pantalla OLED HDR de 7.4 pulgadas a 90Hz con colores espectaculares. Almacenamiento NVMe de 1TB de alta velocidad y cristal grabado antirreflejos. Incluye estación de acoplamiento Steam Deck Docking Station oficial con salida HDMI 2.0 y DisplayPort.',
+        precio: 520,
+        ubicacion: 'Querétaro, El Campanario',
+        imagen: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&fit=crop&w=800&q=80',
+        tipos_servicio: {
+            id_tipos_servicio: 6,
+            tipo: CategoriesService.CONSOLAS_Y_VIDEOJUEGOS
+        },
+        disponibilidad_servicio: {
+            id_disponibilidad_servicio: 1,
+            estado: AvailabilityService.DISPONIBLE
+        },
+        usuarios_proveedores: MOCK_USERS[4]
     }
 ];

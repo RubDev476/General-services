@@ -1,4 +1,4 @@
-# General Services
+# Next Loot - Hardware & Gaming Marketplace
 Main technologies:
 
 - TypeScript

@@ -28,9 +28,9 @@ export default function Footer(){
                 {/* Brand & info */}
                 <div className="md:col-span-2">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className={'text-color3 bg-gradient-to-tr from-color5 via-color6 to-color7 text-xl px-2.5 py-1 rounded-lg font-black shadow'}>G</span>
+                        <span className={'text-color3 bg-gradient-to-tr from-color5 via-color6 to-color7 text-lg px-2.5 py-1 rounded-lg font-black shadow tracking-tight'}>NL</span>
                         <div>
-                            <span className="tracking-tight text-xl font-extrabold text-color3 block leading-none">G-SERVICES</span>
+                            <span className="tracking-tight text-xl font-extrabold text-color3 block leading-none">NEXT LOOT</span>
                             <span className="text-[10px] font-bold text-color7 tracking-wider uppercase">Hardware & Gaming Marketplace</span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ export default function Footer(){
             
             <div className={"bg-color2 border-t border-color8/10 w-full"}>
                 <div className={"w-content flex flex-col sm:flex-row items-center justify-between py-6 gap-2 text-xs sm:text-sm text-color8"}>
-                    <p>© {new Date().getFullYear().toString()} G-Services. Todos los derechos reservados.</p>
+                    <p>© {new Date().getFullYear().toString()} Next Loot. Todos los derechos reservados.</p>
                     <p className={"text-color3"}>
                         Creado por <Link href={"https://github.com/RubDev666"} target={"_blank"} className={"text-color7 hover:text-color6 font-semibold g-transition"}>Rubdeveloper</Link> y <Link href={"https://github.com/martin-alexis"} target={"_blank"} className={"text-color7 hover:text-color6 font-semibold g-transition"}>martin-alexis</Link>
                     </p>

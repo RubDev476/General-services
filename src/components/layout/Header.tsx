@@ -171,11 +171,11 @@ export default function Header() {
                 <div className={'w-content flex-center-between py-3 md:py-4 lg:h-20'}>
                     {/* BRAND LOGO */}
                     <Link href={'/'} className={'font-bold text-color2 text-xl md:text-2xl flex items-center gap-2.5 group'}>
-                        <span className={'text-color3 bg-gradient-to-tr from-color5 via-color6 to-color7 text-xl md:text-2xl px-2.5 py-1 rounded-xl font-black shadow-md shadow-color5/20 group-hover:scale-105 transition-transform'}>
-                            G
+                        <span className={'text-color3 bg-gradient-to-tr from-color5 via-color6 to-color7 text-lg md:text-xl px-2.5 py-1 rounded-xl font-black shadow-md shadow-color5/20 group-hover:scale-105 transition-transform tracking-tight'}>
+                            NL
                         </span>
                         <div className="flex flex-col leading-none">
-                            <span className="tracking-tight text-lg md:text-xl font-extrabold text-color2">G-SERVICES</span>
+                            <span className="tracking-tight text-lg md:text-xl font-extrabold text-color2">NEXT LOOT</span>
                             <span className="text-[10px] font-bold text-color6 tracking-wider uppercase mt-0.5">Hardware & Gaming</span>
                         </div>
                     </Link>

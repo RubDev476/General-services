@@ -8,7 +8,7 @@ export default function FormLayout({nameForm, children}: FormLayoutProps) {
 
             <div className="text-center mb-8 relative z-10">
                 <span className="text-[11px] uppercase tracking-widest font-extrabold text-color6 bg-color6/10 px-3.5 py-1 rounded-full border border-color6/20 inline-block mb-3">
-                    G-Services • Acceso
+                    Next Loot • Acceso
                 </span>
                 <h1 className={"text-color2 text-center text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight"}>{nameForm}</h1>
                 <p className="text-color10 text-sm sm:text-base mt-2 max-w-md mx-auto">
