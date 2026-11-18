@@ -15,6 +15,7 @@ export type ErrorProps = Record<"title" | "message", string>;
 export type FormLayoutProps = {
     nameForm: string;
     children: React.ReactNode;
+    maxWidth?: string;
 }
 
 export type DropzoneProps = {
