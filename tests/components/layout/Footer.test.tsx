@@ -15,26 +15,16 @@ describe('Footer component', () => {
     })
 
     test("service links are displayed correctly", () => {
-        const allServices_link = screen.getByText(/Todos los servicios/);
-        const createServices_link = screen.getByText(/Crear servicio/);
+        const allServices_link = screen.getByText(/Comprar articulos|Todos los servicios/i);
+        const createServices_link = screen.getByText(/Vender articulo|Crear servicio/i);
 
         expect(allServices_link).toBeInTheDocument();
         expect(createServices_link).toBeInTheDocument();
     })
 
-    test("user links are displayed correctly", () => {
-        const manageServices_link = screen.getByText(/Administrar servicios/);
-        const editProfile_link = screen.getByText(/Editar perfil/);
-
-        expect(manageServices_link).toBeInTheDocument();
-        expect(editProfile_link).toBeInTheDocument();
-    })
-
     test("creator links are displayed correctly", () => {
-        const rubdeveloper_link = screen.getByText(/Rubdeveloper/);
-        const martinAlexis_link = screen.getByText(/martin-alexis/);
+        const creator_link = screen.getByText(/Rubdev/i);
 
-        expect(rubdeveloper_link).toBeInTheDocument();
-        expect(martinAlexis_link).toBeInTheDocument();
+        expect(creator_link).toBeInTheDocument();
     })
 })

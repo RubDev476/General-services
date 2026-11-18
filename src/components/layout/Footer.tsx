@@ -38,26 +38,26 @@ export default function Footer(){
                         La plataforma de compra y venta directa para entusiastas del gaming y tecnología. Encuentra tarjetas gráficas, procesadores, PCs custom y consolas al mejor precio.
                     </p>
                     <span className="inline-block text-xs bg-color3/10 text-color7 px-3 py-1 rounded-full border border-color7/30">
-                        ⚡ Nuevos & Seminuevos certificados
+                        ⚡ Nuevos & Seminuevos
                     </span>
                 </div>
 
-                <UlContainer title="Servicios">
-                    <LiItems url="/services" name="Todos los servicios" />
-                    <LiItems url="/create-service" name="Crear servicio" />
+                <UlContainer title="Marketplace">
+                    <LiItems url="/services" name="Comprar articulos" />
+                    <LiItems url="/create-service" name="Vender articulo" />
                 </UlContainer>
 
-                <UlContainer title="Usuarios">
+                {/*<UlContainer title="Usuarios">
                     <LiItems url="/my-services" name="Administrar servicios" />
                     <LiItems url="/edit-profile" name="Editar perfil" />
-                </UlContainer>
+                </UlContainer>*/}
             </div>
             
             <div className={"bg-color2 border-t border-color8/10 w-full"}>
                 <div className={"w-content flex flex-col sm:flex-row items-center justify-between py-6 gap-2 text-xs sm:text-sm text-color8"}>
                     <p>© {new Date().getFullYear().toString()} Next Loot. Todos los derechos reservados.</p>
                     <p className={"text-color3"}>
-                        Creado por <Link href={"https://github.com/RubDev666"} target={"_blank"} className={"text-color7 hover:text-color6 font-semibold g-transition"}>Rubdeveloper</Link> y <Link href={"https://github.com/martin-alexis"} target={"_blank"} className={"text-color7 hover:text-color6 font-semibold g-transition"}>martin-alexis</Link>
+                        Creado por <Link href={"https://github.com/RubDev476"} target={"_blank"} className={"text-color7 hover:text-color6 font-semibold g-transition"}>Rubdev476</Link>
                     </p>
                 </div>
             </div>

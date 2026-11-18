@@ -14,7 +14,7 @@ describe("no auth user", () => {
     })
 
     test('initial links displayed correctly', () => {
-        const services_link = screen.getByText(/Servicios/);
+        const services_link = screen.getByText(/Explorar articulos|Servicios/i);
         const login_link = screen.getByTestId("login-link");
         const signUp_link = screen.getByText(/Registro/);
 

@@ -48,15 +48,12 @@ export default function Home() {
                             Compra, vende y actualiza tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-color7 via-color3 to-color6">setup gamer</span>.
                         </h1>
                         
-                        <p className={"text-color8 font-normal text-base sm:text-xl lg:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed"}>
+                        <p className={"text-color3 font-normal text-base sm:text-xl lg:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed"}>
                             Encuentra tarjetas gráficas, procesadores, PCs armadas y periféricos nuevos o seminuevos con trato directo y seguro entre usuarios y tiendas.
                         </p>
                         
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Link href={'/create-service'} className={'btn-2 text-base sm:text-lg py-3 px-8 shadow-lg'}>
-                                Comenzar a vender
-                            </Link>
-                            <Link href={'/services'} className={'btn-1 text-base sm:text-lg py-3 px-8 shadow-lg'}>
+                            <Link href={'/services'} className={'btn-2 text-base sm:text-lg py-3 px-8 shadow-lg'}>
                                 Explorar artículos
                             </Link>
                         </div>
@@ -144,7 +141,7 @@ export default function Home() {
                             Publica gratis tu tarjeta gráfica, procesador o consola usada y conecta con gamers listos para comprar en tu zona.
                         </p>
 
-                        <Link href={'/create-service'} className={'btn-2 inline-block text-base sm:text-lg py-3 px-10'}>
+                        <Link href={'/create-service'} className={'btn-1 inline-block text-base sm:text-lg py-3 px-10'}>
                             Publicar un artículo ahora
                         </Link>
                     </div>
@@ -155,13 +152,13 @@ export default function Home() {
             <section className="py-12 bg-color9">
                 <div className={"w-content relative"}>
                     <div className="text-center mb-8">
-                        <h3 className="text-color2 text-2xl sm:text-3xl font-bold">Últimas publicaciones y setups</h3>
-                        <p className="text-color10 text-sm mt-1">Explora artículos publicados recientemente por la comunidad</p>
+                        <h3 className="text-color2 text-2xl sm:text-3xl font-bold">Multiples componentes y setups</h3>
+                        <p className="text-color10 text-sm mt-1">Explora artículos publicados por la comunidad</p>
                     </div>
 
                     <div className={'absolute all-center left-0 bottom-0 z-10 text-center box-border w-full m-auto gradient-grid h-[20vh] md:h-[35vh]'}>
                         <Link href={'/services'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>
-                            Ver todos los servicios
+                            Ver todos los articulos
                         </Link>
                     </div>
                     

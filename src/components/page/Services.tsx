@@ -185,18 +185,6 @@ export default function Services() {
                         + Vender artículo
                     </Link>
                 </div>
-
-                <div className="text-center mt-6 mb-8 w-content">
-                    <span className="text-xs uppercase tracking-widest font-semibold text-color6 bg-color6/10 px-3 py-1 rounded-full border border-color6/20 inline-block mb-3">
-                        Catálogo de Hardware & Gaming
-                    </span>
-                    <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-color2">
-                        Explorar Componentes & Setups
-                    </h1>
-                    <p className="text-color10 text-sm sm:text-base lg:text-lg mt-2 max-w-2xl mx-auto">
-                        Tarjetas gráficas, procesadores, PCs armadas y periféricos nuevos y seminuevos con trato directo.
-                    </p>
-                </div>
             </div>
 
             {modalFilters && (

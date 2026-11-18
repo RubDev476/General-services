@@ -1,5 +1,5 @@
 import { test, describe, beforeAll, expect, afterAll } from "vitest";
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '@tests/setup';
 
@@ -54,5 +54,21 @@ describe('mobile size', () => {
 
         expect(navMobile).toHaveClass("left-0");
         expect(navMobile).not.toHaveClass("left-[-100%]");
-    })
+    });
+
+    test("resizing window to desktop size (>= 1024px) closes nav mobile and resets button icon", async () => {
+        window.innerWidth = 1024;
+        window.dispatchEvent(new Event('resize'));
+
+        const menuButton = screen.getByRole("button");
+        const navMobile = screen.getByTestId("nav-mobile");
+
+        await waitFor(() => {
+            const icon = menuButton.querySelector('svg');
+            expect(icon).toHaveClass("fa-bars");
+            expect(icon).not.toHaveClass("fa-xmark");
+            expect(navMobile).toHaveClass("left-[-100%]");
+            expect(navMobile).not.toHaveClass("left-0");
+        });
+    });
 })

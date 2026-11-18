@@ -6,9 +6,9 @@ import Home from "@/app/page";
 test("main links displayed", () => {
     render(<Home />);
 
-    const start_link = screen.getByText(/Comenzar/);
-    const viewAllServices_link = screen.getByText(/Ver todos los servicios/);
+    const explore_link = screen.getByRole('link', { name: /Explorar artículos/i });
+    const publish_link = screen.getByRole('link', { name: /Publicar un artículo ahora/i });
 
-    expect(start_link).toBeInTheDocument();
-    expect(viewAllServices_link).toBeInTheDocument();
+    expect(explore_link).toBeInTheDocument();
+    expect(publish_link).toBeInTheDocument();
 })

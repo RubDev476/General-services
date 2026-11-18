@@ -76,27 +76,11 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
 
     return (
         <>
-            <Link
-                href={'/services'}
-                className={`font-semibold g-transition ${
-                    mobileSize
-                        ? 'w-full px-4 py-3 rounded-2xl bg-color9/80 text-color2 hover:text-color5 flex items-center justify-between text-base'
-                        : 'px-4 py-2 rounded-xl text-color2 hover:text-color5 hover:bg-color9/80 text-sm lg:text-base'
-                }`}
-            >
-                <span>Servicios & Hardware</span>
-                {mobileSize && <span className="text-xs text-color5 font-bold uppercase">&rarr;</span>}
-            </Link>
-
             {!userData ? (
                 <>
                     <Link
                         href={'/login'}
-                        className={`font-semibold g-transition ${
-                            mobileSize
-                                ? 'w-full px-4 py-3 rounded-2xl border border-color8/30 text-color2 hover:text-color5 text-center text-base'
-                                : 'px-4 py-2 rounded-full text-color2 hover:text-color5 hover:bg-color9/80 text-sm lg:text-base border border-transparent hover:border-color8/20'
-                        }`}
+                        className={`font-semibold g-transition px-4 py-2 rounded-full text-color2 hover:text-color5 hover:bg-color9/80  lg:text-base border border-transparent hover:border-color8/20 ${mobileSize ? "w-full text-center" : ""} max-w-[500px] mx-auto`}
                         data-testid="login-link"
                     >
                         Iniciar sesion
@@ -104,9 +88,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
 
                     <Link
                         href={'/register'}
-                        className={`btn-1 font-bold shadow-md shadow-color6/20 text-center ${
-                            mobileSize ? 'w-full py-3 text-base' : 'py-2 px-6 text-sm lg:text-base'
-                        }`}
+                        className={`font-semibold g-transition px-4 py-2 rounded-full text-color2 hover:text-color5 hover:bg-color9/80  lg:text-base border border-transparent hover:border-color8/20 ${mobileSize ? "w-full text-center" : ""} max-w-[500px] mx-auto`}
                     >
                         Registro
                     </Link>
@@ -145,6 +127,13 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                     )}
                 </>
             )}
+
+            <Link
+                href={'/services'}
+                className={`font-semibold g-transition btn-2 ${mobileSize ? "w-full text-center" : ""} max-w-[500px] mx-auto`}
+            >
+                <span>Explorar articulos</span>
+            </Link>
         </>
     )
 }
@@ -165,6 +154,38 @@ export default function Header() {
         setOpenMenu(false);
     }, [pathname]);
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                setOpenMenu(false);
+            }
+        };
+
+        let mql: MediaQueryList | null = null;
+        const handleMedia = (e: MediaQueryListEvent) => {
+            if (e.matches) {
+                setOpenMenu(false);
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', handleResize);
+            if (typeof window.matchMedia === 'function') {
+                mql = window.matchMedia('(min-width: 1024px)');
+                if (mql.addEventListener) {
+                    mql.addEventListener('change', handleMedia);
+                }
+            }
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (mql && mql.removeEventListener) {
+                mql.removeEventListener('change', handleMedia);
+            }
+        };
+    }, []);
+
     return (
         <>
             <header className={'sticky top-0 bg-color3/95 backdrop-blur-md border-b border-color8/20 z-[100] transition-all'}>
@@ -176,7 +197,7 @@ export default function Header() {
                         </span>
                         <div className="flex flex-col leading-none">
                             <span className="tracking-tight text-lg md:text-xl font-extrabold text-color2">NEXT LOOT</span>
-                            <span className="text-[10px] font-bold text-color6 tracking-wider uppercase mt-0.5">Hardware & Gaming</span>
+                            <span className="text-[10px] font-bold text-color6 tracking-wider uppercase mt-0.5">Hardware & Gaming Marketplace</span>
                         </div>
                     </Link>
 
