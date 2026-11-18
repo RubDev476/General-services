@@ -13,7 +13,7 @@ export type UserData = Pick<RegisterForm, "nombre" | "correo" | "telefono"> & {
     }[];
 }
 
-export type Service = {
+export type Product = {
     descripcion: string;
     disponibilidad_servicio: {
         estado: AvailabilityService;
@@ -30,3 +30,5 @@ export type Service = {
     ubicacion: string;
     usuarios_proveedores: UserData;
 }
+
+export type Service = Product;

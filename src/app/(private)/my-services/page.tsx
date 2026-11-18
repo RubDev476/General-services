@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { GET_user_services, DELETE_user_service } from "@/server-actions";
-import type { Service } from "@/types/server-response";
-import type { TableServicesProps } from "@/types/props";
+import type { Service, Product } from "@/types/server-response";
+import type { TableProductsProps, TableServicesProps } from "@/types/props";
 
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 import useGetData from "@/hooks/useGetData";
 
 import LoaderPage from "@/components/ui/LoaderPage";
 
-const TableServices = ({services, setDeleteService}: TableServicesProps) => {
+const TableProducts = ({services, setDeleteService}: TableProductsProps) => {
     return (
         <div className="my-8 flow-root">
             <div className="overflow-x-auto">
@@ -36,7 +36,7 @@ const TableServices = ({services, setDeleteService}: TableServicesProps) => {
                             {services.map((service, index) => (
                                 <tr key={service.id_servicios}>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm font-semibold">{`${index + 1}`}</td>
-                                    <td className="whitespace-nowrap py-4 px-3 text-sm font-semibold"><Link href={`/service/${service.id_servicios}`} className="hover:underline">{service.nombre}</Link></td>
+                                    <td className="whitespace-nowrap py-4 px-3 text-sm font-semibold"><Link href={`/product/${service.id_servicios}`} className="hover:underline">{service.nombre}</Link></td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm font-semibold">
                                         <Link href={`/edit-service/${service.id_servicios}`} className="mr-4 text-color5 hover:underline">Editar</Link>
                                         <button className="text-color6 hover:underline" onClick={() => setDeleteService(service)} >Eliminar</button>
@@ -123,7 +123,7 @@ export default function Page() {
 
                     {loadingData && <LoaderPage />}
 
-                    {fetchData && <TableServices services={fetchData} setDeleteService={setDeleteService} />}
+                    {fetchData && <TableProducts services={fetchData} setDeleteService={setDeleteService} />}
 
                     {(!loadingData && !fetchData) && (
                         <div className="w-full all-center my-6 h-[50vh]">

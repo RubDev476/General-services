@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faFilter, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 import { GET_services } from "@/server-actions";
-import type { Service } from "@/types/server-response";
+import type { Product, Service } from "@/types/server-response";
 import type { FilterServices } from "@/types/forms";
 
 import ErrorComponent from "@/components/ui/Error";
@@ -21,7 +21,7 @@ import useGetData from "@/hooks/useGetData";
 
 import { MOCK_SERVICES } from "@/mockDB";
 
-const SkeletonServiceCard = () => {
+const SkeletonProductCard = () => {
     return (
         <div className="bg-color3 rounded-2xl border border-color8/20 shadow-sm overflow-hidden flex flex-col h-full">
             <div className="skeleton w-full h-52 relative"></div>
@@ -48,22 +48,25 @@ const SkeletonServiceCard = () => {
     )
 }
 
-const ServiceCard = ({service}: {service: Service}) => {
+const ProductCard = ({product, service = product}: {product?: Product; service?: Service}) => {
+    const item = product || service;
+    if (!item) return null;
+
     return (
-        <Link href={`/service/${service.id_servicios}`} className="block group h-full">
+        <Link href={`/product/${item.id_servicios}`} className="block group h-full">
             <article className="bg-color3 rounded-2xl border border-color8/20 shadow-sm group-hover:shadow-xl group-hover:border-color5/40 transition-all duration-300 cursor-pointer flex flex-col h-full overflow-hidden">
                 {/* Contenedor de imagen con altura fija y controlada (nunca se deforma ni se agranda) */}
                 <div className="w-full h-52 relative overflow-hidden bg-color1 shrink-0">
                     <Image
-                        src={service.imagen}
-                        alt="service-img"
+                        src={item.imagen}
+                        alt="product-img"
                         fill
                         priority
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <span className="absolute top-3 left-3 bg-color1/80 backdrop-blur-md text-color3 text-xs font-bold px-2.5 py-1 rounded-md border border-color3/20 shadow">
-                        {service.disponibilidad_servicio?.estado || "DISPONIBLE"}
+                        {item.disponibilidad_servicio?.estado || "DISPONIBLE"}
                     </span>
                 </div>
 
@@ -72,20 +75,20 @@ const ServiceCard = ({service}: {service: Service}) => {
                     <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
                             <span className="text-[11px] font-bold uppercase tracking-wider text-color5 bg-color9 px-2 py-0.5 rounded truncate max-w-[55%]">
-                                {service.tipos_servicio?.tipo || "HARDWARE"}
+                                {item.tipos_servicio?.tipo || "HARDWARE"}
                             </span>
-                            <span className="text-xs text-color8 truncate max-w-[45%] text-right" title={service.ubicacion}>
+                            <span className="text-xs text-color8 truncate max-w-[45%] text-right" title={item.ubicacion}>
                                 <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-color6 shrink-0" />
-                                <span>{service.ubicacion}</span>
+                                <span>{item.ubicacion}</span>
                             </span>
                         </div>
 
                         {/* Título adaptable con altura mínima reservada (se adapta a textos cortos o largos sin romper las cards vecinas) */}
                         <h4
                             className="text-color2 font-bold text-base sm:text-lg group-hover:text-color5 transition-colors line-clamp-2 min-h-[2.8rem] leading-snug break-words"
-                            title={service.nombre}
+                            title={item.nombre}
                         >
-                            {service.nombre}
+                            {item.nombre}
                         </h4>
                     </div>
 
@@ -93,7 +96,7 @@ const ServiceCard = ({service}: {service: Service}) => {
                     <div className="mt-4 pt-3 border-t border-color8/20 flex items-center justify-between gap-2">
                         <div className="min-w-0">
                             <span className="text-[10px] uppercase font-bold text-color10 block">Precio</span>
-                            <p className="text-color6 font-extrabold text-2xl leading-none truncate">{`$ ${service.precio}`}</p>
+                            <p className="text-color6 font-extrabold text-2xl leading-none truncate">{`$ ${item.precio}`}</p>
                         </div>
                         <span className="text-xs font-bold text-color5 group-hover:text-color6 transition-colors flex items-center gap-1 shrink-0 bg-color9/80 px-3 py-1.5 rounded-full border border-color8/20">
                             Ver detalles &rarr;
@@ -105,7 +108,7 @@ const ServiceCard = ({service}: {service: Service}) => {
     )
 }
 
-export default function Services() {
+export default function Marketplace() {
     const [modalFilters, setModalFilters] = useState(false);
 
     const { register, handleSubmit, watch, /*reset*/ } = useForm<FilterServices>();
@@ -164,7 +167,7 @@ export default function Services() {
 
         setModalFilters(false);
         //reset();
-        router.push('/services?' + newParams.toString(), { scroll: true });
+        router.push('/marketplace?' + newParams.toString(), { scroll: true });
     }
 
     return (
@@ -176,7 +179,7 @@ export default function Services() {
                             <FontAwesomeIcon icon={faFilter} /> Filtros
                         </button>
 
-                        <Link href={"/services"} className="bg-color9 hover:bg-color8/20 text-color2 g-transition py-1.5 px-4 rounded-lg font-medium text-sm border border-color8/30">
+                        <Link href={"/marketplace"} className="bg-color9 hover:bg-color8/20 text-color2 g-transition py-1.5 px-4 rounded-lg font-medium text-sm border border-color8/30">
                             Limpiar filtros
                         </Link>
                     </div>
@@ -311,19 +314,19 @@ export default function Services() {
             <main>
                 <div className="w-content py-7">
                     {loadingData && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" data-testid="skeletons-service">
-                            <SkeletonServiceCard />
-                            <SkeletonServiceCard />
-                            <SkeletonServiceCard />
-                            <SkeletonServiceCard />
-                            <SkeletonServiceCard />
-                            <SkeletonServiceCard />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" data-testid="skeletons-product">
+                            <SkeletonProductCard />
+                            <SkeletonProductCard />
+                            <SkeletonProductCard />
+                            <SkeletonProductCard />
+                            <SkeletonProductCard />
+                            <SkeletonProductCard />
                         </div>
                     )}
 
                     {(!loadingData && fetchData) && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" data-testid="services-container">
-                            {fetchData.map((service) => <ServiceCard key={service.id_servicios} service={service} />)}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" data-testid="products-container">
+                            {fetchData.map((service) => <ProductCard key={service.id_servicios} product={service} />)}
                         </div>
                     )}
 

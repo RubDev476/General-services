@@ -129,7 +129,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
             )}
 
             <Link
-                href={'/services'}
+                href={'/marketplace'}
                 className={`font-semibold g-transition btn-2 ${mobileSize ? "w-full text-center" : ""} max-w-[500px] mx-auto`}
             >
                 <span>Explorar articulos</span>

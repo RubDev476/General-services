@@ -212,7 +212,7 @@ export default function User({ userId }: { userId: string }) {
                                 Artículos publicados ({userServices.length})
                             </h2>
                         </div>
-                        <Link href="/services" className="text-sm font-semibold text-color5 hover:text-color6 transition-colors">
+                        <Link href="/marketplace" className="text-sm font-semibold text-color5 hover:text-color6 transition-colors">
                             Ver todo el marketplace &rarr;
                         </Link>
                     </div>
@@ -222,7 +222,7 @@ export default function User({ userId }: { userId: string }) {
                             {userServices.map((service) => (
                                 <Link 
                                     key={service.id_servicios} 
-                                    href={`/service/${service.id_servicios}`}
+                                    href={`/product/${service.id_servicios}`}
                                     className="group"
                                 >
                                     <article className="bg-color3 rounded-2xl border border-color8/20 overflow-hidden shadow-md group-hover:shadow-xl group-hover:border-color5/40 transition-all flex flex-col h-full">
@@ -276,7 +276,7 @@ export default function User({ userId }: { userId: string }) {
                             <p className="text-color10 text-sm mt-1 max-w-sm mx-auto">
                                 Este usuario no tiene artículos en venta actualmente. Explora las publicaciones de otros miembros en el catálogo.
                             </p>
-                            <Link href="/services" className="btn-2 inline-block text-sm py-2 px-6 mt-4">
+                            <Link href="/marketplace" className="btn-2 inline-block text-sm py-2 px-6 mt-4">
                                 Explorar Hardware
                             </Link>
                         </div>

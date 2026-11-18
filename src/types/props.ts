@@ -1,5 +1,5 @@
 import type { UserData } from "./store";
-import type { Service } from "./server-response";
+import type { Service, Product } from "./server-response";
 import { Dispatch, SetStateAction } from "react";
 
 export type NavItemsInitialProps = {
@@ -28,10 +28,12 @@ export type PreviewImgProps = Pick<DropzoneProps, "setImg"> & {
     setPreviewImg: Dispatch<SetStateAction<string | null>>;
 }
 
-export type TableServicesProps = {
-    setDeleteService: Dispatch<SetStateAction<Service | null>>
-    services: Service[];
+export type TableProductsProps = {
+    setDeleteService: Dispatch<SetStateAction<Product | null>>;
+    services: Product[];
 }
+
+export type TableServicesProps = TableProductsProps;
 
 export type AvatarProps = {
     urlImg: string;

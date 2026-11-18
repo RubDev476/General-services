@@ -43,7 +43,7 @@ export default function Footer(){
                 </div>
 
                 <UlContainer title="Marketplace">
-                    <LiItems url="/services" name="Comprar articulos" />
+                    <LiItems url="/marketplace" name="Comprar articulos" />
                     <LiItems url="/create-service" name="Vender articulo" />
                 </UlContainer>
 

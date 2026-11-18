@@ -23,7 +23,7 @@ import ErrorForm from "@/components/ui/form/Error";
 import { ERROR_MESSAGE } from "@/utils/error-messages";
 import { PUT_img_service, PATCH_edit_service, GET_services } from "@/server-actions";
 
-export default function EditService({id}: {id: string}) {
+export default function EditProduct({id}: {id: string}) {
     const [imgFile, setImgFile] = useState<File | string | null>(null);
 
     const {loaderFetch, setErrorForm, errorForm, setLoaderFetch} = useFormStatus();
@@ -104,7 +104,7 @@ export default function EditService({id}: {id: string}) {
                 }
             }
 
-            router.push(`/service/${id}`);
+            router.push(`/product/${id}`);
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error.message);

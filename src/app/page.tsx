@@ -53,7 +53,7 @@ export default function Home() {
                         </p>
                         
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Link href={'/services'} className={'btn-2 text-base sm:text-lg py-3 px-8 shadow-lg'}>
+                            <Link href={'/marketplace'} className={'btn-2 text-base sm:text-lg py-3 px-8 shadow-lg'}>
                                 Explorar artículos
                             </Link>
                         </div>
@@ -110,7 +110,7 @@ export default function Home() {
                         {QuickCategories.map((cat, idx) => (
                             <Link
                                 key={idx}
-                                href="/services"
+                                href="/marketplace"
                                 className="bg-color3 p-4 rounded-xl border border-color8/20 hover:border-color5 hover:shadow-lg g-transition flex flex-col items-center text-center group"
                             >
                                 <div className="w-12 h-12 rounded-xl bg-color9 group-hover:bg-color5 text-color5 group-hover:text-color3 all-center text-xl mb-3 g-transition">
@@ -157,7 +157,7 @@ export default function Home() {
                     </div>
 
                     <div className={'absolute all-center left-0 bottom-0 z-10 text-center box-border w-full m-auto gradient-grid h-[20vh] md:h-[35vh]'}>
-                        <Link href={'/services'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>
+                        <Link href={'/marketplace'} className={'btn-2 shadow-[0px_20px_40px_0px_rgba(28,9,80,0.35)] md:text-xl'}>
                             Ver todos los articulos
                         </Link>
                     </div>

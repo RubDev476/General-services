@@ -8,15 +8,15 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { GET_services } from "@/server-actions";
-import type { Service } from "@/types/server-response";
+import type { Product as ProductType, Service } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 
 import useGetData from "@/hooks/useGetData";
 import { MOCK_SERVICES } from "@/mockDB";
 
-const SkeletonService = () => {
+const SkeletonProduct = () => {
     return (
-        <main className="my-7" data-testid="skeleton-service">
+        <main className="my-7" data-testid="skeleton-product">
             <div className="w-content">
                 <article className="sm:flex gap-4 overflow-hidden sm:max-h-[300px]">
                     <div className="w-auto sm:w-full sm:max-w-[400px] h-[200px] lg:h-[300px] relative">
@@ -42,8 +42,8 @@ const SkeletonService = () => {
     )
 }
 
-export default function Page({ idService }: { idService: string }) {
-    const {loadingData, setFetchData, fetchData, setLoadingData} = useGetData<Service>();
+export default function Product({ idService }: { idService: string }) {
+    const {loadingData, setFetchData, fetchData, setLoadingData} = useGetData<ProductType>();
 
     useEffect(() => {
         const getService = async () => {
@@ -73,7 +73,7 @@ export default function Page({ idService }: { idService: string }) {
         getService();
     }, [idService, setFetchData, setLoadingData])
 
-    if(loadingData) return <SkeletonService />;
+    if(loadingData) return <SkeletonProduct />;
 
     if(!fetchData && !loadingData) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
 
@@ -83,7 +83,7 @@ export default function Page({ idService }: { idService: string }) {
                 <div className="w-content">
                     {/* Breadcrumb / Category Tag */}
                     <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-color8">
-                        <Link href="/services" className="hover:text-color6 g-transition">Marketplace</Link>
+                        <Link href="/marketplace" className="hover:text-color6 g-transition">Marketplace</Link>
                         <span>/</span>
                         <span className="text-color5">{fetchData.tipos_servicio?.tipo || "HARDWARE"}</span>
                     </div>

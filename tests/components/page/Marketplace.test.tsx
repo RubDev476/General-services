@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
-import Services from "@/components/page/Services";
+import Marketplace from "@/components/page/Marketplace";
 import * as useGetData from "@/hooks/useGetData";
 
 import { routerPushMock } from "@mocks/next/navigation";
@@ -9,7 +9,7 @@ import userEvent from "@testing-library/user-event";
 
 vi.mock("next/navigation");
 
-describe("Services page", () => {
+describe("Marketplace page", () => {
     afterEach(() => {
         vi.clearAllMocks();
 
@@ -28,24 +28,24 @@ describe("Services page", () => {
     const renderService = (mock: any) => {
         vi.spyOn(useGetData, "default").mockReturnValue(mock);
 
-        render(<Services />);
+        render(<Marketplace />);
     }
 
     test("filters button displayed", () => {
-        render(<Services />);
+        render(<Marketplace />);
 
         expect(screen.getByText(/Limpiar filtros/i)).toBeInTheDocument();
         expect(screen.getByRole("button")).toBeInTheDocument();
     })
 
     test("modal filters no displayed", () => {
-        render(<Services />);
+        render(<Marketplace />);
 
         expect(screen.queryByTestId("modal-filters-container")).not.toBeInTheDocument();
     })
 
     test("open modal filters", async () => {
-        render(<Services />);
+        render(<Marketplace />);
 
         await userEvent.click(screen.getByRole("button"));
 
@@ -53,7 +53,7 @@ describe("Services page", () => {
     })
 
     test("filter action success (busqueda)", async () => {
-        render(<Services />);
+        render(<Marketplace />);
 
         await userEvent.click(screen.getByRole("button"));
 
@@ -63,13 +63,13 @@ describe("Services page", () => {
 
         await userEvent.click(screen.getByText(/Buscar/));
 
-        expect(routerPushMock).toHaveBeenCalledWith("/services?busqueda=any+search", {scroll: true});
+        expect(routerPushMock).toHaveBeenCalledWith("/marketplace?busqueda=any+search", {scroll: true});
     })
 
     test("if 'loadingData' is true displays skeletons", () => {
         renderService({...useGetDataMock, loadingData: true});
 
-        expect(screen.queryByTestId("skeletons-service")).toBeInTheDocument();
+        expect(screen.queryByTestId("skeletons-product")).toBeInTheDocument();
     })
 
     test("if 'fetchData' is true displays services", () => {
@@ -92,15 +92,15 @@ describe("Services page", () => {
 
         renderService({...useGetDataMock, fetchData: mockServices});
 
-        expect(screen.queryByTestId("skeletons-service")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("services-container")).toBeInTheDocument();
+        expect(screen.queryByTestId("skeletons-product")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("products-container")).toBeInTheDocument();
     })
 
     test("if 'fetchData' is null displays 'ErrorComponent'", async () => {
         renderService({...useGetDataMock, errorMessage: {title: "Error inesperado", message: "Vuelva al inicio o intentelo mas tarde"}});
 
-        expect(screen.queryByTestId("skeletons-service")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("services-container")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("skeletons-product")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("products-container")).not.toBeInTheDocument();
         
         expect(screen.getByText(/Error inesperado/i)).toBeInTheDocument();
         expect(screen.getByText(/Vuelva al inicio o intentelo mas tarde/i)).toBeInTheDocument();

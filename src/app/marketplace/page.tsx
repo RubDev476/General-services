@@ -1,11 +1,11 @@
 "use client";
 
 import { Suspense } from "react";
-import Services from "@/components/page/Services";
+import Marketplace from "@/components/page/Marketplace";
 export default function Page() {
     return (
         <Suspense>
-            <Services />
+            <Marketplace />
         </Suspense>
     )
 }

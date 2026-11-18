@@ -26,7 +26,7 @@ Plataforma web moderna orientada a la exploración, compra, venta y actualizaci�
 
 ## 🚀 Características Principales
 
-- **Catálogo de Hardware y Componentes (`/services`):**
+- **Catálogo de Hardware y Componentes (`/marketplace`):**
   - Cuadrícula adaptable protegida contra desbordamientos con alturas fijas de imagen y truncado inteligente de especificaciones.
   - Artículos categorizados con badges de disponibilidad en tiempo real (`DISPONIBLE`, `AGOTADO`, `BAJO PEDIDO`).
 - **Sistema de Filtrado Multi-criterio Avanzado:**
@@ -104,15 +104,15 @@ General-services/
 │   ├── app/                # Rutas y páginas (Next.js 16 App Router)
 │   │   ├── (private)/      # Rutas protegidas (create-service, my-services, edit-profile)
 │   │   ├── (public)/       # Rutas públicas de autenticación (login, register)
-│   │   ├── service/[id]/   # Vista de detalle de publicación individual
+│   │   ├── product/[id]/   # Vista de detalle de producto individual
 │   │   ├── user/[id]/      # Vista de perfil público de vendedor / usuario
-│   │   ├── services/       # Catálogo general con modal de filtros
+│   │   ├── marketplace/    # Catálogo general con modal de filtros
 │   │   ├── globals.css     # Directivas de Tailwind CSS v4 y tokens de tema
 │   │   ├── layout.tsx      # Layout raíz (Providers, Header, Footer, Metadatos)
 │   │   └── page.tsx        # Landing Page principal de Next Loot
 │   ├── components/         # Componentes modulares y reutilizables
 │   │   ├── layout/         # Header, Footer, Warning, Navigation
-│   │   ├── page/           # Vistas de página (Services, Service, User, LoginAndRegister)
+│   │   ├── page/           # Vistas de página (Marketplace, Product, User, LoginAndRegister)
 │   │   └── ui/             # Componentes atómicos (Avatar, Error, Dropzone, FormLayout, Loader)
 │   ├── hooks/              # Custom React hooks (useGetData, useFormStatus, useWidth)
 │   ├── mockDB/             # Base de datos simulada (15 artículos de hardware y 5 vendedores)
@@ -232,7 +232,8 @@ El proyecto cuenta con una cobertura integral de pruebas unitarias y de integrac
 - **Estado de la Suite:** **11 suites aprobadas (11/11)** y **64 pruebas aprobadas (64/64)**.
 - **Detalle de Suites de Prueba:**
   - `LoginAndRegister.test.tsx`: Validación de renderizado, formulario de login, formulario de registro, validación de contraseñas coincidentes, asignación de roles y despacho de acciones.
-  - `Services.test.tsx`: Carga del catálogo, apertura/cierre de modal de filtros, filtrado interactivo por palabra clave y renderizado de skeletons.
+  - `Marketplace.test.tsx`: Carga del marketplace, apertura/cierre de modal de filtros, filtrado interactivo por palabra clave y renderizado de skeletons.
+  - `Product.test.tsx`: Renderizado detallado de producto, skeletons de carga y estados de error.
   - `Service.test.tsx`: Renderizado de ficha técnica individual, información del vendedor y estado de disponibilidad.
   - `User.test.tsx`: Visualización del perfil de usuario, insignias de reputación y catálogo de publicaciones del proveedor.
   - `Header.test.tsx`: Comportamiento de navegación, menú desplegable y botón de apertura en móviles.

@@ -3,13 +3,13 @@ import {cleanup, render, screen, waitFor} from "@testing-library/react";
 
 import * as useGetData from "@/hooks/useGetData";
 
-import Service from "@/components/page/Service";
+import Product from "@/components/page/Product";
 
 import ErrorComponent from "@/components/ui/Error";
 
 vi.mock("@/components/ui/Error", {spy: true});
 
-describe("Service Page Component", () => {
+describe("Product Page Component", () => {
     afterEach(() => {
         vi.clearAllMocks();
 
@@ -28,13 +28,13 @@ describe("Service Page Component", () => {
     const renderService = (mock: any) => {
         vi.spyOn(useGetData, "default").mockReturnValue(mock);
 
-        render(<Service idService="1" />);
+        render(<Product idService="1" />);
     }
 
     it("renders the skeleton while loading", () => {
         renderService({...useGetDataMock, loadingData: true});
 
-        expect(screen.queryByTestId("skeleton-service")).toBeInTheDocument();
+        expect(screen.queryByTestId("skeleton-product")).toBeInTheDocument();
     });
 
     it("renders the error message when no service is found", async () => {
