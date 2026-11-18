@@ -14,19 +14,19 @@ describe("no auth user", () => {
     })
 
     test('initial links displayed correctly', () => {
-        const services_link = screen.getByText(/Explorar articulos|Servicios/i);
+        const marketplace_link = screen.getByText(/Explorar articulos/i);
         const login_link = screen.getByTestId("login-link");
         const signUp_link = screen.getByText(/Registro/);
 
-        expect(services_link).toBeInTheDocument();
+        expect(marketplace_link).toBeInTheDocument();
         expect(login_link).toBeInTheDocument();
         expect(signUp_link).toBeInTheDocument();
     })
 
-    test("create service link not displayed", () => {
-        const createService_link = screen.queryByText(/Crear servicio/);
+    test("create product link not displayed", () => {
+        const createProduct_link = screen.queryByText(/Crear producto/);
 
-        expect(createService_link).not.toBeInTheDocument();
+        expect(createProduct_link).not.toBeInTheDocument();
     })
 })
 
@@ -54,10 +54,10 @@ describe("auth user (client role - particular type)", () => {
         expect(signUp_link).not.toBeInTheDocument();
     })
 
-    test("create service link not displayed", () => {
-        const createService_link = screen.queryByText(/Crear servicio/);
+    test("create product link not displayed", () => {
+        const createProduct_link = screen.queryByText(/Crear producto/);
 
-        expect(createService_link).not.toBeInTheDocument();
+        expect(createProduct_link).not.toBeInTheDocument();
     })
 })
 
@@ -83,10 +83,10 @@ describe("auth user (proveedor role - particular type)", () => {
         cleanup();
     })
     
-    test("create service link displayed", () => {
-        const createService_link = screen.queryByText(/Crear servicio/);
+    test("create product link displayed", () => {
+        const createProduct_link = screen.queryByText(/Crear producto/);
 
-        expect(createService_link).toBeInTheDocument();
+        expect(createProduct_link).toBeInTheDocument();
     })
 })
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {useRouter} from "next/navigation";
 
-import type { CreateService } from "@/types/forms";
+import type { CreateProduct } from "@/types/forms";
 import { Roles } from "@/types/forms";
 
 import useFormStatus from "@/hooks/useFormStatus";
@@ -15,11 +15,11 @@ import FormLayout from "@/components/ui/form/FormLayout";
 import Dropzone from "@/components/ui/form/Dropzone";
 
 import { ERROR_MESSAGE } from "@/utils/error-messages";
-import { POST_create_service } from "@/server-actions";
+import { POST_create_product } from "@/server-actions";
 
 import { useAuthSelectors } from "@/store/hooks/useAuthSelectors";
 
-import { AvailabilityService, CategoriesService } from "@/types/forms";
+import { AvailabilityProduct, CategoriesProduct } from "@/types/forms";
 
 export default function Page() {
     const [imgFile, setImgFile] = useState<File | string | null>(null);
@@ -29,14 +29,14 @@ export default function Page() {
 
     const router = useRouter();
 
-    const { register, handleSubmit } = useForm<CreateService>();
+    const { register, handleSubmit } = useForm<CreateProduct>();
 
     useEffect(() => {
         if(!userData?.roles.some(role => role.tipo.includes(Roles.proveedor)) && !authLoading) router.push("/");
     }, [token, router, authLoading, userData])
 
-    const onSubmit: SubmitHandler<CreateService> = async (data) => {
-        if(!token) return setErrorForm("Inicie sesion para crear servicio");
+    const onSubmit: SubmitHandler<CreateProduct> = async (data) => {
+        if(!token) return setErrorForm("Inicie sesion para crear producto");
         if(!imgFile) return setErrorForm("Porfavor suba una imagen");
         if(typeof imgFile === "string") return;
 
@@ -46,12 +46,12 @@ export default function Page() {
         const newdata = {...data, imagen: imgFile};
 
         try {
-            const response = await POST_create_service(newdata, token);
+            const response = await POST_create_product(newdata, token);
 
             if(response.error || !response.message.includes("exitosamente")) {
-                throw new Error("ui- Error al crear servicio");
+                throw new Error("ui- Error al crear producto");
             } else if(response.status === "success") {
-                router.push("/my-services");
+                router.push("/my-products");
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -64,14 +64,14 @@ export default function Page() {
 
     return (
         <main>
-            <FormLayout nameForm="Crear servicio">
+            <FormLayout nameForm="Crear producto">
                 <form
                     className={"w-full px-4 mb-7"}
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <input
                         className={"input mb-5"}
-                        placeholder={"Nombre del servicio"}
+                        placeholder={"Nombre del producto"}
                         type={"text"}
                         {...register("nombre")}
                         autoComplete={"name"}
@@ -81,7 +81,7 @@ export default function Page() {
                     <textarea
                         className="textarea mb-5"
                         {...register("descripcion")}
-                        placeholder="Añade una descripcion de tu servicio"
+                        placeholder="Añade una descripcion de tu producto"
                         required
                     />
 
@@ -103,22 +103,22 @@ export default function Page() {
                         required
                     />
 
-                    <select className="input mb-5" {...register("tipos_servicio_id")} required role="combobox" name="categories">
+                    <select className="input mb-5" {...register("tipos_producto_id")} required role="combobox" name="categories">
                         <option value="">Selecciona categoria:</option>
-                        <option value={CategoriesService.TARJETAS_GRAFICAS}>{CategoriesService.TARJETAS_GRAFICAS}</option>
-                        <option value={CategoriesService.PROCESADORES_Y_CPUS}>{CategoriesService.PROCESADORES_Y_CPUS}</option>
-                        <option value={CategoriesService.PCS_GAMING_COMPLETAS}>{CategoriesService.PCS_GAMING_COMPLETAS}</option>
-                        <option value={CategoriesService.MONITORES_Y_PANTALLAS}>{CategoriesService.MONITORES_Y_PANTALLAS}</option>
-                        <option value={CategoriesService.PERIFERICOS_Y_ACCESORIOS}>{CategoriesService.PERIFERICOS_Y_ACCESORIOS}</option>
-                        <option value={CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}</option>
-                        <option value={CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}</option>
-                        <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
+                        <option value={CategoriesProduct.TARJETAS_GRAFICAS}>{CategoriesProduct.TARJETAS_GRAFICAS}</option>
+                        <option value={CategoriesProduct.PROCESADORES_Y_CPUS}>{CategoriesProduct.PROCESADORES_Y_CPUS}</option>
+                        <option value={CategoriesProduct.PCS_GAMING_COMPLETAS}>{CategoriesProduct.PCS_GAMING_COMPLETAS}</option>
+                        <option value={CategoriesProduct.MONITORES_Y_PANTALLAS}>{CategoriesProduct.MONITORES_Y_PANTALLAS}</option>
+                        <option value={CategoriesProduct.PERIFERICOS_Y_ACCESORIOS}>{CategoriesProduct.PERIFERICOS_Y_ACCESORIOS}</option>
+                        <option value={CategoriesProduct.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesProduct.CONSOLAS_Y_VIDEOJUEGOS}</option>
+                        <option value={CategoriesProduct.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesProduct.COMPONENTES_Y_ALMACENAMIENTO}</option>
+                        <option value={CategoriesProduct.OTROS}>{CategoriesProduct.OTROS}</option>
                     </select>
 
-                    <select className="input mb-5" {...register("disponibilidad_servicio_id")} required name="availability" role="combobox">
-                        <option value={AvailabilityService.DISPONIBLE}>{AvailabilityService.DISPONIBLE}</option>
-                        <option value={AvailabilityService.PROXIMAMENTE}>{AvailabilityService.PROXIMAMENTE}</option>
-                        <option value={AvailabilityService.AGOTADO}>{AvailabilityService.AGOTADO}</option>
+                    <select className="input mb-5" {...register("disponibilidad_producto_id")} required name="availability" role="combobox">
+                        <option value={AvailabilityProduct.DISPONIBLE}>{AvailabilityProduct.DISPONIBLE}</option>
+                        <option value={AvailabilityProduct.PROXIMAMENTE}>{AvailabilityProduct.PROXIMAMENTE}</option>
+                        <option value={AvailabilityProduct.AGOTADO}>{AvailabilityProduct.AGOTADO}</option>
                     </select>
 
                     <Dropzone setImg={setImgFile} />
@@ -127,7 +127,7 @@ export default function Page() {
 
                     {errorForm && <ErrorForm message={errorForm} />}
 
-                    <button className={"btn-3 w-full"} type={"submit"}>Crear servicio</button>
+                    <button className={"btn-3 w-full"} type={"submit"}>Crear producto</button>
                 </form>
             </FormLayout>
         </main>

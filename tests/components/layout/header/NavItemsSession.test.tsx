@@ -36,7 +36,7 @@ describe("any authenticated user", () => {
     })
 })
 
-describe("'my services' link", () => {
+describe("'my products' link", () => {
     afterEach(() => {
         cleanup();
     })
@@ -44,17 +44,17 @@ describe("'my services' link", () => {
     test("(client role) not displayed", () => {
         renderWithProviders(<NavItemsSession mobileSize={false} userData={initialTestUser} />);
 
-        const myServices_link = screen.queryByText(/Mis servicios/);
+        const myProducts_link = screen.queryByText(/Mis productos/);
 
-        expect(myServices_link).not.toBeInTheDocument();
+        expect(myProducts_link).not.toBeInTheDocument();
     })
 
     test("(proveedor role) displayed", () => {
         renderWithProviders(<NavItemsSession mobileSize={false} userData={{...initialTestUser, roles: [{id_roles: 2, tipo: Roles.proveedor}]}} />);
 
-        const myServices_link = screen.queryByText(/Mis servicios/);
+        const myProducts_link = screen.queryByText(/Mis productos/);
 
-        expect(myServices_link).toBeInTheDocument();
+        expect(myProducts_link).toBeInTheDocument();
     })
 })
 

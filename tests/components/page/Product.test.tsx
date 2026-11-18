@@ -25,51 +25,51 @@ describe("Product Page Component", () => {
         setErrorMessage: vi.fn(),
     };
 
-    const renderService = (mock: any) => {
+    const renderProduct = (mock: any) => {
         vi.spyOn(useGetData, "default").mockReturnValue(mock);
 
-        render(<Product idService="1" />);
+        render(<Product idProduct="1" />);
     }
 
     it("renders the skeleton while loading", () => {
-        renderService({...useGetDataMock, loadingData: true});
+        renderProduct({...useGetDataMock, loadingData: true});
 
         expect(screen.queryByTestId("skeleton-product")).toBeInTheDocument();
     });
 
-    it("renders the error message when no service is found", async () => {
-        renderService(useGetDataMock);
+    it("renders the error message when no product is found", async () => {
+        renderProduct(useGetDataMock);
 
         expect(ErrorComponent).toHaveBeenCalledWith({
-            message: "Vuelva al inicio para explorar otros servicios",
-            title: "Servicio no encontrado",
+            message: "Vuelva al inicio para explorar otros productos",
+            title: "Producto no encontrado",
         }, undefined);
 
         await waitFor(() => {
-            expect(screen.getByText(/Servicio no encontrado/i)).toBeInTheDocument();
-            expect(screen.getByText(/Vuelva al inicio para explorar otros servicios/i)).toBeInTheDocument();
+            expect(screen.getByText(/Producto no encontrado/i)).toBeInTheDocument();
+            expect(screen.getByText(/Vuelva al inicio para explorar otros productos/i)).toBeInTheDocument();
         })
     });
 
-    it("renders the service details when service data is available", async () => {
-        const mockService = {
+    it("renders the product details when product data is available", async () => {
+        const mockProduct = {
             imagen: "/test-image.jpg",
-            nombre: "Test Service",
-            disponibilidad_servicio: { estado: "Disponible" },
+            nombre: "Test Product",
+            disponibilidad_producto: { estado: "Disponible" },
             precio: 100,
             ubicacion: "Test Location",
             descripcion: "Test Description",
             usuarios_proveedores: { id_usuarios: "123", nombre: "Test User" },
         };
 
-        renderService({...useGetDataMock, fetchData: mockService});
+        renderProduct({...useGetDataMock, fetchData: mockProduct});
 
         await waitFor(() => {
-            expect(screen.getByText(mockService.nombre)).toBeInTheDocument();
-            expect(screen.getByText(`$${mockService.precio}`)).toBeInTheDocument();
-            expect(screen.getByText(mockService.descripcion)).toBeInTheDocument();
-            expect(screen.getByText(mockService.ubicacion)).toBeInTheDocument();
-            expect(screen.getByText(mockService.usuarios_proveedores.nombre)).toBeInTheDocument();
+            expect(screen.getByText(mockProduct.nombre)).toBeInTheDocument();
+            expect(screen.getByText(`$${mockProduct.precio}`)).toBeInTheDocument();
+            expect(screen.getByText(mockProduct.descripcion)).toBeInTheDocument();
+            expect(screen.getByText(mockProduct.ubicacion)).toBeInTheDocument();
+            expect(screen.getByText(mockProduct.usuarios_proveedores.nombre)).toBeInTheDocument();
             expect(screen.getByText(/(Disponible)/)).toBeInTheDocument();
         });
     });

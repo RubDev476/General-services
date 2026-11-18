@@ -44,10 +44,10 @@ export const NavItemsSession = ({ mobileSize, userData }: NavItemsSessionProps) 
 
                 {userData.roles.some(role => role.tipo.includes(Roles.proveedor)) && (
                     <Link
-                        href={'/my-services'}
+                        href={'/my-products'}
                         className={'w-full px-3 py-2 rounded-xl text-color2 hover:text-color5 hover:bg-color9 font-semibold text-sm lg:text-base g-transition flex items-center gap-2'}
                     >
-                        <FontAwesomeIcon icon={faList} className="text-color5 text-sm" /> Mis servicios
+                        <FontAwesomeIcon icon={faList} className="text-color5 text-sm" /> Mis productos
                     </Link>
                 )}
 
@@ -97,7 +97,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                 <>
                     {userData.roles.some(role => role.tipo.includes(Roles.proveedor)) && (
                         <Link
-                            href={'/create-service'}
+                            href={'/create-product'}
                             className={`font-bold g-transition ${
                                 mobileSize
                                     ? 'w-full px-4 py-3 rounded-2xl bg-color5/10 text-color5 border border-color5/30 text-center text-base flex items-center justify-center gap-2'
@@ -105,7 +105,7 @@ export const NavItemsInitial = ({ mobileSize }: NavItemsInitialProps) => {
                             }`}
                         >
                             <FontAwesomeIcon icon={faPlus} className="text-xs" />
-                            <span>Crear servicio</span>
+                            <span>Crear producto</span>
                         </Link>
                     )}
 

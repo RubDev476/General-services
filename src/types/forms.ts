@@ -18,11 +18,11 @@ export interface RegisterForm {
     roles_id: Roles[];
 }
 
-export type CreateService = Record<"nombre" | "descripcion" | "precio" | "ubicacion" | "tipos_servicio_id" | "disponibilidad_servicio_id", string>;
+export type CreateProduct = Record<"nombre" | "descripcion" | "precio" | "ubicacion" | "tipos_producto_id" | "disponibilidad_producto_id", string>;
 
-export type FilterServices = Record<"busqueda" | "categoria" | "precio_max" | "precio_min", string>;
+export type FilterProducts = Record<"busqueda" | "categoria" | "precio_max" | "precio_min", string>;
 
-export enum CategoriesService {
+export enum CategoriesProduct {
     TARJETAS_GRAFICAS = "TARJETAS GRAFICAS",
     PROCESADORES_Y_CPUS = "PROCESADORES Y CPUS",
     PCS_GAMING_COMPLETAS = "PCS GAMING COMPLETAS",
@@ -33,7 +33,7 @@ export enum CategoriesService {
     OTROS = "OTROS"
 }
 
-export enum AvailabilityService {
+export enum AvailabilityProduct {
     DISPONIBLE = "DISPONIBLE",
     AGOTADO = "AGOTADO",
     PROXIMAMENTE = "PROXIMAMENTE"

@@ -14,12 +14,12 @@ describe('Footer component', () => {
         expect(footer).toBeInTheDocument();
     })
 
-    test("service links are displayed correctly", () => {
-        const allServices_link = screen.getByText(/Comprar articulos|Todos los servicios/i);
-        const createServices_link = screen.getByText(/Vender articulo|Crear servicio/i);
+    test("product links are displayed correctly", () => {
+        const allProducts_link = screen.getByText(/Comprar articulos/i);
+        const createProducts_link = screen.getByText(/Vender articulo/i);
 
-        expect(allServices_link).toBeInTheDocument();
-        expect(createServices_link).toBeInTheDocument();
+        expect(allProducts_link).toBeInTheDocument();
+        expect(createProducts_link).toBeInTheDocument();
     })
 
     test("creator links are displayed correctly", () => {

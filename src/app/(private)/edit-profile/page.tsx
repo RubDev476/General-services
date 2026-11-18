@@ -105,7 +105,7 @@ export default function Page() {
             if (res.usuario) {
                 const newData = { token, userData: res.usuario };
 
-                localStorage.setItem('gServicesUser', JSON.stringify(newData));
+                localStorage.setItem('nextLootUser', JSON.stringify(newData));
 
                 updateProfileAction(newData);
             }

@@ -11,7 +11,7 @@ const getFormDescription = (name: string): string => {
     if (lower.includes("crear")) {
         return "Publica tus tarjetas gráficas, procesadores, PCs armadas o periféricos para llegar a compradores gamers de toda la comunidad.";
     }
-    if (lower.includes("editar") && lower.includes("servicio")) {
+    if (lower.includes("editar") && lower.includes("producto")) {
         return "Actualiza las especificaciones, precio, fotos o disponibilidad de tu publicación en Next Loot.";
     }
     if (lower.includes("perfil")) {
@@ -25,7 +25,7 @@ const getBadgeText = (name: string): string => {
     if (lower.includes("iniciar") || lower.includes("registr")) {
         return "Next Loot • Acceso";
     }
-    if (lower.includes("servicio")) {
+    if (lower.includes("producto")) {
         return "Next Loot • Marketplace";
     }
     return "Next Loot • Comunidad";

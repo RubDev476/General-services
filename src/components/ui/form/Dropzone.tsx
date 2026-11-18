@@ -43,7 +43,7 @@ export default function Dropzone({setImg, imgUploaded}: DropzoneProps) {
     const onDropAccepted = useCallback(async (acceptedFiles: Array<File>) => {
         const formData = new FormData();
 
-        formData.append('img-servicez', acceptedFiles[0]);
+        formData.append('img-product', acceptedFiles[0]);
 
         //console.log(acceptedFiles[0])
 

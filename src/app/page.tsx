@@ -141,7 +141,7 @@ export default function Home() {
                             Publica gratis tu tarjeta gráfica, procesador o consola usada y conecta con gamers listos para comprar en tu zona.
                         </p>
 
-                        <Link href={'/create-service'} className={'btn-1 inline-block text-base sm:text-lg py-3 px-10'}>
+                        <Link href={'/create-product'} className={'btn-1 inline-block text-base sm:text-lg py-3 px-10'}>
                             Publicar un artículo ahora
                         </Link>
                     </div>

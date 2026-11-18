@@ -7,19 +7,19 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faFilter, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
-import { GET_services } from "@/server-actions";
-import type { Product, Service } from "@/types/server-response";
-import type { FilterServices } from "@/types/forms";
+import { GET_products } from "@/server-actions";
+import type { Product } from "@/types/server-response";
+import type { FilterProducts } from "@/types/forms";
 
 import ErrorComponent from "@/components/ui/Error";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { AvailabilityService, CategoriesService, Roles, UserType } from "@/types/forms";
+import { AvailabilityProduct, CategoriesProduct, Roles, UserType } from "@/types/forms";
 
 import useGetData from "@/hooks/useGetData";
 
-import { MOCK_SERVICES } from "@/mockDB";
+import { MOCK_PRODUCTS } from "@/mockDB";
 
 const SkeletonProductCard = () => {
     return (
@@ -48,17 +48,14 @@ const SkeletonProductCard = () => {
     )
 }
 
-const ProductCard = ({product, service = product}: {product?: Product; service?: Service}) => {
-    const item = product || service;
-    if (!item) return null;
-
+const ProductCard = ({product}: {product: Product}) => {
     return (
-        <Link href={`/product/${item.id_servicios}`} className="block group h-full">
+        <Link href={`/product/${product.id_productos}`} className="block group h-full">
             <article className="bg-color3 rounded-2xl border border-color8/20 shadow-sm group-hover:shadow-xl group-hover:border-color5/40 transition-all duration-300 cursor-pointer flex flex-col h-full overflow-hidden">
                 {/* Contenedor de imagen con altura fija y controlada (nunca se deforma ni se agranda) */}
                 <div className="w-full h-52 relative overflow-hidden bg-color1 shrink-0">
                     <Image
-                        src={item.imagen}
+                        src={product.imagen}
                         alt="product-img"
                         fill
                         priority
@@ -66,7 +63,7 @@ const ProductCard = ({product, service = product}: {product?: Product; service?:
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <span className="absolute top-3 left-3 bg-color1/80 backdrop-blur-md text-color3 text-xs font-bold px-2.5 py-1 rounded-md border border-color3/20 shadow">
-                        {item.disponibilidad_servicio?.estado || "DISPONIBLE"}
+                        {product.disponibilidad_producto?.estado || "DISPONIBLE"}
                     </span>
                 </div>
 
@@ -75,20 +72,20 @@ const ProductCard = ({product, service = product}: {product?: Product; service?:
                     <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
                             <span className="text-[11px] font-bold uppercase tracking-wider text-color5 bg-color9 px-2 py-0.5 rounded truncate max-w-[55%]">
-                                {item.tipos_servicio?.tipo || "HARDWARE"}
+                                {product.tipos_producto?.tipo || "HARDWARE"}
                             </span>
-                            <span className="text-xs text-color8 truncate max-w-[45%] text-right" title={item.ubicacion}>
+                            <span className="text-xs text-color8 truncate max-w-[45%] text-right" title={product.ubicacion}>
                                 <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-color6 shrink-0" />
-                                <span>{item.ubicacion}</span>
+                                <span>{product.ubicacion}</span>
                             </span>
                         </div>
 
                         {/* Título adaptable con altura mínima reservada (se adapta a textos cortos o largos sin romper las cards vecinas) */}
                         <h4
                             className="text-color2 font-bold text-base sm:text-lg group-hover:text-color5 transition-colors line-clamp-2 min-h-[2.8rem] leading-snug break-words"
-                            title={item.nombre}
+                            title={product.nombre}
                         >
-                            {item.nombre}
+                            {product.nombre}
                         </h4>
                     </div>
 
@@ -96,7 +93,7 @@ const ProductCard = ({product, service = product}: {product?: Product; service?:
                     <div className="mt-4 pt-3 border-t border-color8/20 flex items-center justify-between gap-2">
                         <div className="min-w-0">
                             <span className="text-[10px] uppercase font-bold text-color10 block">Precio</span>
-                            <p className="text-color6 font-extrabold text-2xl leading-none truncate">{`$ ${item.precio}`}</p>
+                            <p className="text-color6 font-extrabold text-2xl leading-none truncate">{`$ ${product.precio}`}</p>
                         </div>
                         <span className="text-xs font-bold text-color5 group-hover:text-color6 transition-colors flex items-center gap-1 shrink-0 bg-color9/80 px-3 py-1.5 rounded-full border border-color8/20">
                             Ver detalles &rarr;
@@ -111,19 +108,19 @@ const ProductCard = ({product, service = product}: {product?: Product; service?:
 export default function Marketplace() {
     const [modalFilters, setModalFilters] = useState(false);
 
-    const { register, handleSubmit, watch, /*reset*/ } = useForm<FilterServices>();
+    const { register, handleSubmit, watch, /*reset*/ } = useForm<FilterProducts>();
 
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const {loadingData, setLoadingData, fetchData, setFetchData, errorMessage, setErrorMessage} = useGetData<Service[]>();
+    const {loadingData, setLoadingData, fetchData, setFetchData, errorMessage, setErrorMessage} = useGetData<Product[]>();
 
     useEffect(() => {
-        const getServices = async (params: string) => {
+        const getProducts = async (params: string) => {
             setLoadingData(true);
 
             try {
-                /*const res = await GET_services(params.length > 0 ? "/servicios?" + params.toString() : "/servicios");
+                /*const res = await GET_products(params.length > 0 ? "/productos?" + params.toString() : "/productos");
 
                 if (res.length > 0) {
                     setFetchData(res);
@@ -138,7 +135,7 @@ export default function Marketplace() {
                     throw new Error("Error inesperado");
                 }*/
 
-                    setFetchData(MOCK_SERVICES);
+                    setFetchData(MOCK_PRODUCTS);
             } catch (error) {
                 if (error instanceof Error) {
                     console.log(error);
@@ -151,10 +148,10 @@ export default function Marketplace() {
             setLoadingData(false);
         }
 
-        getServices(searchParams.toString());
+        getProducts(searchParams.toString());
     }, [searchParams, setFetchData, setLoadingData, setErrorMessage])
 
-    const onSubmit: SubmitHandler<FilterServices> = async (dataForm) => {
+    const onSubmit: SubmitHandler<FilterProducts> = async (dataForm) => {
         //const currentParams = new URLSearchParams(searchParams.toString());
         const newParams = new URLSearchParams();
 
@@ -184,7 +181,7 @@ export default function Marketplace() {
                         </Link>
                     </div>
 
-                    <Link href={"/create-service"} className="hidden sm:inline-flex bg-color6 hover:bg-color5 g-transition text-color3 py-1.5 px-4 rounded-lg font-semibold text-sm shadow">
+                    <Link href={"/create-product"} className="hidden sm:inline-flex bg-color6 hover:bg-color5 g-transition text-color3 py-1.5 px-4 rounded-lg font-semibold text-sm shadow">
                         + Vender artículo
                     </Link>
                 </div>
@@ -244,14 +241,14 @@ export default function Marketplace() {
                                         role="combobox"
                                     >
                                         <option value="">Todas las categorías</option>
-                                        <option value={CategoriesService.TARJETAS_GRAFICAS}>{CategoriesService.TARJETAS_GRAFICAS}</option>
-                                        <option value={CategoriesService.PROCESADORES_Y_CPUS}>{CategoriesService.PROCESADORES_Y_CPUS}</option>
-                                        <option value={CategoriesService.PCS_GAMING_COMPLETAS}>{CategoriesService.PCS_GAMING_COMPLETAS}</option>
-                                        <option value={CategoriesService.MONITORES_Y_PANTALLAS}>{CategoriesService.MONITORES_Y_PANTALLAS}</option>
-                                        <option value={CategoriesService.PERIFERICOS_Y_ACCESORIOS}>{CategoriesService.PERIFERICOS_Y_ACCESORIOS}</option>
-                                        <option value={CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesService.CONSOLAS_Y_VIDEOJUEGOS}</option>
-                                        <option value={CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesService.COMPONENTES_Y_ALMACENAMIENTO}</option>
-                                        <option value={CategoriesService.OTROS}>{CategoriesService.OTROS}</option>
+                                        <option value={CategoriesProduct.TARJETAS_GRAFICAS}>{CategoriesProduct.TARJETAS_GRAFICAS}</option>
+                                        <option value={CategoriesProduct.PROCESADORES_Y_CPUS}>{CategoriesProduct.PROCESADORES_Y_CPUS}</option>
+                                        <option value={CategoriesProduct.PCS_GAMING_COMPLETAS}>{CategoriesProduct.PCS_GAMING_COMPLETAS}</option>
+                                        <option value={CategoriesProduct.MONITORES_Y_PANTALLAS}>{CategoriesProduct.MONITORES_Y_PANTALLAS}</option>
+                                        <option value={CategoriesProduct.PERIFERICOS_Y_ACCESORIOS}>{CategoriesProduct.PERIFERICOS_Y_ACCESORIOS}</option>
+                                        <option value={CategoriesProduct.CONSOLAS_Y_VIDEOJUEGOS}>{CategoriesProduct.CONSOLAS_Y_VIDEOJUEGOS}</option>
+                                        <option value={CategoriesProduct.COMPONENTES_Y_ALMACENAMIENTO}>{CategoriesProduct.COMPONENTES_Y_ALMACENAMIENTO}</option>
+                                        <option value={CategoriesProduct.OTROS}>{CategoriesProduct.OTROS}</option>
                                     </select>
                                 </div>
 
@@ -326,7 +323,7 @@ export default function Marketplace() {
 
                     {(!loadingData && fetchData) && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" data-testid="products-container">
-                            {fetchData.map((service) => <ProductCard key={service.id_servicios} product={service} />)}
+                            {fetchData.map((product) => <ProductCard key={product.id_productos} product={product} />)}
                         </div>
                     )}
 

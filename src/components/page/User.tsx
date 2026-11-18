@@ -17,10 +17,10 @@ import {
     faTag
 } from "@fortawesome/free-solid-svg-icons";
 
-import type { UserData, Service } from "@/types/server-response";
+import type { UserData, Product } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 import useGetData from "@/hooks/useGetData";
-import { MOCK_USERS, MOCK_SERVICES } from "@/mockDB";
+import { MOCK_USERS, MOCK_PRODUCTS } from "@/mockDB";
 
 const SkeletonUser = () => {
     return (
@@ -81,8 +81,8 @@ export default function User({ userId }: { userId: string }) {
     }
 
     // Artículos publicados por este usuario en el marketplace
-    const userServices: Service[] = MOCK_SERVICES.filter(
-        service => service.usuarios_proveedores?.id_usuarios?.toString() === userId
+    const userProducts: Product[] = MOCK_PRODUCTS.filter(
+        product => product.usuarios_proveedores?.id_usuarios?.toString() === userId
     );
 
     return (
@@ -195,7 +195,7 @@ export default function User({ userId }: { userId: string }) {
 
                         <div className="bg-color9/60 p-4 rounded-2xl border border-color8/20">
                             <span className="text-xs text-color10 font-bold block mb-1">Publicaciones</span>
-                            <p className="text-xl sm:text-2xl font-extrabold text-color6">{userServices.length} activas</p>
+                            <p className="text-xl sm:text-2xl font-extrabold text-color6">{userProducts.length} activas</p>
                             <span className="text-[11px] text-color8">Hardware gamer en venta</span>
                         </div>
                     </div>
@@ -209,7 +209,7 @@ export default function User({ userId }: { userId: string }) {
                                 Catálogo del usuario
                             </span>
                             <h2 className="text-color2 text-2xl sm:text-3xl font-extrabold">
-                                Artículos publicados ({userServices.length})
+                                Artículos publicados ({userProducts.length})
                             </h2>
                         </div>
                         <Link href="/marketplace" className="text-sm font-semibold text-color5 hover:text-color6 transition-colors">
@@ -217,46 +217,46 @@ export default function User({ userId }: { userId: string }) {
                         </Link>
                     </div>
 
-                    {userServices.length > 0 ? (
+                    {userProducts.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {userServices.map((service) => (
+                            {userProducts.map((product) => (
                                 <Link 
-                                    key={service.id_servicios} 
-                                    href={`/product/${service.id_servicios}`}
+                                    key={product.id_productos} 
+                                    href={`/product/${product.id_productos}`}
                                     className="group"
                                 >
                                     <article className="bg-color3 rounded-2xl border border-color8/20 overflow-hidden shadow-md group-hover:shadow-xl group-hover:border-color5/40 transition-all flex flex-col h-full">
                                         <div className="relative h-48 w-full bg-color1 overflow-hidden">
                                             <Image
-                                                src={service.imagen}
-                                                alt={service.nombre}
+                                                src={product.imagen}
+                                                alt={product.nombre}
                                                 fill
                                                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                                                 sizes="(max-width: 768px) 100vw, 33vw"
                                             />
                                             <span className="absolute top-3 left-3 bg-color1/80 backdrop-blur-md text-color3 text-xs font-bold px-2.5 py-1 rounded-md border border-color3/20 shadow">
-                                                {service.disponibilidad_servicio.estado}
+                                                {product.disponibilidad_producto.estado}
                                             </span>
                                         </div>
 
                                         <div className="p-5 flex-1 flex flex-col justify-between">
                                             <div>
                                                 <span className="text-[11px] font-bold uppercase tracking-wider text-color5 bg-color9 px-2 py-0.5 rounded inline-block mb-2">
-                                                    {service.tipos_servicio?.tipo || "HARDWARE"}
+                                                    {product.tipos_producto?.tipo || "HARDWARE"}
                                                 </span>
                                                 <h3 className="text-color2 font-bold text-base sm:text-lg group-hover:text-color5 transition-colors line-clamp-2">
-                                                    {service.nombre}
+                                                    {product.nombre}
                                                 </h3>
                                                 <p className="text-xs text-color8 mt-2 flex items-center gap-1">
                                                     <FontAwesomeIcon icon={faLocationDot} className="text-color6" />
-                                                    <span>{service.ubicacion}</span>
+                                                    <span>{product.ubicacion}</span>
                                                 </p>
                                             </div>
 
                                             <div className="mt-4 pt-3 border-t border-color8/20 flex items-center justify-between">
                                                 <div>
                                                     <span className="text-[10px] uppercase text-color10 block">Precio</span>
-                                                    <p className="text-color6 font-extrabold text-xl">{`$${service.precio}`}</p>
+                                                    <p className="text-color6 font-extrabold text-xl">{`$${product.precio}`}</p>
                                                 </div>
                                                 <span className="text-xs font-bold text-color5 group-hover:text-color6 transition-colors">
                                                     Ver artículo &rarr;

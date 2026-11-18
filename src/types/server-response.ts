@@ -1,4 +1,4 @@
-import type { RegisterForm, AvailabilityService, CategoriesService, Roles, UserType } from "./forms";
+import type { RegisterForm, AvailabilityProduct, CategoriesProduct, Roles, UserType } from "./forms";
 
 export type UserData = Pick<RegisterForm, "nombre" | "correo" | "telefono"> & {
     id_usuarios: number;
@@ -15,20 +15,18 @@ export type UserData = Pick<RegisterForm, "nombre" | "correo" | "telefono"> & {
 
 export type Product = {
     descripcion: string;
-    disponibilidad_servicio: {
-        estado: AvailabilityService;
-        id_disponibilidad_servicio: number;
+    disponibilidad_producto: {
+        estado: AvailabilityProduct;
+        id_disponibilidad_producto: number;
     };
-    id_servicios: number;
+    id_productos: number;
     imagen: string;
     nombre: string;
     precio: number;
-    tipos_servicio: {
-        id_tipos_servicio: number;
-        tipo: CategoriesService;
+    tipos_producto: {
+        id_tipos_producto: number;
+        tipo: CategoriesProduct;
     };
     ubicacion: string;
     usuarios_proveedores: UserData;
 }
-
-export type Service = Product;

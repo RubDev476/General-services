@@ -8,11 +8,11 @@ import type { AuthState } from "@/types/store";
 import { routerPushMock } from "@mocks/next/navigation";
 
 import * as useAuthSelectors from "@/store/hooks/useAuthSelectors";
-import Page from "@/app/(private)/create-service/page";
+import Page from "@/app/(private)/create-product/page";
 
 vi.mock('next/navigation');
 
-describe("Create Service Page", () => {
+describe("Create Product Page", () => {
     afterEach(() => {
         vi.clearAllMocks();
 
@@ -49,11 +49,11 @@ describe("Create Service Page", () => {
 
         expect(routerPushMock).not.toHaveBeenCalledWith("/");
 
-        expect(screen.getByPlaceholderText("Nombre del servicio")).toBeInTheDocument();
-        expect(screen.getByPlaceholderText("Añade una descripcion de tu servicio")).toBeInTheDocument();
+        expect(screen.getByPlaceholderText("Nombre del producto")).toBeInTheDocument();
+        expect(screen.getByPlaceholderText("Añade una descripcion de tu producto")).toBeInTheDocument();
         expect(screen.getByPlaceholderText("Precio")).toBeInTheDocument();
         expect(screen.getByPlaceholderText("Ubicacion")).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /Crear servicio/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /Crear producto/i })).toBeInTheDocument();
     });
 
     it("shows error message if there is not image", async () => {
@@ -66,14 +66,14 @@ describe("Create Service Page", () => {
             }
         });
 
-        const nameService = screen.getByPlaceholderText("Nombre del servicio");
-        const description = screen.getByPlaceholderText("Añade una descripcion de tu servicio");
+        const nameProduct = screen.getByPlaceholderText("Nombre del producto");
+        const description = screen.getByPlaceholderText("Añade una descripcion de tu producto");
         const price = screen.getByPlaceholderText("Precio");
         const location = screen.getByPlaceholderText("Ubicacion");
         const category2 = screen.getAllByRole("combobox");
         const button = screen.getByRole("button");
 
-        await userEvent.type(nameService, "Test Service");
+        await userEvent.type(nameProduct, "Test Product");
         await userEvent.type(description, "Test Description");
         await userEvent.type(price, "100");
         await userEvent.type(location, "Test Location");

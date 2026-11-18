@@ -25,7 +25,7 @@ describe("Marketplace page", () => {
         errorMessage: { title: "", message: "" }
     }
 
-    const renderService = (mock: any) => {
+    const renderMarketplace = (mock: any) => {
         vi.spyOn(useGetData, "default").mockReturnValue(mock);
 
         render(<Marketplace />);
@@ -67,37 +67,37 @@ describe("Marketplace page", () => {
     })
 
     test("if 'loadingData' is true displays skeletons", () => {
-        renderService({...useGetDataMock, loadingData: true});
+        renderMarketplace({...useGetDataMock, loadingData: true});
 
         expect(screen.queryByTestId("skeletons-product")).toBeInTheDocument();
     })
 
-    test("if 'fetchData' is true displays services", () => {
-        const mockServices = [
+    test("if 'fetchData' is true displays products", () => {
+        const mockProducts = [
             {
-                id_servicios: 1,
+                id_productos: 1,
                 imagen: "https://www.cloudinary.com/img",
-                nombre: "service 1",
+                nombre: "product 1",
                 precio: 900,
                 ubicacion: "some where"
             },
             {
-                id_servicios: 2,
+                id_productos: 2,
                 imagen: "https://www.cloudinary.com/img",
-                nombre: "service 2",
+                nombre: "product 2",
                 precio: 900,
                 ubicacion: "some where"
             }
         ]
 
-        renderService({...useGetDataMock, fetchData: mockServices});
+        renderMarketplace({...useGetDataMock, fetchData: mockProducts});
 
         expect(screen.queryByTestId("skeletons-product")).not.toBeInTheDocument();
         expect(screen.queryByTestId("products-container")).toBeInTheDocument();
     })
 
     test("if 'fetchData' is null displays 'ErrorComponent'", async () => {
-        renderService({...useGetDataMock, errorMessage: {title: "Error inesperado", message: "Vuelva al inicio o intentelo mas tarde"}});
+        renderMarketplace({...useGetDataMock, errorMessage: {title: "Error inesperado", message: "Vuelva al inicio o intentelo mas tarde"}});
 
         expect(screen.queryByTestId("skeletons-product")).not.toBeInTheDocument();
         expect(screen.queryByTestId("products-container")).not.toBeInTheDocument();

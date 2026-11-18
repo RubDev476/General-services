@@ -39,10 +39,10 @@ export const PATCH_edit_user = async <T>(formData: T, token: string, idUser: num
     return response.json();
 }
 
-export const PATCH_edit_service = async <T>(formData: T, token: string, idService: string) => {
+export const PATCH_edit_product = async <T>(formData: T, token: string, idProduct: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
-    const response = await fetch(`${urlApi}/servicios/${idService}`, {
+    const response = await fetch(`${urlApi}/productos/${idProduct}`, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
@@ -54,17 +54,17 @@ export const PATCH_edit_service = async <T>(formData: T, token: string, idServic
     return response.json();
 }
 
-type CreateServiceForm = {
+type CreateProductForm = {
     imagen: File;
     nombre: string;
     descripcion: string;
     precio: string;
     ubicacion: string;
-    tipos_servicio_id: string;
-    disponibilidad_servicio_id: string;
+    tipos_producto_id: string;
+    disponibilidad_producto_id: string;
 }
 
-export const POST_create_service = async (formData: CreateServiceForm, token: string) => {
+export const POST_create_product = async (formData: CreateProductForm, token: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
     const formData2 = new FormData();
@@ -73,11 +73,11 @@ export const POST_create_service = async (formData: CreateServiceForm, token: st
     formData2.append("nombre", formData.nombre);
     formData2.append("descripcion", formData.descripcion);
     formData2.append("precio", formData.precio);
-    formData2.append("disponibilidad_servicio_id", formData.disponibilidad_servicio_id);
-    formData2.append("tipos_servicio_id", formData.tipos_servicio_id);
+    formData2.append("disponibilidad_producto_id", formData.disponibilidad_producto_id);
+    formData2.append("tipos_producto_id", formData.tipos_producto_id);
     formData2.append("ubicacion", formData.ubicacion);
 
-    const response = await fetch(`${urlApi}/servicios`, {
+    const response = await fetch(`${urlApi}/productos`, {
         method: "POST",
         headers: {
             //'Content-Type': 'multipart/form-data',
@@ -108,13 +108,13 @@ export const PUT_img_profile = async (imgUser: File, token: string, idUser: numb
     return response.json();
 }
 
-export const PUT_img_service = async (imgUser: File, token: string, idService: string) => {
+export const PUT_img_product = async (imgUser: File, token: string, idProduct: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
     const formData = new FormData();
     formData.append('imagen', imgUser);
 
-    const response = await fetch(`${urlApi}/servicios/${idService}/imagen-servicio`, {
+    const response = await fetch(`${urlApi}/productos/${idProduct}/imagen-producto`, {
         method: "PUT",
         headers: {
             //'Content-Type': 'multipart/form-data',
@@ -126,7 +126,7 @@ export const PUT_img_service = async (imgUser: File, token: string, idService: s
     return response.json();
 }
 
-export const GET_services = async (url: string) => {
+export const GET_products = async (url: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
     const response = await fetch(`${urlApi}${url}`).then(res => res.json());
@@ -134,10 +134,10 @@ export const GET_services = async (url: string) => {
     return response;
 }
 
-export const GET_user_services = async (idUser: string, token: string) => {
+export const GET_user_products = async (idUser: string, token: string) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
-    const response = await fetch(`${urlApi}/usuarios/${idUser}/servicios`, {
+    const response = await fetch(`${urlApi}/usuarios/${idUser}/productos`, {
         headers: {
             'Content-Type': "application/json",
             'Authorization': `Bearer ${token}`
@@ -147,10 +147,10 @@ export const GET_user_services = async (idUser: string, token: string) => {
     return response.json();
 }
 
-export const DELETE_user_service = async ({idUser, idService, token}: Record<"idUser" | "idService" | "token", string>) => {
+export const DELETE_user_product = async ({idUser, idProduct, token}: Record<"idUser" | "idProduct" | "token", string>) => {
     if (!urlApi) throw new Error('No se pudo conectar a la base de datos');
 
-    const response = await fetch(`${urlApi}/usuarios/${idUser}/servicios/${idService}`, {
+    const response = await fetch(`${urlApi}/usuarios/${idUser}/productos/${idProduct}`, {
         method: "delete",
         headers: {
             'Content-Type': "application/json",

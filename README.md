@@ -20,15 +20,17 @@ Plataforma web moderna orientada a la exploración, compra, venta y actualizaci�
 - [Scripts Disponibles](#-scripts-disponibles)
 - [Pruebas Automatizadas (Testing)](#-pruebas-automatizadas-testing)
 - [Diseño y Estilos](#-diseño-y-estilos)
-- [Colaboradores](#-colaboradores)
 
 ---
 
 ## 🚀 Características Principales
 
 - **Catálogo de Hardware y Componentes (`/marketplace`):**
-  - Cuadrícula adaptable protegida contra desbordamientos con alturas fijas de imagen y truncado inteligente de especificaciones.
-  - Artículos categorizados con badges de disponibilidad en tiempo real (`DISPONIBLE`, `AGOTADO`, `BAJO PEDIDO`).
+  - Cuadrícula adaptable protegida contra desbordamientos con alturas fijas de imagen y truncado inteligente de especificaciones (`ProductCard` y `SkeletonProductCard`).
+  - Artículos categorizados con badges de disponibilidad en tiempo real (`DISPONIBLE`, `AGOTADO`, `PROXIMAMENTE`).
+- **Detalle de Producto (`/product/[id]`):**
+  - Vista individual de cada artículo del marketplace con galería principal, precio, ubicación, estado de disponibilidad, especificaciones completas, perfil del vendedor verificado y estado de carga mediante `SkeletonProduct`.
+  - Navegación breadcrumb directa de regreso a `/marketplace`.
 - **Sistema de Filtrado Multi-criterio Avanzado:**
   - Modal flotante con efecto *glassmorphism* y resplandor neón decorativo.
   - Búsqueda por palabra clave o modelo (GPU, CPU, periféricos, etc.).
@@ -41,11 +43,11 @@ Plataforma web moderna orientada a la exploración, compra, venta y actualizaci�
 - **Perfiles de Vendedor Enriquecidos (`/user/[id]`):**
   - Banner de portada, avatar personalizable e indicador de vendedor verificado.
   - Métricas de reputación comunitaria con estrellas, tiempo de respuesta promedio y métodos de entrega (*Trato en mano con prueba de rendimiento* / *Envío asegurado*).
-  - Pestaña de inventario activo con listado de todos los artículos publicados por el proveedor.
+  - Pestaña de inventario activo con listado de todos los productos publicados por el proveedor enlazados a `/product/[id]`.
   - Sección de reseñas y comentarios de compradores.
-- **Gestión Integral de Publicaciones / CRUD (`/my-services`, `/create-service`):**
+- **Gestión Integral de Publicaciones / CRUD (`/my-products`, `/create-product`, `/edit-product/[id]`):**
   - Creación de publicaciones con selector de imagen interactivo mediante **React Dropzone**.
-  - Edición y eliminación de publicaciones con diálogos modales de confirmación.
+  - Tabla de administración (`TableProducts`), edición (`EditProduct`) y eliminación de publicaciones con diálogos modales de confirmación.
   - Rutas privadas y protegidas según sesión activa y rol de proveedor.
 - **Base de Datos Simulada (Mock DB) Integrada:**
   - 15 artículos de hardware de última generación y 5 perfiles de proveedores completos para desarrollo, pruebas y demostración inmediata sin dependencias externas.
@@ -102,32 +104,34 @@ General-services/
 │   └── uploads/            # Archivos temporales de carga
 ├── src/
 │   ├── app/                # Rutas y páginas (Next.js 16 App Router)
-│   │   ├── (private)/      # Rutas protegidas (create-service, my-services, edit-profile)
-│   │   ├── (public)/       # Rutas públicas de autenticación (login, register)
+│   │   ├── (private)/      # Rutas protegidas (create-product, edit-product/[id], my-products, edit-profile)
+│   │   ├── login/          # Ruta pública de inicio de sesión
+│   │   ├── register/       # Ruta pública de registro de usuarios
+│   │   ├── marketplace/    # Catálogo general de productos con modal de filtros
 │   │   ├── product/[id]/   # Vista de detalle de producto individual
 │   │   ├── user/[id]/      # Vista de perfil público de vendedor / usuario
-│   │   ├── marketplace/    # Catálogo general con modal de filtros
 │   │   ├── globals.css     # Directivas de Tailwind CSS v4 y tokens de tema
 │   │   ├── layout.tsx      # Layout raíz (Providers, Header, Footer, Metadatos)
 │   │   └── page.tsx        # Landing Page principal de Next Loot
 │   ├── components/         # Componentes modulares y reutilizables
-│   │   ├── layout/         # Header, Footer, Warning, Navigation
-│   │   ├── page/           # Vistas de página (Marketplace, Product, User, LoginAndRegister)
+│   │   ├── layout/         # Header (con autocierre responsivo en >= 1024px), Footer, Warning
+│   │   ├── no-ssr/         # NavMobile (drawer móvil cargado sin SSR)
+│   │   ├── page/           # Vistas de página (Marketplace, Product, User, LoginAndRegister, EditProduct)
 │   │   └── ui/             # Componentes atómicos (Avatar, Error, Dropzone, FormLayout, Loader)
-│   ├── hooks/              # Custom React hooks (useGetData, useFormStatus, useWidth)
+│   ├── hooks/              # Custom React hooks (useGetData, useFormStatus)
 │   ├── mockDB/             # Base de datos simulada (15 artículos de hardware y 5 vendedores)
 │   ├── server-actions/     # Server Actions de Next.js preparadas para integración
 │   ├── store/              # Configuración de Redux Store (AuthSlice, Hooks tipados)
-│   ├── types/              # Definiciones e interfaces TypeScript (Forms, Models, Store)
+│   ├── types/              # Definiciones e interfaces TypeScript (Forms, Models, Props, Store)
 │   └── utils/              # Mensajes de error, constantes y utilidades
 ├── tests/                  # Suite integral de pruebas unitarias y de integración
 │   ├── app/                # Pruebas de rutas de página y redirecciones
-│   ├── components/         # Pruebas de componentes de UI, autenticación y catálogo
-│   └── setup.ts            # Configuración de Vitest, mocks y renderizador con Providers
+│   ├── components/         # Pruebas de componentes de UI, autenticación, marketplace y producto
+│   └── setup.tsx           # Configuración de Vitest, mocks y renderizador con Providers
 ├── next.config.ts          # Configuración de Next.js (patrones remotos de imágenes)
 ├── tailwind.config.ts      # Paleta de colores y temas de Tailwind
 ├── tsconfig.json           # Configuración de TypeScript con alias de rutas (@/*)
-├── vitest.config.ts        # Configuración del entorno de pruebas unitarias
+├── vitest.config.mts       # Configuración del entorno de pruebas unitarias
 └── package.json            # Metadatos del proyecto y dependencias
 ```
 
@@ -152,12 +156,12 @@ El frontend gestiona la persistencia de sesión y los datos del usuario de forma
            │                                 │
            ▼                                 ▼
    [ Acceso a Rutas Protegidas ]     [ Navbar / Dropdown / Perfil ]
-   (create-service, my-services)     (Mi perfil, Mis servicios, Logout)
+   (create-product, my-products)     (Mi perfil, Mis productos, Logout)
 ```
 
 1. **Gestión Reactiva con Redux:** Toda la información del usuario autenticado (`userData`, `token`, `authLoading`) se gestiona centralizadamente mediante hooks personalizados (`useAuthActions`, `useAuthSelectors`).
 2. **Hidratación Automática:** Al cargar cualquier vista, el componente `Header` despacha `validateSessionAction()` para restaurar la sesión a partir del token guardado en el cliente.
-3. **Protección de Rutas en Cliente:** Vistas como `/create-service` y `/my-services` verifican tanto la existencia de sesión como la pertenencia al rol `proveedor`, redireccionando a la página principal si el usuario no cumple los permisos.
+3. **Protección de Rutas en Cliente:** Vistas como `/create-product`, `/edit-product/[id]` y `/my-products` verifican tanto la existencia de sesión como la pertenencia al rol `proveedor`, redireccionando a la página principal si el usuario no cumple los permisos.
 
 ---
 
@@ -167,7 +171,7 @@ Para permitir el desarrollo ágil, pruebas unitarias y navegación completa sin 
 
 - **15 Artículos de Hardware:** Cobertura de todas las categorías principales (GPUs de última generación, procesadores Intel y AMD, monitores OLED, teclados mecánicos, consolas portátiles y almacenamiento).
 - **5 Vendedores Especializados:** Perfiles con nombres, correos de contacto, teléfonos, ubicaciones y roles preconfigurados para asociar con los artículos.
-- **Server Actions Listas para Conectar:** La capa en `src/server-actions/index.ts` está estructurada con funciones fuertemente tipadas (`POST_register_login`, `GET_user`, `GET_services`, `POST_create_service`, etc.) que facilitan una integración inmediata en cuanto se disponga de un backend.
+- **Server Actions Listas para Conectar:** La capa en `src/server-actions/index.ts` está estructurada con funciones fuertemente tipadas (`POST_register_login`, `GET_user`, `GET_products`, `POST_create_product`, etc.) que facilitan una integración inmediata en cuanto se disponga de un backend.
 
 ---
 
@@ -176,11 +180,12 @@ Para permitir el desarrollo ágil, pruebas unitarias y navegación completa sin 
 Este proyecto experimentó un proceso integral de modernización, refactorización y aseguramiento de calidad asistido por la IA agéntica **Antigravity** (Google DeepMind):
 
 - **Pivote temático y de marca:** Transición arquitectónica y visual desde un concepto genérico hacia la identidad de marca **Next Loot** (Hardware & Gaming Marketplace).
-- **Corrección de maquetación y desbordamientos:** Solución de fallos de overflow y redimensionado desproporcionado de imágenes en la cuadrícula de cards en resoluciones intermedias (760px a 1300px), asegurando dinamismo ante textos cortos o largos.
+- **Refactorización de rutas y dominio a Marketplace/Product:** Migración de rutas públicas y privadas (`/services` ➔ `/marketplace`, `/service/[id]` ➔ `/product/[id]`, `/create-service` ➔ `/create-product`, `/edit-service/[id]` ➔ `/edit-product/[id]`, `/my-services` ➔ `/my-products`), así como renombrado de vistas, componentes y tipos (`Marketplace`, `Product`, `ProductCard`, `SkeletonProduct`, `SkeletonProductCard`, `TableProducts`, `EditProduct`).
+- **Corrección de maquetación, responsividad y navegación:** Solución de fallos de overflow en la cuadrícula de cards en resoluciones intermedias (760px a 1300px) y corrección del menú móvil en `Header` para cerrar automáticamente el drawer al expandir la ventana a escritorio (`>= 1024px`).
 - **Rediseño estético y responsivo:** Implementación del modal de filtros flotante con *glassmorphism*, renovación de las vistas de usuario/vendedor (`/user/[id]`) y estructuración de formularios en diseño dividido asimétrico para monitores de escritorio con campos en cascada ordenada.
 - **Generación programática de activos:** Creación y exportación de nuevos favicons y Apple Touch icons (180x180, 32x32, 16x16) con transparencias y curvas *squircle* utilizando **Sharp**.
 - **Ampliación de datos mock y tipado:** Adición de 10 nuevos artículos de hardware (alcanzando 15 publicaciones completas) asociados a 5 vendedores tecnológicos.
-- **Verificación rigurosa de código:** Supervisión continua para mantener el 100% de la suite de pruebas unitarias aprobadas (64/64 tests en Vitest) y 0 errores de compilación en TypeScript.
+- **Verificación rigurosa de código:** Supervisión continua para mantener el 100% de la suite de pruebas unitarias aprobadas (11 suites / 64 pruebas en Vitest) y 0 errores de compilación en TypeScript.
 
 ---
 
@@ -195,7 +200,6 @@ Este proyecto experimentó un proceso integral de modernización, refactorizaci�
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/RubDev666/General-services.git
-   cd General-services
    ```
 
 2. **Instalar dependencias:**
@@ -232,14 +236,13 @@ El proyecto cuenta con una cobertura integral de pruebas unitarias y de integrac
 - **Estado de la Suite:** **11 suites aprobadas (11/11)** y **64 pruebas aprobadas (64/64)**.
 - **Detalle de Suites de Prueba:**
   - `LoginAndRegister.test.tsx`: Validación de renderizado, formulario de login, formulario de registro, validación de contraseñas coincidentes, asignación de roles y despacho de acciones.
-  - `Marketplace.test.tsx`: Carga del marketplace, apertura/cierre de modal de filtros, filtrado interactivo por palabra clave y renderizado de skeletons.
-  - `Product.test.tsx`: Renderizado detallado de producto, skeletons de carga y estados de error.
-  - `Service.test.tsx`: Renderizado de ficha técnica individual, información del vendedor y estado de disponibilidad.
+  - `Marketplace.test.tsx`: Carga del marketplace (`/marketplace`), apertura/cierre de modal de filtros, filtrado interactivo por palabra clave y renderizado de skeletons (`SkeletonProductCard`).
+  - `Product.test.tsx`: Renderizado detallado de ficha técnica del producto (`/product/[id]`), información del vendedor, estado de disponibilidad, `SkeletonProduct` de carga y estados de error.
   - `User.test.tsx`: Visualización del perfil de usuario, insignias de reputación y catálogo de publicaciones del proveedor.
-  - `Header.test.tsx`: Comportamiento de navegación, menú desplegable y botón de apertura en móviles.
+  - `Header.test.tsx`: Comportamiento de navegación, menú desplegable, botón de apertura en móviles y cierre automático al redimensionar a escritorio (`>= 1024px`).
   - `NavItemsInitial.test.tsx` y `NavItemsSession.test.tsx`: Renderizado condicional de elementos de menú según el estado de la sesión y roles de usuario.
-  - `create-service/page.test.tsx`: Protección de rutas para usuarios no autenticados o sin rol de proveedor, y validación de formulario de creación.
-  - `my-services/page.test.tsx`: Listado de artículos propios, renderizado de tabla, diálogo de confirmación y eliminación de publicaciones.
+  - `create-product/page.test.tsx`: Protección de rutas para usuarios no autenticados o sin rol de proveedor, y validación de formulario de creación.
+  - `my-products/page.test.tsx`: Listado de artículos propios, renderizado de tabla (`TableProducts`), diálogo de confirmación y eliminación de publicaciones.
   - `Footer.test.tsx`: Enlaces informativos y créditos de la plataforma.
   - `page.test.tsx`: Renderizado correcto de la landing page principal de Next Loot.
 
@@ -265,16 +268,3 @@ npx tsc --noEmit
 - **Control de Desbordamiento:** Componentes protegidos con `line-clamp`, `truncate` y contenedores con proporciones fijas para garantizar que títulos largos nunca rompan la alineación de la cuadrícula.
 
 ---
-
-## 👥 Colaboradores y Créditos
-
-| Desarrollador / Herramienta | Rol / Especialidad | Enlace |
-| :--- | :--- | :--- |
-| **RubDev666** | Arquitectura Frontend, UI/UX, Testing con Vitest y Redux | [@RubDev666](https://github.com/RubDev666) |
-| **Antigravity AI** | Asistencia agéntica en refactorización, UI/UX, testing y modernización | [Google DeepMind](https://deepmind.google/) |
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia **MIT**. Consulta el archivo `LICENSE` para más información.

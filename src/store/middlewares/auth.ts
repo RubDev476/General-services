@@ -18,7 +18,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
                 if(res.usuario) {
                     const newData = {token, userData: {...res.usuario}};
 
-                    localStorage.setItem('gServicesUser', JSON.stringify(newData));
+                    localStorage.setItem('nextLootUser', JSON.stringify(newData));
 
                     action.payload = newData;
 
@@ -33,7 +33,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             break;
         }
         case "auth/validateSession": {
-            const userData = localStorage.getItem('gServicesUser');
+            const userData = localStorage.getItem('nextLootUser');
 
             const getUserData = async (idUser: string, token: string, userData: string) => {
                 try {
@@ -42,7 +42,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
                     if (res.usuario) {
                         const newData = { token, userData: res.usuario };
 
-                        localStorage.setItem('gServicesUser', JSON.stringify(newData));
+                        localStorage.setItem('nextLootUser', JSON.stringify(newData));
 
                         action.payload = newData;
                     } else {
@@ -79,7 +79,7 @@ const middleware: Middleware = (store) => (next) => (action: any) => {
             break;
         }
         case "auth/logout": {
-            localStorage.removeItem('gServicesUser');
+            localStorage.removeItem('nextLootUser');
 
             next(action);
 

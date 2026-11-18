@@ -7,12 +7,12 @@ import Link from "next/link";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { GET_services } from "@/server-actions";
-import type { Product as ProductType, Service } from "@/types/server-response";
+import { GET_products } from "@/server-actions";
+import type { Product as ProductType } from "@/types/server-response";
 import ErrorComponent from "../ui/Error";
 
 import useGetData from "@/hooks/useGetData";
-import { MOCK_SERVICES } from "@/mockDB";
+import { MOCK_PRODUCTS } from "@/mockDB";
 
 const SkeletonProduct = () => {
     return (
@@ -42,24 +42,24 @@ const SkeletonProduct = () => {
     )
 }
 
-export default function Product({ idService }: { idService: string }) {
+export default function Product({ idProduct }: { idProduct: string }) {
     const {loadingData, setFetchData, fetchData, setLoadingData} = useGetData<ProductType>();
 
     useEffect(() => {
-        const getService = async () => {
+        const getProduct = async () => {
             try {
-                /*const res = await GET_services("/servicios/" + idService);
+                /*const res = await GET_products("/productos/" + idProduct);
 
                 console.log(res);
 
-                if(res.servicio) {
-                    setFetchData(res.servicio);
+                if(res.producto) {
+                    setFetchData(res.producto);
                 }*/
 
-                const servicio = MOCK_SERVICES.find(service => service.id_servicios.toString() === idService);
+                const producto = MOCK_PRODUCTS.find(product => product.id_productos.toString() === idProduct);
 
-                if(servicio) {
-                    setFetchData(servicio);
+                if(producto) {
+                    setFetchData(producto);
                 }
             } catch (error) {
                 if(error instanceof Error) {
@@ -70,12 +70,12 @@ export default function Product({ idService }: { idService: string }) {
             setLoadingData(false);
         }
 
-        getService();
-    }, [idService, setFetchData, setLoadingData])
+        getProduct();
+    }, [idProduct, setFetchData, setLoadingData])
 
     if(loadingData) return <SkeletonProduct />;
 
-    if(!fetchData && !loadingData) return <ErrorComponent title="Servicio no encontrado" message="Vuelva al inicio para explorar otros servicios" />;
+    if(!fetchData && !loadingData) return <ErrorComponent title="Producto no encontrado" message="Vuelva al inicio para explorar otros productos" />;
 
     if(fetchData && !loadingData) return (
         <>
@@ -85,7 +85,7 @@ export default function Product({ idService }: { idService: string }) {
                     <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-color8">
                         <Link href="/marketplace" className="hover:text-color6 g-transition">Marketplace</Link>
                         <span>/</span>
-                        <span className="text-color5">{fetchData.tipos_servicio?.tipo || "HARDWARE"}</span>
+                        <span className="text-color5">{fetchData.tipos_producto?.tipo || "HARDWARE"}</span>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -105,7 +105,7 @@ export default function Product({ idService }: { idService: string }) {
                         <div className="lg:col-span-5 flex flex-col gap-6">
                             <div className="bg-color3 p-6 sm:p-8 rounded-2xl border border-color8/20 shadow-lg">
                                 <span className="text-xs font-bold text-color8 uppercase tracking-widest block mb-1">
-                                    {`(${fetchData.disponibilidad_servicio.estado})`}
+                                    {`(${fetchData.disponibilidad_producto.estado})`}
                                 </span>
 
                                 <h1 className="text-color2 font-extrabold text-2xl sm:text-3xl leading-snug mb-3">
